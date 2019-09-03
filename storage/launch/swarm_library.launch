@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="id" default="0" />
+    <arg name="output" default="log" />
+
+    <!-- CPSwarm behavior state machine -->
+    <node pkg="storage" type="storage_simulation.py" name="storage_state_machine_$(arg id)" output="$(arg output)" required="true" />
+
+    <!-- CPSwarm box storage algorithms -->
+    <include file="$(find storage)/launch/box_storage.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- Assign Task -->
+    <!--include file="$(find assign_task)/launch/assign_task.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="log_output" value="$(arg output)" />
+    </include-->
+
+    <!-- Swarm kinematics exchanger -->
+    <include file="$(find swarm_kinematics_exchanger)/launch/swarm_kinematics_exchanger.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+</launch>

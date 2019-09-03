@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="id" default="1" />
+    <arg name="output" default="log" />
+
+    <!-- CPSwarm SAR UAV coverage algorithm -->
+    <include file="$(find uav_flocking)/launch/uav_flocking_coverage.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- CPSwarm SAR UAV local coverage algorithm -->
+    <include file="$(find uav_local_coverage)/launch/uav_local_coverage.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- CPSwarm SAR UAV tracking algorithm -->
+    <include file="$(find uav_flocking)/launch/uav_flocking_tracking.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+</launch>

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="id" default="0" />
+    <arg name="output" default="log" />
+
+    <!-- Node for recording data from logging topic to bag files -->
+    <node pkg="rosbag" type="record" name="record_$(arg id)" output="$(arg output)" required="true" args="-o cpswarm_storage_ugv_$(arg id)
+    pos_controller/goal_position
+    pos_provider/pose
+    " />
+
+    <!--
+        TODO: update topic list
+        FURTHER AVAILABLE TOPICS
+
+        /tf
+        /clock
+        /rosout
+        /rosout_agg
+        pos_provider/pose
+        pos_controller/goal_position
+        ugv_coverage/goal
+        ugv_coverage/cancel
+        ugv_coverage/status
+        ugv_coverage/feedback
+        ugv_coverage/result
+        bridge/uuid
+        bridge/nodes
+        bridge/events/velocity
+        bridge/events/cps_selection
+        bridge/events/mission_abort
+        bridge/events/position
+        bridge/events/mission_start
+        bridge/events/target_rescued
+        bridge/events/launch
+        base_pose_ground_truth
+        odom
+        map_metadata
+        amcl_pose
+        move_base/goal
+        move_base/cancel
+        move_base_0/current_goal
+        particlecloud
+        map
+        base_scan
+        cmd_vel
+    -->
+
+</launch>

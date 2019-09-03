@@ -1,0 +1,27 @@
+# general setup
+include "settings.inc"
+
+# set floorplan
+floorplan
+(
+    name "empty.png"
+    bitmap "empty.png"
+    size [20 20 1]
+)
+
+# set agent(s)
+agent(
+    pose [0 -1 0 90]
+    name "robot_0"
+    color "red"
+)
+agent(
+    pose [-1 0 0 90]
+    name "robot_1"
+    color "green"
+)
+#agent(
+#    pose [1 0 0 90]
+#    name "robot_2"
+#    color "blue"
+#)

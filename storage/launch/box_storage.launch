@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="id" default="0" />
+    <arg name="x" default="0" />
+    <arg name="y" default="0" />
+    <arg name="output" default="log" />
+
+    <!-- CPSwarm box searching coverage algorithm -->
+    <include file="$(find ugv_random_walk)/launch/ugv_random_walk.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="x" value="$(arg x)" />
+        <arg name="y" value="$(arg y)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- TODO: add other behaviors -->
+
+</launch>

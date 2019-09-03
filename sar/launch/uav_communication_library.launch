@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="id" default="1" />
+    <arg name="output" default="log" />
+
+    <!-- Communication library bridge -->
+    <node pkg="swarmros" type="bridge" name="swarmio_$(arg id)" args="-C$(find sar)/param/uav_swarmros.cfg" output="$(arg output)" required="true" />
+
+</launch>

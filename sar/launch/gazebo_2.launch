@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="gui" default="false" />
+    <arg name="world" default="$(find mavlink_sitl_gazebo)/worlds/empty.world" />
+
+    <!-- Gazebo simulator -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="gui" value="$(arg gui)" />
+        <arg name="world_name" value="$(arg world)" />
+    </include>
+
+    <!-- UAV 1 -->
+    <include file="$(find sar)/launch/uav_sitl.launch">
+        <arg name="id" value="1" />
+        <arg name="x" value="-1" />
+        <arg name="y" value="-32" />
+        <arg name="Y" value="2.094" />
+    </include>
+
+    <!-- UAV 2 -->
+    <include file="$(find sar)/launch/uav_sitl.launch">
+        <arg name="id" value="2" />
+        <arg name="x" value="1" />
+        <arg name="y" value="-32" />
+        <arg name="Y" value="1.047" />
+    </include>
+
+</launch>

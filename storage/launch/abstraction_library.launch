@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="id" default="0" />
+    <arg name="frame" />
+    <arg name="x" default="0" />
+    <arg name="y" default="0" />
+    <arg name="world" />
+    <arg name="pos_type" default="local" />
+    <arg name="output" default="log" />
+
+    <!-- Mission area services -->
+    <include file="$(find area_provider)/launch/area_provider.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="pos_type" value="$(arg pos_type)" />
+        <arg name="x" value="$(arg x)" />
+        <arg name="y" value="$(arg y)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- Position controller -->
+    <include file="$(find navigation_pos_controller)/launch/navigation_pos_controller.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="frame" value="$(arg frame)" />
+        <arg name="x" value="$(arg x)" />
+        <arg name="y" value="$(arg y)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- Position provider -->
+    <include file="$(find navigation_pos_provider)/launch/navigation_pos_provider_sim.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="frame" value="$(arg frame)" />
+        <arg name="x" value="$(arg x)" />
+        <arg name="y" value="$(arg y)" />
+        <arg name="world" value="$(find storage)/world/$(arg world).yaml" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- Velocity provider -->
+    <include file="$(find navigation_vel_provider)/launch/navigation_vel_provider.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- Obstacle detection -->
+    <include file="$(find obstacle_detection)/launch/obstacle_detection.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+</launch>

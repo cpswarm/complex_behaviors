@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="id" default="1" />
+    <arg name="output" default="log" />
+
+    <!-- Node for recording data from logging topic to bag files -->
+    <node pkg="rosbag" type="record" name="record_$(arg id)" output="$(arg output)" required="true" args="-o cpswarm_sar_uav_$(arg id)
+          pos_controller/goal_position
+          mavros/local_position/pose
+          uav_coverage/goal
+          uav_coverage/result
+          " />
+
+    <!--
+        FURTHER AVAILABLE TOPICS
+
+        target_found
+        target_lost
+        target_update
+        cps_selected
+        bridge/events/cps_selection
+        bridge/events/target_rescued
+
+        uav_coverage/status (actionlib_msgs/GoalStatusArray)
+
+        uav_local_coverage/goal ()
+        uav_local_coverage/status (actionlib_msgs/GoalStatusArray)
+        uav_local_coverage/result ()
+
+        uav_tracking/goal ()
+        uav_tracking/status (actionlib_msgs/GoalStatusArray)
+        uav_tracking/result ()
+
+        position (cpswarm_msgs/Position)
+        uavs_positions (cpswarm_msgs/ArrayOfVectors)
+
+        cmd/takeoff/goal (uav_mavros_takeoff/TakeOffActionGoal)
+        cmd/takeoff/status (actionlib_msgs/GoalStatusArray)
+        cmd/takeoff/result (uav_mavros_takeoff/TakeOffActionResult)
+        cmd/assign_task/status (actionlib_msgs/GoalStatusArray)
+
+        bridge/events/position (cpswarm_msgs/Position)
+        bridge/uuid (swarmros/String)
+
+        mavros/imu/data_raw (sensor_msgs/Imu)
+        mavros/setpoint_raw/target_local (mavros_msgs/PositionTarget)
+        mavros/global_position/global (sensor_msgs/NavSatFix)
+        mavros/altitude (mavros_msgs/Altitude)
+        mavros/target_actuator_control (mavros_msgs/ActuatorControl)
+        mavros/extended_state (mavros_msgs/ExtendedState)
+        mavros/vfr_hud (mavros_msgs/VFR_HUD)
+        mavros/state (mavros_msgs/State)
+        mavros/time_reference (sensor_msgs/TimeReference)
+        mavros/local_position/velocity (geometry_msgs/TwistStamped)
+        mavros/imu/temperature_imu (sensor_msgs/Temperature)
+        mavros/imu/data (sensor_msgs/Imu)
+        mavros/mission/waypoints (mavros_msgs/WaypointList)
+        mavros/battery (sensor_msgs/BatteryState)
+        mavros/global_position/rel_alt (std_msgs/Float64)
+        mavros/global_position/raw/gps_vel (geometry_msgs/TwistStamped)
+        mavros/statustext/recv (mavros_msgs/StatusText)
+        mavros/global_position/compass_hdg (std_msgs/Float64)
+        mavros/setpoint_raw/target_attitude (mavros_msgs/AttitudeTarget)
+        mavros/setpoint_raw/target_global (mavros_msgs/GlobalPositionTarget)
+        mavros/imu/mag (sensor_msgs/MagneticField)
+        mavros/timesync_status (mavros_msgs/TimesyncStatus)
+        mavros/global_position/local (nav_msgs/Odometry)
+        mavros/global_position/raw/fix (sensor_msgs/NavSatFix)
+        mavros/setpoint_position/local (geometry_msgs/PoseStamped)
+        mavros/imu/static_pressure (sensor_msgs/FluidPressure)
+        mavros/rc/out (mavros_msgs/RCOut)
+        mavros/local_position/odom (nav_msgs/Odometry)
+        mavlink/from (mavros_msgs/Mavlink)
+
+        /rosout (rosgraph_msgs/Log)
+        /rosout_agg (rosgraph_msgs/Log)
+        /diagnostics (diagnostic_msgs/DiagnosticArray)
+        /clock (rosgraph_msgs/Clock)
+        /tf_static (tf2_msgs/TFMessage)
+        /gazebo/parameter_updates (dynamic_reconfigure/Config)
+        /gazebo/model_states (gazebo_msgs/ModelStates)
+        /gazebo/parameter_descriptions (dynamic_reconfigure/ConfigDescription)
+        /gazebo/link_states (gazebo_msgs/LinkStates)
+    -->
+
+</launch>
