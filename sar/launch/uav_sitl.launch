@@ -15,7 +15,7 @@
     <group ns="/cpswarm/$(arg vehicle)_$(arg id)">
 
         <!-- PX4 SITL and Gazebo vehicle spawn URDF -->
-        <include file="$(find sar)/launch/px4.launch">
+        <include file="$(find sar)/launch/px4_sitl.launch">
             <arg name="x" value="$(arg x)" />
             <arg name="y" value="$(arg y)" />
             <arg name="Y" value="$(arg Y)" />
