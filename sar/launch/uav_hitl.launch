@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="id" default="1" />
+    <arg name="vehicle" default="drone" />
+    <arg name="x" default="0" />
+    <arg name="y" default="0" />
+    <arg name="pos_type" default="local" />
+    <arg name="output" default="screen" />
+    <arg name="fcu_url" default="/dev/ttyS2:57600" />
+
+    <group ns="/cpswarm/$(arg vehicle)_$(arg id)">
+
+        <!-- PX4 SITL and Gazebo vehicle spawn URDF -->
+        <include file="$(find sar)/launch/px4_hitl.launch">
+            <arg name="id" value="$(arg id)" />
+            <arg name="output" value="$(arg output)" />
+        </include>
+
+        <!-- MAVROS -->
+        <include file="$(find mavros)/launch/px4.launch">
+            <arg name="fcu_url" value="$(arg fcu_url)" />
+            <arg name="gcs_url" value="" />
+            <arg name="tgt_system" value="$(arg id)" />
+            <arg name="tgt_component" value="1" />
+            <arg name="log_output" value="$(arg output)" />
+        </include>
+
+        <!-- CPSwarm communication library -->
+        <include file="$(find sar)/launch/uav_communication_library.launch">
+            <arg name="id" value="$(arg id)" />
+            <arg name="output" value="$(arg output)" />
+        </include>
+
+        <!-- CPSwarm abstraction library -->
+        <include file="$(find sar)/launch/uav_abstraction_library.launch">
+            <arg name="id" value="$(arg id)" />
+            <arg name="x" value="$(arg x)" />
+            <arg name="y" value="$(arg y)" />
+            <arg name="pos_type" value="$(arg pos_type)" />
+            <arg name="output" value="$(arg output)" />
+        </include>
+
+        <!-- CPSwarm swarm library -->
+        <include file="$(find sar)/launch/uav_swarm_library.launch">
+            <arg name="id" value="$(arg id)" />
+            <arg name="output" value="$(arg output)" />
+        </include>
+
+        <!-- Data logging -->
+        <include file="$(find sar)/launch/logging.launch">
+            <arg name="id" value="$(arg id)" />
+            <arg name="output" value="$(arg output)" />
+        </include>
+
+    </group>
+
+</launch>
