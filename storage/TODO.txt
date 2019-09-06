@@ -3,3 +3,4 @@
  - add launch files for gazebo
  - add turtlebot configuration
  - pos_type arg can be removed?
+ - update readme
