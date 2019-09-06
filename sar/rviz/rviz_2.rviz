@@ -82,7 +82,7 @@ Visualization Manager:
       Value: true
     - Alpha: 1
       Class: rviz/PointStamped
-      Color: 78; 154; 6
+      Color: 164; 0; 0
       Enabled: true
       History Length: 1
       Name: Goal UAV 1
@@ -92,7 +92,7 @@ Visualization Manager:
       Value: true
     - Alpha: 1
       Class: rviz/PointStamped
-      Color: 164; 0; 0
+      Color: 78; 154; 6
       Enabled: true
       History Length: 1
       Name: Goal UAV 2
@@ -137,11 +137,11 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 9.55354118347168
+      Scale: 18.856996536254883
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
-      X: 1.4140682220458984
-      Y: -0.20895463228225708
+      X: 1.5669147968292236
+      Y: -20.87445068359375
     Saved: ~
 Window Geometry:
   Displays:

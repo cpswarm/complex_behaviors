@@ -6,8 +6,8 @@ Panels:
       Expanded:
         - /Pose1
         - /Pose1/Status1
-        - /PointStamped1
-        - /PointStamped1/Status1
+        - /Goal1
+        - /Goal1/Status1
       Splitter Ratio: 0.33528265357017517
     Tree Height: 707
   - Class: rviz/Selection
@@ -74,7 +74,7 @@ Visualization Manager:
       Color: 204; 41; 204
       Enabled: true
       History Length: 1
-      Name: PointStamped
+      Name: Goal
       Radius: 1
       Topic: /cpswarm/iris_1/vis/wp
       Unreliable: false
@@ -116,7 +116,7 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 33.50363540649414
+      Scale: 32.077022552490234
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
       X: 1.6389999389648438
