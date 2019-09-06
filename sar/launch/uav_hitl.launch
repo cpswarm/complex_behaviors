@@ -11,12 +11,6 @@
 
     <group ns="/cpswarm/$(arg vehicle)_$(arg id)">
 
-        <!-- PX4 SITL and Gazebo vehicle spawn URDF -->
-        <include file="$(find sar)/launch/px4_hitl.launch">
-            <arg name="id" value="$(arg id)" />
-            <arg name="output" value="$(arg output)" />
-        </include>
-
         <!-- MAVROS -->
         <include file="$(find mavros)/launch/px4.launch">
             <arg name="fcu_url" value="$(arg fcu_url)" />
