@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>sar</name>
-  <version>1.0.0</version>
+  <version>1.2.0</version>
   <description>A package that allows to perform search and rescue (SAR) with a heterogeneous swarm of unmanned aerial and ground vehicles (UAVs and UGVs).</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
