@@ -8,7 +8,6 @@ import std_srvs.srv
 
 from cpswarm_msgs.msg import *
 from swarmros.msg import *
-from assign_task.msg import *
 from uav_mavros_takeoff.msg import *
 
 
@@ -82,8 +81,8 @@ def main():
 
 				# ADD SelectRover to SarBehavior #
 				smach.StateMachine.add('SelectRover',
-					smach_ros.SimpleActionState('cmd/assign_task',
-						AssignTaskAction,
+					smach_ros.SimpleActionState('cmd/task_allocation_auction',
+						TaskAllocationAction,
 						goal_slots=['target_id', 'target_pose'],
 						result_slots=['target_id', 'selected_cps_UUID', 'target_pose']),
 					transitions={'succeeded':'Tracking', 'aborted':'SelectRover'})

@@ -8,16 +8,16 @@
     <node pkg="sar" type="uav_sar_simulation.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true" />
 
     <!-- CPSwarm SAR algorithms -->
-<!--     <include file="$(find sar)/launch/uav_sar_flocking.launch"> -->
-    <include file="$(find sar)/launch/uav_sar_m18.launch">
+    <include file="$(find sar)/launch/uav_sar_flocking.launch">
+<!--     <include file="$(find sar)/launch/uav_sar_m18.launch"> -->
         <arg name="id" value="$(arg id)" />
         <arg name="output" value="$(arg output)" />
     </include>
 
-    <!-- Assign Task -->
-    <include file="$(find assign_task)/launch/assign_task.launch">
+    <!-- Task allocation -->
+    <include file="$(find task_allocation)/launch/task_allocation.launch">
         <arg name="id" value="$(arg id)" />
-        <arg name="log_output" value="$(arg output)" />
+        <arg name="output" value="$(arg output)" />
     </include>
 
     <!-- Swarm kinematics exchanger -->
