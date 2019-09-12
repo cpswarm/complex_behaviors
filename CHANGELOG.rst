@@ -1,6 +1,6 @@
 master (unreleased)
 ===================
-
+- Fixed: Use task allocation from swarm functions library
 
 1.2 (2019-09-10)
 ================
