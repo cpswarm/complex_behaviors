@@ -21,7 +21,7 @@
     </include>
 
     <!-- Swarm kinematics exchanger -->
-    <include file="$(find swarm_kinematics_exchanger)/launch/swarm_kinematics_exchanger.launch">
+    <include file="$(find kinematics_exchanger)/launch/kinematics_exchanger.launch">
         <arg name="id" value="$(arg id)" />
         <arg name="output" value="$(arg output)" />
     </include>
