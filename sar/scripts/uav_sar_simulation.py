@@ -83,9 +83,10 @@ def main():
 				smach.StateMachine.add('SelectRover',
 					smach_ros.SimpleActionState('cmd/task_allocation_auction',
 						TaskAllocationAction,
-						goal_slots=['target_id', 'target_pose'],
-						result_slots=['target_id', 'selected_cps_UUID', 'target_pose']),
-					transitions={'succeeded':'Tracking', 'aborted':'SelectRover'})
+						goal_slots=['task_id', 'task_pose'],
+						result_slots=['task_id', 'winner', 'task_pose']),
+					transitions={'succeeded':'Tracking', 'aborted':'SelectRover'},
+					remapping={'task_id':'target_id', 'task_pose':'target_pose', 'winner':'selected_cps_UUID'})
 
 				# ADD Tracking to SarBehavior #
 				smach.StateMachine.add('Tracking',
