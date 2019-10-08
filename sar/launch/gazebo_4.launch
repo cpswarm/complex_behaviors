@@ -13,7 +13,7 @@
     <include file="$(find sar)/launch/uav_sitl.launch">
         <arg name="id" value="1" />
         <arg name="x" value="-3" />
-        <arg name="y" value="-32" />
+        <arg name="y" value="-4.5" />
         <arg name="Y" value="2.513" />
     </include>
 
@@ -21,7 +21,7 @@
     <include file="$(find sar)/launch/uav_sitl.launch">
         <arg name="id" value="2" />
         <arg name="x" value="-1" />
-        <arg name="y" value="-32" />
+        <arg name="y" value="-4.5" />
         <arg name="Y" value="1.885" />
     </include>
 
@@ -29,7 +29,7 @@
     <include file="$(find sar)/launch/uav_sitl.launch">
         <arg name="id" value="3" />
         <arg name="x" value="1" />
-        <arg name="y" value="-32" />
+        <arg name="y" value="-4.5" />
         <arg name="Y" value="1.257" />
     </include>
 
@@ -37,7 +37,7 @@
     <include file="$(find sar)/launch/uav_sitl.launch">
         <arg name="id" value="4" />
         <arg name="x" value="3" />
-        <arg name="y" value="-32" />
+        <arg name="y" value="-4.5" />
         <arg name="Y" value="0.628" />
     </include>
 
