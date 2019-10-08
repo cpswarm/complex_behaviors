@@ -4,6 +4,7 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
+        - /Grid1
         - /UAV 11/Status1
       Splitter Ratio: 0.33528265357017517
     Tree Height: 707
@@ -48,7 +49,7 @@ Visualization Manager:
         Y: 0
         Z: 0
       Plane: XY
-      Plane Cell Count: 66
+      Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
       Value: true
     - Alpha: 1
@@ -158,7 +159,7 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 10.85629653930664
+      Scale: 21.428403854370117
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
       X: 1.4140682220458984
