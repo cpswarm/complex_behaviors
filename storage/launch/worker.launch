@@ -12,6 +12,12 @@
 
     <group ns="$(arg frame)">
 
+        <!-- Box moving -->
+        <include file="$(find storage)/launch/box_moving.launch">
+            <arg name="id" value="$(arg id)" />
+            <arg name="output" value="$(arg output)" />
+        </include>
+
         <!-- CPSwarm communication library -->
         <include file="$(find storage)/launch/communication_library.launch">
             <arg name="id" value="$(arg id)" />

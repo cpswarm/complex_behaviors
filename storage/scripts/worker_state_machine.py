@@ -31,8 +31,8 @@ def main():
 	# Open the container
 	with top_sm:
 
-		#  ===================================== StorageThreads =====================================
-		# Callback for custom outcomes from StorageThreads
+		#  ===================================== WorkerThreads =====================================
+		# Callback for custom outcomes from WorkerThreads
 		def out_cb(outcome_map):
 			if outcome_map['AbortEventMonitoring'] == 'invalid':
 				rospy.loginfo('Returning missionAbort Event')
@@ -41,51 +41,60 @@ def main():
 			return 'aborted'
 
 		# Create a Concurrence container
-		storagethreads_concurrence = smach.Concurrence(
+		workerthreads_concurrence = smach.Concurrence(
 			outcomes=['missionAbort', 'aborted'],
 			default_outcome='missionAbort',
 			child_termination_cb=lambda so: True,
 			outcome_cb=out_cb)
 	
 		# Open the container
-		with storagethreads_concurrence:
+		with workerthreads_concurrence:
 
-			# ===================================== StorageBehavior =====================================
+			# ===================================== ScoutBehavior =====================================
 			# Create a State Machine container
-			storagebehavior_sm = smach.StateMachine(
+			workerbehavior_sm = smach.StateMachine(
 				outcomes=['succeeded', 'preempted', 'aborted'])
 
 			# Open the container
-			with storagebehavior_sm:
+			with workerbehavior_sm:
 
-				# ADD Idle to StorageBehavior #
+				# ADD Idle to ScoutBehavior #
 				smach.StateMachine.add('Idle',
 					Idle(),
 					transitions={'succeeded':'Coverage'})
 
-				# ADD Coverage to StorageBehavior #
+				# ADD Coverage to ScoutBehavior #
 				smach.StateMachine.add('Coverage',
 					smach_ros.SimpleActionState('ugv_coverage',
 						CoverageAction,
 						result_slots=['target_id', 'target_pose']),
-					transitions={'succeeded':'Idle'},
+					transitions={'succeeded':'AssignBox'},
 					remapping={'target_id':'target_id', 'target_pose':'target_pose'})
 
-			#  ===================================== StorageBehavior END =====================================
+				# ADD Task Allocation to ScoutBehavior #
+				smach.StateMachine.add('AssignBox',
+					smach_ros.SimpleActionState('cmd/task_allocation_auction',
+						AssignBoxAction,
+						goal_slots=['task_id', 'task_pose'],
+						result_slots=['task_id', 'winner', 'task_pose']),
+					transitions={'succeeded':'Coverage'},
+					remapping={'task_id':'target_id', 'task_pose':'target_pose'})
 
-			# ADD StorageBehavior to StorageThreads #
-			smach.Concurrence.add('StorageBehavior', storagebehavior_sm)
+			#  ===================================== ScoutBehavior END =====================================
 
-			# ADD AbortEventMonitoring to StorageThreads #
+			# ADD ScoutBehavior to WorkerThreads #
+			smach.Concurrence.add('ScoutBehavior', workerbehavior_sm)
+
+			# ADD AbortEventMonitoring to WorkerThreads #
 			smach.Concurrence.add('AbortEventMonitoring',
 				smach_ros.MonitorState('bridge/events/mission_abort',
 					SimpleEvent,
 					cond_cb=lambda ud, msg: False))
-		#  ===================================== StorageThreads END =====================================
+		#  ===================================== WorkerThreads END =====================================
 
-		# ADD StorageThreads to TOP state #
-		smach.StateMachine.add('StorageThreads',
-			storagethreads_concurrence,
+		# ADD WorkerThreads to TOP state #
+		smach.StateMachine.add('WorkerThreads',
+			workerthreads_concurrence,
 			transitions={'missionAbort':'MissionAbort'})
 
 		# ===================================== MissionAbort =====================================
@@ -97,7 +106,7 @@ def main():
 		# ADD MissionAbort to TOP state #
 		smach.StateMachine.add('MissionAbort',
 			missionabort_sm,
-			transitions={'succeeded':'StorageThreads'})
+			transitions={'succeeded':'WorkerThreads'})
 	
 	# Create and start the introspection server (uncomment if needed)
 	# sis = smach_ros.IntrospectionServer('smach_server', top_sm, '/SM_TOP')
