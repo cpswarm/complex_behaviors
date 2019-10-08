@@ -8,20 +8,39 @@
     <node pkg="sar" type="uav_sar_simulation.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true" />
 
     <!-- CPSwarm SAR algorithms -->
-    <include file="$(find sar)/launch/uav_sar_flocking.launch">
-<!--     <include file="$(find sar)/launch/uav_sar_m18.launch"> -->
+    <include file="$(find sar)/launch/uav_sar_optimal.launch">
+        <!--     <include file="$(find sar)/launch/uav_sar_flocking.launch"> -->
+        <!--     <include file="$(find sar)/launch/uav_sar_m18.launch"> -->
         <arg name="id" value="$(arg id)" />
         <arg name="output" value="$(arg output)" />
     </include>
 
-    <!-- Task allocation -->
-    <include file="$(find task_allocation)/launch/task_allocation.launch">
+    <!-- Area division -->
+    <include file="$(find area_division)/launch/area_division.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- Coverage path generator -->
+    <include file="$(find coverage_path)/launch/coverage_path.launch">
         <arg name="id" value="$(arg id)" />
         <arg name="output" value="$(arg output)" />
     </include>
 
     <!-- Swarm kinematics exchanger -->
     <include file="$(find kinematics_exchanger)/launch/kinematics_exchanger.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- Target monitor -->
+    <include file="$(find target_monitor)/launch/target_monitor.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- Task allocation -->
+    <include file="$(find task_allocation)/launch/task_allocation.launch">
         <arg name="id" value="$(arg id)" />
         <arg name="output" value="$(arg output)" />
     </include>

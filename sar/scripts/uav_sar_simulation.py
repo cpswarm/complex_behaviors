@@ -86,15 +86,15 @@ def main():
 						goal_slots=['task_id', 'task_pose'],
 						result_slots=['task_id', 'winner', 'task_pose']),
 					transitions={'succeeded':'Tracking', 'aborted':'SelectRover'},
-					remapping={'task_id':'target_id', 'task_pose':'target_pose', 'winner':'selected_cps_UUID'})
+					remapping={'task_id':'target_id', 'task_pose':'target_pose'})
 
 				# ADD Tracking to SarBehavior #
 				smach.StateMachine.add('Tracking',
 					smach_ros.SimpleActionState('uav_tracking',
 						TrackingAction,
-						goal_slots=['target', 'cps']),
+						goal_slots=['target']),
 					transitions={'succeeded':'Coverage', 'aborted':'LocalCoverage'},
-					remapping={'target':'target_id', 'cps':'selected_cps_UUID'})
+					remapping={'target':'target_id'})
 				
 				# ADD LocalCoverage to SarBehavior #
 				smach.StateMachine.add('LocalCoverage',

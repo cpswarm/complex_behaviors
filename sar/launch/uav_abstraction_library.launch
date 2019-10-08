@@ -7,8 +7,20 @@
     <arg name="pos_type" default="local" />
     <arg name="output" default="log" />
 
-    <!-- GPS services -->
-    <include if="$(eval pos_type == 'global')" file="$(find mavros_gps)/launch/mavros_gps.launch">
+    <!-- Move to action server -->
+    <include file="$(find moveto)/launch/moveto.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- Land service -->
+    <include file="$(find uav_mavros_land)/launch/mavros_land.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- Take off service -->
+    <include file="$(find uav_mavros_takeoff)/launch/mavros_takeoff.launch">
         <arg name="id" value="$(arg id)" />
         <arg name="output" value="$(arg output)" />
     </include>
@@ -22,20 +34,8 @@
         <arg name="output" value="$(arg output)" />
     </include>
 
-    <!-- Obstacle detection services -->
-    <include file="$(find obstacle_detection)/launch/obstacle_detection.launch">
-        <arg name="id" value="$(arg id)" />
-        <arg name="output" value="$(arg output)" />
-    </include>
-
-    <!-- Take off service -->
-    <include file="$(find uav_mavros_takeoff)/launch/mavros_takeoff.launch">
-        <arg name="id" value="$(arg id)" />
-        <arg name="output" value="$(arg output)" />
-    </include>
-
-    <!-- Land service -->
-    <include file="$(find uav_mavros_land)/launch/mavros_land.launch">
+    <!-- GPS services -->
+    <include if="$(eval pos_type == 'global')" file="$(find mavros_gps)/launch/mavros_gps.launch">
         <arg name="id" value="$(arg id)" />
         <arg name="output" value="$(arg output)" />
     </include>
@@ -68,6 +68,12 @@
     <include file="$(find mavros_vel_provider)/launch/mavros_vel_provider.launch">
         <arg name="id" value="$(arg id)" />
         <arg name="pos_type" value="$(arg pos_type)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- Obstacle detection services -->
+    <include file="$(find obstacle_detection)/launch/obstacle_detection.launch">
+        <arg name="id" value="$(arg id)" />
         <arg name="output" value="$(arg output)" />
     </include>
 
