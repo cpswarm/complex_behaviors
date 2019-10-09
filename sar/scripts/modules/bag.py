@@ -196,7 +196,7 @@ class Bag:
                 self.pose.append((t.secs + t.nsecs / 1000000000.0, msg.pose.position.x + self.origin[0], msg.pose.position.y + self.origin[1], msg.pose.position.z))
 
         # validate end time of coverage
-        if self.tstop == 0.0:
+        if self.tstop == 0.0 and len(self.pose) > 0:
             self.tstop = self.pose[-1][0]
 
         # trim poses according to begin and end times
@@ -216,8 +216,10 @@ class Bag:
         :param bool verbose: whether to be verbose (default False)
         '''
         # compute altitude
-        alts = [p[3] for p in self.pose]
-        alt = sum(alts) / len(alts)
+        alt = 0
+        if len(self.pose) > 0:
+            alts = [p[3] for p in self.pose]
+            alt = sum(alts) / len(alts)
 
         # area visible to UAVs in each direction (inflation of line)
         self.fov = alt * math.tan(fov/2)
@@ -226,11 +228,15 @@ class Bag:
             print("Tracking camera field of view:\n  fov = {0:.2f} m * tan({1:.2f}/2) = {2:.2f} m".format(alt, fov, self.fov))
 
         # create a line string that represents the trajectory of the UAV
-        self.traj = geo.LineString(self.path(self.tstop))
+        if len(self.pose) > 0:
+            self.traj = geo.LineString(self.path(self.tstop))
+        else:
+            self.traj = geo.LineString()
 
         if verbose:
             #print("Average velocity:\n  v = {0:.2f}/{1:.2f} = {2:.2f}".format(self.traj.length, self.time[-1]-self.time[0], self.traj.length / (self.time[-1]-self.time[0])))
-            print("Average velocity:\n  v = {0:.2f} m / {1:.2f} s = {2:.2f} m/s".format(self.traj.length, self.tstop-self.tstart, self.traj.length / (self.tstop-self.tstart)))
+            if self.tstop != self.tstart:
+                print("Average velocity:\n  v = {0:.2f} m / {1:.2f} s = {2:.2f} m/s".format(self.traj.length, self.tstop-self.tstart, self.traj.length / (self.tstop-self.tstart)))
 
 
     def path(self, tmax):
@@ -244,9 +250,10 @@ class Bag:
             i += 1
 
         # make sure a path has at least length of two
-        if i == 0:
-            yield self.pose[0][1], self.pose[0][2]
-            yield self.pose[0][1], self.pose[0][2]
+        if len(self.pose) > 0:
+            if i == 0:
+                yield self.pose[0][1], self.pose[0][2]
+                yield self.pose[0][1], self.pose[0][2]
 
-        if i == 1:
-            yield self.pose[0][1], self.pose[0][2]
+            if i == 1:
+                yield self.pose[0][1], self.pose[0][2]
