@@ -66,7 +66,7 @@ def main():
 				# ADD Search to ScoutBehavior #
 				smach.StateMachine.add('Search',
 					smach_ros.SimpleActionState('ugv_coverage',
-						SearchAction,
+						CoverageAction,
 						result_slots=['target_id', 'target_pose']),
 					transitions={'succeeded':'AssignBox'},
 					remapping={'target_id':'box_id', 'target_pose':'box_position'})
@@ -74,7 +74,7 @@ def main():
 				# ADD Task Allocation to ScoutBehavior #
 				smach.StateMachine.add('AssignBox',
 					smach_ros.SimpleActionState('cmd/task_allocation_auction',
-						AssignBoxAction,
+						TaskAllocationAction,
 						goal_slots=['task_id', 'task_pose'],
 						result_slots=['task_id', 'winner', 'task_pose']),
 					transitions={'succeeded':'Search', 'aborted':'AssignBox'},

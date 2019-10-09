@@ -9,6 +9,16 @@
     <arg name="pos_type" default="local" />
     <arg name="output" default="log" />
 
+    <!-- TODO: add other behaviors -->
+    <!-- lift table behavior -->
+    <!-- set table behavior -->
+
+    <!-- Move to action server -->
+    <include file="$(find moveto)/launch/moveto.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
     <!-- Mission area services -->
     <include file="$(find area_provider)/launch/area_provider.launch">
         <arg name="id" value="$(arg id)" />
