@@ -16,7 +16,7 @@ class Idle(smach.State):
 
 	def execute(self, userdata):
 		rospy.loginfo('Executing state Idle')
-		rospy.sleep(10.0)
+		rospy.sleep(1.0)
 		return 'succeeded'
 
 
