@@ -12,11 +12,8 @@
 
     <group ns="$(arg frame)">
 
-        <!-- Box moving -->
-        <include file="$(find storage)/launch/box_moving.launch">
-            <arg name="id" value="$(arg id)" />
-            <arg name="output" value="$(arg output)" />
-        </include>
+        <!-- Behavior state machine -->
+        <node pkg="storage" type="worker_state_machine.py" name="worker_state_machine_$(arg id)" output="$(arg output)" required="true" />
 
         <!-- CPSwarm communication library -->
         <include file="$(find storage)/launch/communication_library.launch">
