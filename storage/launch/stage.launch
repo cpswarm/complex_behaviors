@@ -14,7 +14,7 @@
     <include file="$(find storage)/launch/scout.launch">
         <arg name="id" value="0" />
         <arg name="world" value="$(arg world)" />
-        <arg name="x" value="0" />
+        <arg name="x" value="1" />
         <arg name="y" value="-1" />
     </include>
 
@@ -22,7 +22,7 @@
     <include file="$(find storage)/launch/worker.launch">
         <arg name="id" value="1" />
         <arg name="world" value="$(arg world)" />
-        <arg name="x" value="0" />
+        <arg name="x" value="-1" />
         <arg name="y" value="-1" />
     </include>
 

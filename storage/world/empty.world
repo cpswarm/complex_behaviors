@@ -11,12 +11,12 @@ floorplan
 
 # set agent(s)
 agent(
-    pose [0 -1 0 90]
+    pose [1 -1 0 90]
     name "robot_0"
     color "red"
 )
 agent(
-    pose [-1 0 0 90]
+    pose [-1 -1 0 90]
     name "robot_1"
     color "green"
 )
