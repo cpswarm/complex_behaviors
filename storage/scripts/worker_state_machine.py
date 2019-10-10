@@ -4,129 +4,129 @@ import rospy
 import smach
 import smach_ros
 import geometry_msgs
-import move_base_msgs
 
+from move_base_msgs.msg import *
 from cpswarm_msgs.msg import *
 from swarmros.msg import *
 
 # define state Idle
 class Idle(smach.State):
 
-	def __init__(self):
-	    smach.State.__init__(self, outcomes=['succeeded', 'preempted'])
+    def __init__(self):
+        smach.State.__init__(self, outcomes=['succeeded', 'preempted'])
 
-	def execute(self, userdata):
-		rospy.loginfo('Executing state Idle')
-		while True:
-			# Check for preempt
-			if self.preempt_requested():
-				rospy.loginfo("Idle state has been preempted")
-				self.service_preempt()
-				return 'preempted'
-			rospy.sleep(1.0)
+    def execute(self, userdata):
+        rospy.loginfo('Executing state Idle')
+        while True:
+            # Check for preempt
+            if self.preempt_requested():
+                rospy.loginfo("Idle state has been preempted")
+                self.service_preempt()
+                return 'preempted'
+            rospy.sleep(1.0)
 
-		return 'succeeded'
+        return 'succeeded'
 
 
 def main():
-	rospy.init_node('state_machine_node')
+    rospy.init_node('state_machine_node')
 
-	# Create a TOP level SMACH state machine
-	top_sm = smach.StateMachine(['succeeded', 'preempted', 'aborted'])
+    # Create a TOP level SMACH state machine
+    top_sm = smach.StateMachine(['succeeded', 'preempted', 'aborted'])
 
-	# Open the container
-	with top_sm:
+    # Open the container
+    with top_sm:
 
-		#  ===================================== WorkerThreads =====================================
-		# Callback for custom outcomes from WorkerThreads
-		def out_cb(outcome_map):
-			if outcome_map['GoHomeEventMonitoring'] == 'invalid':
-				rospy.loginfo('Returning goHome Event')
-				return 'goHome'
+        #  ===================================== WorkerThreads =====================================
+        # Callback for custom outcomes from WorkerThreads
+        def out_cb(outcome_map):
+            if outcome_map['GoHomeEventMonitoring'] == 'invalid':
+                rospy.loginfo('Returning goHome Event')
+                return 'goHome'
 
-			return 'aborted'
+            return 'aborted'
 
-		# Create a Concurrence container
-		workerthreads_concurrence = smach.Concurrence(
-			outcomes=['goHome', 'aborted'],
-			default_outcome='goHome',
-			child_termination_cb=lambda so: True,
-			outcome_cb=out_cb)
+        # Create a Concurrence container
+        workerthreads_concurrence = smach.Concurrence(
+            outcomes=['goHome', 'aborted'],
+            default_outcome='goHome',
+            child_termination_cb=lambda so: True,
+            outcome_cb=out_cb)
 
-		# Open the container
-		with workerthreads_concurrence:
+        # Open the container
+        with workerthreads_concurrence:
 
-			# ===================================== WorkerBehavior =====================================
-			# Create a State Machine container
-			workerbehavior_sm = smach.StateMachine(
-				outcomes=['succeeded', 'preempted', 'aborted'])
+            # ===================================== WorkerBehavior =====================================
+            # Create a State Machine container
+            workerbehavior_sm = smach.StateMachine(
+                outcomes=['succeeded', 'preempted', 'aborted'])
 
-			# Open the container
-			with workerbehavior_sm:
+            # Open the container
+            with workerbehavior_sm:
 
-				#  ===================================== IdleThreads =====================================
-				# Callback for custom outcomes from IdleThreads
-				def out_cb(outcome_map):
-					if outcome_map['IdleEventMonitoring'] == 'invalid':
-						rospy.loginfo('Returning targetFound Event')
-						return 'targetFound'
+                #  ===================================== IdleThreads =====================================
+                # Callback for custom outcomes from IdleThreads
+                def out_cb(outcome_map):
+                    if outcome_map['IdleEventMonitoring'] == 'invalid':
+                        rospy.loginfo('Returning boxFound Event')
+                        return 'boxFound'
 
-					return 'aborted'
+                    return 'aborted'
 
-				# Create a Concurrence container
-				idlethreads_concurrence = smach.Concurrence(
-					outcomes=['targetFound', 'aborted'],
-					default_outcome='targetFound',
-					child_termination_cb=lambda so: True,
-					outcome_cb=out_cb,
-					output_keys=['box_id', 'scout', 'box_position'])
+                # Create a Concurrence container
+                idlethreads_concurrence = smach.Concurrence(
+                    outcomes=['boxFound', 'aborted'],
+                    default_outcome='boxFound',
+                    child_termination_cb=lambda so: True,
+                    outcome_cb=out_cb,
+                    output_keys=['box_id', 'scout', 'box_position'])
 
-				# Open the container
-				with idlethreads_concurrence:
+                # Open the container
+                with idlethreads_concurrence:
 
-					# ADD Idle to IdleThreads #
-					smach.Concurrence.add('Idle',
-						Idle()
-					)
+                    # ADD Idle to IdleThreads #
+                    smach.Concurrence.add('Idle',
+                        Idle()
+                    )
 
-					def monitor_cb(ud, msg):
-						rospy.loginfo('Executing monitor_cb')
-						ud.box_id = msg.id
-						ud.scout = msg.swarmio.node
-						ud.box_position = msg.pose
-						return False
+                    def monitor_cb(ud, msg):
+                        rospy.loginfo('Executing monitor_cb')
+                        ud.box_id = msg.id
+                        ud.scout = msg.swarmio.node
+                        ud.box_position = msg.pose
+                        return False
 
-					# ADD IdleEventMonitoring to IdleThreads #
-					smach.Concurrence.add('IdleEventMonitoring',
-						smach_ros.MonitorState('bridge/events/target_found',
-							TargetPositionEvent,
-							cond_cb=monitor_cb,
-							output_keys=['box_id', 'scout', 'box_position']))
-				#  ===================================== IdleThreads END =====================================
+                    # ADD IdleEventMonitoring to IdleThreads #
+                    smach.Concurrence.add('IdleEventMonitoring',
+                        smach_ros.MonitorState('bridge/events/target_found',
+                            TargetPositionEvent,
+                            cond_cb=monitor_cb,
+                            output_keys=['box_id', 'scout', 'box_position']))
+                #  ===================================== IdleThreads END =====================================
 
-				# ADD IdleThreads to WorkerBehavior #
-				smach.StateMachine.add('IdleThreads',
-					idlethreads_concurrence,
-					transitions={'boxFound':'AssignBox'})
+                # ADD IdleThreads to WorkerBehavior #
+                smach.StateMachine.add('IdleThreads',
+                    idlethreads_concurrence,
+                    transitions={'boxFound':'AssignBox'})
 
-				# ADD AssignBox to WorkerBehavior #
-				smach.StateMachine.add('AssignBox',
-					smach_ros.SimpleActionState('cmd/task_allocation_bid',
-						TaskAllocationAction,
-						goal_slots=['task_id', 'task_pose', 'auctioneer']),
-						result_slots=['task_pose']),
-					transitions={'succeeded':'MoveToBox', 'aborted':'IdleThreads'}
+                # ADD AssignBox to WorkerBehavior #
+                smach.StateMachine.add('AssignBox',
+                    smach_ros.SimpleActionState('cmd/task_allocation_bid',
+                        TaskAllocationAction,
+                        goal_slots=['task_id', 'task_pose', 'auctioneer'],
+                        result_slots=['task_pose']),
+                    transitions={'succeeded':'MoveToBox', 'aborted':'IdleThreads'},
                     remapping={'task_id':'box_id', 'task_pose':'box_position', 'scout':'auctioneer'})
 
-				# ADD MoveToBox to WorkerBehavior #
-				smach.StateMachine.add('MoveToBox',
-					smach_ros.SimpleActionState('cmd/moveto',
-						move_base_msgs.MoveBaseGoal,
-						goal_slots=['target_pose']),
-					transitions={'succeeded':'MoveToDest', 'aborted':'GoHome'}
+                # ADD MoveToBox to WorkerBehavior #
+                smach.StateMachine.add('MoveToBox',
+                    smach_ros.SimpleActionState('cmd/moveto',
+                        MoveBaseAction,
+                        goal_slots=['target_pose']),
+                    transitions={'succeeded':'MoveToDest', 'aborted':'MoveToHome'},
                     remapping={'target_pose':'box_position'})
 
-				# ADD MoveToDest to WorkerBehavior #
+                # ADD MoveToDest to WorkerBehavior #
                 def move_dest_cb(ud, goal):
                     goal = geometry_msgs.Pose()
                     goal.position.x = 4 # TODO: should be parameter!
@@ -134,60 +134,74 @@ def main():
                     rospy.loginfo('Deliver Box to %.2f, %.2f', goal.position.x, goal.position.y)
                     return goal
 
-				smach.StateMachine.add('MoveToDest',
-					smach_ros.SimpleActionState('cmd/moveto',
-						move_base_msgs.MoveBaseGoal,
+                smach.StateMachine.add('MoveToDest',
+                    smach_ros.SimpleActionState('cmd/moveto',
+                        MoveBaseAction,
                         goal_cb=move_dest_cb,
-						goal_slots=['target_pose']),
-					transitions={'succeeded':'GoHome', 'aborted':'GoHome'}
-                    remapping={'target_pose':'dest_position'})
+                        goal_slots=['target_pose']),
+                    transitions={'succeeded':'MoveToHome', 'aborted':'MoveToHome'})
 
-			#  ===================================== WorkerBehavior END =====================================
+                # ADD MoveToHome to WorkerBehavior #
+                def move_home_cb(ud, goal):
+                    goal = geometry_msgs.Pose()
+                    goal.position.x = 0 # TODO: should be parameter!
+                    goal.position.y = -4
+                    rospy.loginfo('Going home %.2f, %.2f', goal.position.x, goal.position.y)
+                    return goal
 
-			# ADD WorkerBehavior to WorkerThreads #
-			smach.Concurrence.add('WorkerBehavior', workerbehavior_sm)
+                smach.StateMachine.add('MoveToHome',
+                    smach_ros.SimpleActionState('cmd/moveto',
+                        MoveBaseAction,
+                        goal_cb=move_home_cb,
+                        goal_slots=['target_pose']),
+                    transitions={'succeeded':'IdleThreads', 'aborted':'IdleThreads'})
 
-			# ADD GoHomeEventMonitoring to WorkerThreads #
-			smach.Concurrence.add('GoHomeEventMonitoring',
-				smach_ros.MonitorState('bridge/events/go_home',
-					SimpleEvent,
-					cond_cb=lambda ud, msg: False))
-		#  ===================================== WorkerThreads END =====================================
+            #  ===================================== WorkerBehavior END =====================================
 
-		# ADD WorkerThreads to TOP state #
-		smach.StateMachine.add('WorkerThreads',
-			workerthreads_concurrence,
-			transitions={'goHome':'GoHome'})
+            # ADD WorkerBehavior to WorkerThreads #
+            smach.Concurrence.add('WorkerBehavior', workerbehavior_sm)
 
-		def move_home_cb(ud, goal):
-			goal = geometry_msgs.Pose()
-			goal.position.x = 0 # TODO: should be parameter!
-			goal.position.y = -4
-			rospy.loginfo('Going HOME: %.2f, %.2f', goal.position.x, goal.position.y)
-			return goal
+            # ADD GoHomeEventMonitoring to WorkerThreads #
+            smach.Concurrence.add('GoHomeEventMonitoring',
+                smach_ros.MonitorState('bridge/events/go_home',
+                    SimpleEvent,
+                    cond_cb=lambda ud, msg: False))
+        #  ===================================== WorkerThreads END =====================================
 
-		# ADD GoHome to TOP state #
-		smach.StateMachine.add('GoHome',
-			smach_ros.SimpleActionState('cmd/moveto',
-				move_base_msgs.MoveBaseGoal,
-				goal_cb=move_home_cb,
+        # ADD WorkerThreads to TOP state #
+        smach.StateMachine.add('WorkerThreads',
+            workerthreads_concurrence,
+            transitions={'goHome':'GoHome'})
+
+        def move_home_cb(ud, goal):
+            goal = geometry_msgs.Pose()
+            goal.position.x = 0 # TODO: should be parameter!
+            goal.position.y = -4
+            rospy.loginfo('Going HOME: %.2f, %.2f', goal.position.x, goal.position.y)
+            return goal
+
+        # ADD GoHome to TOP state #
+        smach.StateMachine.add('GoHome',
+            smach_ros.SimpleActionState('cmd/moveto',
+                MoveBaseAction,
+                goal_cb=move_home_cb,
                 goal_slots=['target_pose']),
-			transitions={'boxFound':'AssignBox'})
+            transitions={})
 
-	# Create and start the introspection server (uncomment if needed)
-	# sis = smach_ros.IntrospectionServer('smach_server', top_sm, '/SM_TOP')
-	# sis.start()
+    # Create and start the introspection server (uncomment if needed)
+    # sis = smach_ros.IntrospectionServer('smach_server', top_sm, '/SM_TOP')
+    # sis.start()
 
-	# Execute SMACH plan
-	outcome = top_sm.execute()
+    # Execute SMACH plan
+    outcome = top_sm.execute()
 
-	# Wait for ctrl-c to stop the application
-	rospy.spin()
-	# sis.stop()
+    # Wait for ctrl-c to stop the application
+    rospy.spin()
+    # sis.stop()
 
 
 if __name__ == '__main__':
-	try:
-		main()
-	except rospy.ROSInterruptException:
-		pass
+    try:
+        main()
+    except rospy.ROSInterruptException:
+        pass

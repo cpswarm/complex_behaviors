@@ -3,8 +3,6 @@
 import rospy
 import smach
 import smach_ros
-import mavros_msgs
-import std_srvs.srv
 
 from cpswarm_msgs.msg import *
 from swarmros.msg import *
