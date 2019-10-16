@@ -154,7 +154,7 @@ def main():
                         MoveBaseAction,
                         goal_cb=move_home_cb,
                         goal_slots=['target_pose']),
-                    transitions={'succeeded':'IdleThreads', 'aborted':'IdleThreads'})
+                    transitions={'succeeded':'IdleThreads', 'aborted':'IdleThreads', 'boxFound':'AssignBox'})
 
             #  ===================================== WorkerBehavior END =====================================
 
