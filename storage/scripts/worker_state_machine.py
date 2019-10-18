@@ -3,8 +3,8 @@
 import rospy
 import smach
 import smach_ros
-import geometry_msgs
 
+from actionlib.simple_action_client import SimpleActionClient, GoalStatus
 from move_base_msgs.msg import *
 from cpswarm_msgs.msg import *
 from swarmros.msg import *
@@ -116,7 +116,7 @@ def main():
                         goal_slots=['task_id', 'task_pose', 'auctioneer'],
                         result_slots=['task_pose']),
                     transitions={'succeeded':'MoveToBox', 'aborted':'IdleThreads'},
-                    remapping={'task_id':'box_id', 'task_pose':'box_position', 'scout':'auctioneer'})
+                    remapping={'task_id':'box_id', 'task_pose':'box_position', 'auctioneer':'scout'})
 
                 # ADD MoveToBox to WorkerBehavior #
                 smach.StateMachine.add('MoveToBox',
@@ -128,33 +128,41 @@ def main():
 
                 # ADD MoveToDest to WorkerBehavior #
                 def move_dest_cb(ud, goal):
-                    goal = geometry_msgs.Pose()
-                    goal.position.x = 4 # TODO: should be parameter!
-                    goal.position.y = 0
-                    rospy.loginfo('Deliver Box to %.2f, %.2f', goal.position.x, goal.position.y)
+                    goal = MoveBaseGoal()
+                    goal.target_pose.pose.position.x = 4 # TODO: should be parameter!
+                    goal.target_pose.pose.position.y = 0
+                    goal.target_pose.pose.orientation.w = 1;
+                    rospy.loginfo('Deliver Box to %.2f, %.2f', goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
                     return goal
 
                 smach.StateMachine.add('MoveToDest',
                     smach_ros.SimpleActionState('cmd/moveto',
                         MoveBaseAction,
-                        goal_cb=move_dest_cb,
-                        goal_slots=['target_pose']),
-                    transitions={'succeeded':'MoveToHome', 'aborted':'MoveToHome'})
+                        goal_cb=move_dest_cb),
+                    transitions={'succeeded':'PublishState', 'aborted':'MoveToHome'})
+
+                # ADD PublishState to WorkerBehavior #
+                smach.StateMachine.add('PublishState',
+                    smach_ros.SimpleActionState('cmd/target_done',
+                        TargetAction,
+                        goal_slots=['id', 'pose']),
+                    transitions={'succeeded':'MoveToHome', 'aborted':'MoveToHome'},
+                    remapping={'id':'box_id', 'pose':'box_position'})
 
                 # ADD MoveToHome to WorkerBehavior #
                 def move_home_cb(ud, goal):
-                    goal = geometry_msgs.Pose()
-                    goal.position.x = 0 # TODO: should be parameter!
-                    goal.position.y = -4
-                    rospy.loginfo('Going home %.2f, %.2f', goal.position.x, goal.position.y)
+                    goal = MoveBaseGoal()
+                    goal.target_pose.pose.position.x = 0 # TODO: should be parameter!
+                    goal.target_pose.pose.position.y = -4
+                    goal.target_pose.pose.orientation.w = 1;
+                    rospy.loginfo('Going home %.2f, %.2f', goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
                     return goal
 
                 smach.StateMachine.add('MoveToHome',
                     smach_ros.SimpleActionState('cmd/moveto',
                         MoveBaseAction,
-                        goal_cb=move_home_cb,
-                        goal_slots=['target_pose']),
-                    transitions={'succeeded':'IdleThreads', 'aborted':'IdleThreads', 'boxFound':'AssignBox'})
+                        goal_cb=move_home_cb),
+                    transitions={'succeeded':'IdleThreads', 'aborted':'IdleThreads'})
 
             #  ===================================== WorkerBehavior END =====================================
 
@@ -174,18 +182,18 @@ def main():
             transitions={'goHome':'GoHome'})
 
         def move_home_cb(ud, goal):
-            goal = geometry_msgs.Pose()
-            goal.position.x = 0 # TODO: should be parameter!
-            goal.position.y = -4
-            rospy.loginfo('Going HOME: %.2f, %.2f', goal.position.x, goal.position.y)
+            goal = MoveBaseGoal()
+            goal.target_pose.pose.position.x = 0 # TODO: should be parameter!
+            goal.target_pose.pose.position.y = -4
+            goal.target_pose.pose.orientation.w = 1;
+            rospy.loginfo('Going HOME: %.2f, %.2f', goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
             return goal
 
         # ADD GoHome to TOP state #
         smach.StateMachine.add('GoHome',
             smach_ros.SimpleActionState('cmd/moveto',
                 MoveBaseAction,
-                goal_cb=move_home_cb,
-                goal_slots=['target_pose']),
+                goal_cb=move_home_cb),
             transitions={})
 
     # Create and start the introspection server (uncomment if needed)
