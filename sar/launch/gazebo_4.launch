@@ -14,7 +14,7 @@
         <arg name="id" value="1" />
         <arg name="x" value="-3" />
         <arg name="y" value="-4.5" />
-        <arg name="Y" value="2.513" />
+        <arg name="Y" value="1.571" />
     </include>
 
     <!-- UAV 2 -->
@@ -22,7 +22,7 @@
         <arg name="id" value="2" />
         <arg name="x" value="-1" />
         <arg name="y" value="-4.5" />
-        <arg name="Y" value="1.885" />
+        <arg name="Y" value="1.571" />
     </include>
 
     <!-- UAV 3 -->
@@ -30,7 +30,7 @@
         <arg name="id" value="3" />
         <arg name="x" value="1" />
         <arg name="y" value="-4.5" />
-        <arg name="Y" value="1.257" />
+        <arg name="Y" value="1.571" />
     </include>
 
     <!-- UAV 4 -->
@@ -38,7 +38,7 @@
         <arg name="id" value="4" />
         <arg name="x" value="3" />
         <arg name="y" value="-4.5" />
-        <arg name="Y" value="0.628" />
+        <arg name="Y" value="1.571" />
     </include>
 
 </launch>

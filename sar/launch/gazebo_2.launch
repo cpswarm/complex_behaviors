@@ -14,7 +14,7 @@
         <arg name="id" value="1" />
         <arg name="x" value="-1" />
         <arg name="y" value="-4" />
-        <arg name="Y" value="2.094" />
+        <arg name="Y" value="1.571" />
     </include>
 
     <!-- UAV 2 -->
@@ -22,7 +22,7 @@
         <arg name="id" value="2" />
         <arg name="x" value="1" />
         <arg name="y" value="-4" />
-        <arg name="Y" value="1.047" />
+        <arg name="Y" value="1.571" />
     </include>
 
 </launch>

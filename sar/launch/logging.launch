@@ -13,7 +13,7 @@
           " />
 
     <!--
-        FURTHER AVAILABLE TOPICS
+        FURTHER AVAILABLE TOPICS (TODO: UPDATE)
 
         target_found
         target_lost
@@ -38,7 +38,6 @@
         cmd/takeoff/goal (uav_mavros_takeoff/TakeOffActionGoal)
         cmd/takeoff/status (actionlib_msgs/GoalStatusArray)
         cmd/takeoff/result (uav_mavros_takeoff/TakeOffActionResult)
-        cmd/assign_task/status (actionlib_msgs/GoalStatusArray)
 
         bridge/events/position (cpswarm_msgs/Position)
         bridge/uuid (swarmros/String)

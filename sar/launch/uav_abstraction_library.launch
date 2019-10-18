@@ -7,12 +7,6 @@
     <arg name="pos_type" default="local" />
     <arg name="output" default="log" />
 
-    <!-- Move to action server -->
-    <include file="$(find moveto)/launch/moveto.launch">
-        <arg name="id" value="$(arg id)" />
-        <arg name="output" value="$(arg output)" />
-    </include>
-
     <!-- Land service -->
     <include file="$(find uav_mavros_land)/launch/mavros_land.launch">
         <arg name="id" value="$(arg id)" />
