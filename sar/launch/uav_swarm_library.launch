@@ -4,9 +4,6 @@
     <arg name="id" default="1" />
     <arg name="output" default="log" />
 
-    <!-- CPSwarm behavior state machine -->
-    <node pkg="sar" type="uav_sar_simulation.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true" />
-
     <!-- CPSwarm SAR algorithms -->
     <include file="$(find sar)/launch/uav_sar_optimal.launch">
         <!--     <include file="$(find sar)/launch/uav_sar_flocking.launch"> -->

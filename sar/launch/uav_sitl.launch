@@ -14,6 +14,9 @@
 
     <group ns="/cpswarm/$(arg vehicle)_$(arg id)">
 
+        <!-- Behavior state machine -->
+        <node pkg="sar" type="uav_sar_simulation.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true" />
+
         <!-- PX4 SITL and Gazebo vehicle spawn URDF -->
         <include file="$(find sar)/launch/px4.launch">
             <arg name="x" value="$(arg x)" />

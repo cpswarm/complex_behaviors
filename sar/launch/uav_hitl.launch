@@ -9,7 +9,10 @@
     <arg name="output" default="screen" />
     <arg name="fcu_url" default="/dev/ttyS2:57600" />
 
-    <group ns="/cpswarm/$(arg vehicle)_$(arg id)">
+    <group ns="$(arg vehicle)$(arg id)">
+
+        <!-- Behavior state machine -->
+        <node pkg="sar" type="uav_sar_demonstration.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true" />
 
         <!-- MAVROS -->
         <include file="$(find mavros)/launch/px4.launch">
@@ -32,6 +35,7 @@
             <arg name="x" value="$(arg x)" />
             <arg name="y" value="$(arg y)" />
             <arg name="pos_type" value="$(arg pos_type)" />
+            <arg name="obc" value="true" />
             <arg name="output" value="$(arg output)" />
         </include>
 

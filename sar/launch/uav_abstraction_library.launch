@@ -5,7 +5,17 @@
     <arg name="x" default="0" />
     <arg name="y" default="0" />
     <arg name="pos_type" default="local" />
+    <arg name="obc" default="false" />
     <arg name="output" default="log" />
+
+
+    <!-- HARDWARE FUNCTIONS -->
+
+    <!-- Mission Aborter -->
+    <include file="$(find mission_aborter)/launch/mission_aborter.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
 
     <!-- Land service -->
     <include file="$(find uav_mavros_land)/launch/mavros_land.launch">
@@ -18,6 +28,9 @@
         <arg name="id" value="$(arg id)" />
         <arg name="output" value="$(arg output)" />
     </include>
+
+
+    <!-- SENSING ACTUATION -->
 
     <!-- Mission area services -->
     <include file="$(find area_provider)/launch/area_provider.launch">
@@ -70,5 +83,30 @@
         <arg name="id" value="$(arg id)" />
         <arg name="output" value="$(arg output)" />
     </include>
+
+
+    <!-- HARDWARE DRIVERS -->
+
+    <group if="$(arg obc)">
+
+        <!-- Camera driver -->
+        <include file="$(find obc_ros_openmv)/launch/obc_ros_openmv.launch">
+            <arg name="id" value="$(arg id)" />
+            <arg name="output" value="$(arg output)" />
+        </include>
+
+        <!-- Sonar sensor driver -->
+        <include file="$(find obc_ros_sonar)/launch/obc_ros_sonar.launch">
+            <arg name="id" value="$(arg id)" />
+            <arg name="output" value="$(arg output)" />
+        </include>
+
+        <!-- UWB localization node -->
+        <include file="$(find obc_ros_uwb)/launch/obc_ros_uwb.launch">
+            <arg name="id" value="$(arg id)" />
+            <arg name="output" value="$(arg output)" />
+        </include>
+
+    </group>
 
 </launch>
