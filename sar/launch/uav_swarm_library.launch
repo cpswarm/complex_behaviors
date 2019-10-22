@@ -33,6 +33,12 @@
         <arg name="output" value="$(arg output)" />
     </include>
 
+    <!-- Exchanging state -->
+    <include file="$(find state_exchanger)/launch/state_exchanger.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
     <!-- Managing targets -->
     <include file="$(find target_monitor)/launch/target_monitor.launch">
         <arg name="id" value="$(arg id)" />

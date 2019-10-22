@@ -142,15 +142,15 @@ def main():
 			transitions={'succeeded':'SarThreads'})
 	
 	# Create and start the introspection server (uncomment if needed)
-	# sis = smach_ros.IntrospectionServer('smach_server', top_sm, '/SM_TOP')
-	# sis.start()
+	sis = smach_ros.IntrospectionServer('smach_server', top_sm, '/SM_TOP')
+	sis.start()
 	
 	# Execute SMACH plan
 	outcome = top_sm.execute()
 
 	# Wait for ctrl-c to stop the application
 	rospy.spin()
-	# sis.stop()
+	sis.stop()
 
 	
 if __name__ == '__main__':
