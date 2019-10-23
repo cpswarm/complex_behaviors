@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="id" default="1" />
+    <arg name="x" default="0" />
+    <arg name="y" default="0" />
+    <arg name="pos_type" default="local" />
+    <arg name="obc" default="false" />
+    <arg name="output" default="log" />
+
+
+    <!-- HARDWARE FUNCTIONS -->
+
+    <!-- Mission Aborter -->
+    <include file="$(find mission_aborter)/launch/mission_aborter.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- Land service -->
+    <include file="$(find uav_mavros_land)/launch/mavros_land.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- Take off service -->
+    <include file="$(find uav_mavros_takeoff)/launch/mavros_takeoff.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+
+    <!-- SENSING ACTUATION -->
+
+    <!-- Mission area services -->
+    <include file="$(find area_provider)/launch/area_provider.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="pos_type" value="$(arg pos_type)" />
+        <arg name="x" value="$(arg x)" />
+        <arg name="y" value="$(arg y)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- Position controller -->
+    <include file="$(find mavros_pos_controller)/launch/mavros_pos_controller.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="pos_type" value="$(arg pos_type)" />
+        <arg name="x" value="$(arg x)" />
+        <arg name="y" value="$(arg y)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- Position provider -->
+    <include file="$(find mavros_pos_provider)/launch/mavros_pos_provider.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="pos_type" value="$(arg pos_type)" />
+        <arg name="x" value="$(arg x)" />
+        <arg name="y" value="$(arg y)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- Obstacle detection services -->
+    <include file="$(find obstacle_detection)/launch/obstacle_detection.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+
+    <!-- HARDWARE DRIVERS -->
+
+    <group if="$(arg obc)">
+
+        <!-- UWB localization node -->
+        <include file="$(find obc_ros_uwb)/launch/obc_ros_uwb.launch">
+            <arg name="id" value="$(arg id)" />
+            <arg name="output" value="$(arg output)" />
+        </include>
+
+    </group>
+
+</launch>
