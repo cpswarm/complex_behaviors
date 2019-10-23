@@ -41,12 +41,6 @@
         <arg name="output" value="$(arg output)" />
     </include>
 
-    <!-- GPS services -->
-    <include if="$(eval pos_type == 'global')" file="$(find mavros_gps)/launch/mavros_gps.launch">
-        <arg name="id" value="$(arg id)" />
-        <arg name="output" value="$(arg output)" />
-    </include>
-
     <!-- Position controller -->
     <include file="$(find mavros_pos_controller)/launch/mavros_pos_controller.launch">
         <arg name="id" value="$(arg id)" />
@@ -62,19 +56,6 @@
         <arg name="pos_type" value="$(arg pos_type)" />
         <arg name="x" value="$(arg x)" />
         <arg name="y" value="$(arg y)" />
-        <arg name="output" value="$(arg output)" />
-    </include>
-
-    <!-- Velocity controller -->
-    <include file="$(find mavros_vel_controller)/launch/mavros_vel_controller.launch">
-        <arg name="id" value="$(arg id)" />
-        <arg name="output" value="$(arg output)" />
-    </include>
-
-    <!-- Velocity provider -->
-    <include file="$(find mavros_vel_provider)/launch/mavros_vel_provider.launch">
-        <arg name="id" value="$(arg id)" />
-        <arg name="pos_type" value="$(arg pos_type)" />
         <arg name="output" value="$(arg output)" />
     </include>
 

@@ -45,7 +45,7 @@
         </include>
 
         <!-- CPSwarm abstraction library -->
-        <include file="$(find sar)/launch/uav_abstraction_library.launch">
+        <include file="$(find sar)/launch/uav_abstraction_library_min.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="x" value="$(arg x)" />
             <arg name="y" value="$(arg y)" />
@@ -54,13 +54,7 @@
         </include>
 
         <!-- CPSwarm swarm library -->
-        <include file="$(find sar)/launch/uav_swarm_library.launch">
-            <arg name="id" value="$(arg id)" />
-            <arg name="output" value="$(arg output)" />
-        </include>
-
-        <!-- Data logging -->
-        <include file="$(find sar)/launch/logging.launch">
+        <include file="$(find sar)/launch/uav_swarm_library_min.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
         </include>
