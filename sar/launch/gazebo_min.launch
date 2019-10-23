@@ -10,7 +10,7 @@
     </include>
 
     <!-- UAV 1 -->
-    <include file="$(find sar)/launch/uav_sitl.launch">
+    <include file="$(find sar)/launch/uav_sitl_min.launch">
         <arg name="id" value="1" />
         <arg name="x" value="0" />
         <arg name="y" value="-4.5" />

@@ -92,13 +92,11 @@
         <!-- Camera driver -->
         <include file="$(find obc_ros_openmv)/launch/obc_ros_openmv.launch">
             <arg name="id" value="$(arg id)" />
-            <arg name="output" value="$(arg output)" />
         </include>
 
         <!-- Sonar sensor driver -->
         <include file="$(find obc_ros_sonar)/launch/obc_ros_sonar.launch">
             <arg name="id" value="$(arg id)" />
-            <arg name="output" value="$(arg output)" />
         </include>
 
         <!-- UWB localization node -->
