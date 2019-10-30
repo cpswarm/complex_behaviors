@@ -51,6 +51,12 @@
             <arg name="output" value="$(arg output)" />
         </include>
 
+        <!-- Forwarding for GUI -->
+        <include file="$(find swarmros_forwarder)/launch/swarmros_forwarder.launch">
+            <arg name="id" value="$(arg id)" />
+            <arg name="output" value="$(arg output)" />
+        </include>
+
     </group>
 
 </launch>
