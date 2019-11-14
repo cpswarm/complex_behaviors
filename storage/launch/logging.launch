@@ -6,8 +6,15 @@
 
     <!-- Node for recording data from logging topic to bag files -->
     <node pkg="rosbag" type="record" name="record_$(arg id)" output="$(arg output)" required="true" args="-o cpswarm_storage_ugv_$(arg id)
-    pos_controller/goal_position
-    pos_provider/pose
+        pos_provider/pose
+        target_done
+        target_found
+        target_lost
+        bridge/events/target_done
+        bridge/events/target_found
+        bridge/events/target_lost
+        cps_selected
+        bridge/events/cps_selected
     " />
 
     <!--
