@@ -60,10 +60,10 @@
         </include>
 
         <!-- Data logging -->
-        <include file="$(find sar)/launch/logging.launch">
+        <!--<include file="$(find sar)/launch/logging.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
-        </include>
+        </include>-->
 
     </group>
 
