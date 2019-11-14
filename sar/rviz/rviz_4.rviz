@@ -48,7 +48,7 @@ Visualization Manager:
         Y: 0
         Z: 0
       Plane: XY
-      Plane Cell Count: 10
+      Plane Cell Count: 32
       Reference Frame: <Fixed Frame>
       Value: true
     - Alpha: 1
@@ -280,7 +280,7 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 83.48455047607422
+      Scale: 22.91571807861328
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
       X: 0.18030700087547302
