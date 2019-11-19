@@ -2,6 +2,9 @@
 <launch>
     <arg name="gui" default="false" />
     <arg name="world" default="$(find mavlink_sitl_gazebo)/worlds/empty.world" />
+    <arg name="rng_seed" default="0" />
+
+    <param name="rng_seed" value="$(arg rng_seed)" />
 
     <!-- Gazebo simulator -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
