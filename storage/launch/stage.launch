@@ -3,7 +3,9 @@
 
     <arg name="gui" default="false" />
     <arg name="world" default="empty" />
+    <arg name="rng_seed" default="0" />
 
+    <param name="rng_seed" value="$(arg rng_seed)" />
     <param name="use_sim_time" value="true" />
 
     <!-- Stage simulator -->
