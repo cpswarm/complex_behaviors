@@ -24,6 +24,7 @@
 	<arg name="rostful_init_delay" default="10" />
 	<arg name="launch_move" default="true"/>
 	<arg name="launch_pad" default="false"/>
+	<arg name="worker" default="false"/>
 
 
 		  
@@ -77,6 +78,9 @@
 	<include if="$(arg launch_move_base)" file="$(find robotnik_pkgs)/launch/navigation/navigation_complete.launch">
 		<arg name="id_robot" value="$(arg id_robot)"/>
 	</include>
+	
+	<!-- Fake marker publisher-->
+	<node unless="$(arg worker)" name="stage_marker_publisher" pkg="storage" type="stage_marker_publisher.py"/>
 	
 	<!-- tf to work with the global map frame -->
 	<node pkg="tf" type="static_transform_publisher" name="tf_$(arg id_robot)_map_to_map" args="0 0 0 0 0 0 /map /$(arg id_robot)_map 200"/>
