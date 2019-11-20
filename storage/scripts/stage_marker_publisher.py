@@ -182,14 +182,14 @@ def publish_marker_0():
     marker_0.pose.pose.position.x = cart_0_pose.pose.pose.position.x
     marker_0.pose.pose.position.y = cart_0_pose.pose.pose.position.y
     marker_0.pose.pose.position.z = 1
-    marker_0.pose.pose.orientation.w = 1
+    marker_0.pose.pose.orientation = cart_0_pose.pose.pose.orientation   
     markers.markers.append(marker_0)
     rb1_base_ar_track_pub.publish(markers)
 
     br1 = tf.TransformBroadcaster()
     #tr1 = Transform()
     #br1.sendTransform((marker_1.pose.pose.position.x, marker_1.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, math.pi/2, 0), rospy.Time.now(), "ar_marker_1", "rb1_base_a_front_rgbd_camera_rgb_optical_frame")
-    br1.sendTransform((marker_0.pose.pose.position.x, marker_0.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, math.pi/2, 0), rospy.Time.now(), "ar_marker_0", "map")
+    br1.sendTransform((marker_0.pose.pose.position.x, marker_0.pose.pose.position.y, 0), (marker_0.pose.pose.orientation.x,marker_0.pose.pose.orientation.y,marker_0.pose.pose.orientation.z,marker_0.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_0", "map")
 
 def looking_at_marker1(pose):
     #Eucledian distance between cart and pose
@@ -210,14 +210,14 @@ def publish_marker_1():
     marker_1.pose.pose.position.x = cart_1_pose.pose.pose.position.x
     marker_1.pose.pose.position.y = cart_1_pose.pose.pose.position.y
     marker_1.pose.pose.position.z = 1
-    marker_1.pose.pose.orientation.w = 1
+    marker_1.pose.pose.orientation = cart_1_pose.pose.pose.orientation
     markers.markers.append(marker_1)
     rb1_base_ar_track_pub.publish(markers)
 
     br1 = tf.TransformBroadcaster()
     #tr1 = Transform()
     #br1.sendTransform((marker_1.pose.pose.position.x, marker_1.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, math.pi/2, 0), rospy.Time.now(), "ar_marker_1", "rb1_base_a_front_rgbd_camera_rgb_optical_frame")
-    br1.sendTransform((marker_1.pose.pose.position.x, marker_1.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, math.pi/2, 0), rospy.Time.now(), "ar_marker_1", "map")
+    br1.sendTransform((marker_1.pose.pose.position.x, marker_1.pose.pose.position.y, 0), (marker_1.pose.pose.orientation.x,marker_1.pose.pose.orientation.y,marker_1.pose.pose.orientation.z,marker_1.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_1", "map")
 
 
 def looking_at_marker2(pose):
@@ -239,12 +239,12 @@ def publish_marker_2():
     marker_2.pose.pose.position.x = cart_2_pose.pose.pose.position.x
     marker_2.pose.pose.position.y = cart_2_pose.pose.pose.position.y
     marker_2.pose.pose.position.z = 1
-    marker_2.pose.pose.orientation.w = 1
+    marker_2.pose.pose.orientation = cart_2_pose.pose.pose.orientation
     markers.markers.append(marker_2)
     rb1_base_ar_track_pub.publish(markers)
 
     br2 = tf.TransformBroadcaster()
-    br2.sendTransform((marker_2.pose.pose.position.x, marker_2.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, math.pi/2, 0), rospy.Time.now(), "ar_marker_2", "map")
+    br2.sendTransform((marker_2.pose.pose.position.x, marker_2.pose.pose.position.y, 0), (marker_2.pose.pose.orientation.x,marker_2.pose.pose.orientation.y,marker_2.pose.pose.orientation.z,marker_2.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_2", "map")
 
 def looking_at_marker3(pose):
 
@@ -266,12 +266,12 @@ def publish_marker_3():
     marker_3.pose.pose.position.x = cart_3_pose.pose.pose.position.x
     marker_3.pose.pose.position.y = cart_3_pose.pose.pose.position.x
     marker_3.pose.pose.position.z = 1
-    marker_3.pose.pose.orientation.w = 1
+    marker_3.pose.pose.orientation = cart_3_pose.pose.pose.orientation
     markers.markers.append(marker_3)
     rb1_base_ar_track_pub.publish(markers)
 
     br3 = tf.TransformBroadcaster()
-    br3.sendTransform((marker_3.pose.pose.position.x, marker_3.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, math.pi/2, 0), rospy.Time.now(), "ar_marker_3", "map")
+    br3.sendTransform((marker_3.pose.pose.position.x, marker_3.pose.pose.position.y, 0), (marker_3.pose.pose.orientation.x,marker_3.pose.pose.orientation.y,marker_3.pose.pose.orientation.z,marker_3.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_3", "map")
 
 
 
@@ -295,12 +295,12 @@ def publish_marker_4():
     marker_4.pose.pose.position.x = cart_4_pose.pose.pose.position.x
     marker_4.pose.pose.position.y = cart_4_pose.pose.pose.position.y
     marker_4.pose.pose.position.z = 1
-    marker_4.pose.pose.orientation.w = 1
+    marker_4.pose.pose.orientation = cart_4_pose.pose.pose.orientation
     markers.markers.append(marker_4)
     rb1_base_ar_track_pub.publish(markers)
 
     br4 = tf.TransformBroadcaster()
-    br4.sendTransform((marker_4.pose.pose.position.x, marker_4.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, math.pi/2, 0), rospy.Time.now(), "ar_marker_4", "map")
+    br4.sendTransform((marker_4.pose.pose.position.x, marker_4.pose.pose.position.y, 0), (marker_4.pose.pose.orientation.x,marker_4.pose.pose.orientation.y,marker_4.pose.pose.orientation.z,marker_4.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_4", "map")
 
 def looking_at_marker5(pose):
 
@@ -322,12 +322,12 @@ def publish_marker_5():
     marker_5.pose.pose.position.x = cart_5_pose.pose.pose.position.x
     marker_5.pose.pose.position.y = cart_5_pose.pose.pose.position.y
     marker_5.pose.pose.position.z = 1
-    marker_5.pose.pose.orientation.w = 1
+    marker_5.pose.pose.orientation = cart_5_pose.pose.pose.orientation
     markers.markers.append(marker_5)
     rb1_base_ar_track_pub.publish(markers)
 
     br5 = tf.TransformBroadcaster()
-    br5.sendTransform((marker_5.pose.pose.position.x, marker_5.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, math.pi/2, 0), rospy.Time.now(), "ar_marker_5", "map")
+    br5.sendTransform((marker_5.pose.pose.position.x, marker_5.pose.pose.position.y, 0), (marker_5.pose.pose.orientation.x,marker_5.pose.pose.orientation.y,marker_5.pose.pose.orientation.z,marker_5.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_5", "map")
     
 def looking_at_marker6(pose):
 
@@ -349,12 +349,12 @@ def publish_marker_6():
     marker_6.pose.pose.position.x = cart_6_pose.pose.pose.position.x
     marker_6.pose.pose.position.y = cart_6_pose.pose.pose.position.y
     marker_6.pose.pose.position.z = 1
-    marker_6.pose.pose.orientation.w = 1
+    marker_6.pose.pose.orientation = cart_6_pose.pose.pose.orientation
     markers.markers.append(marker_6)
     rb1_base_ar_track_pub.publish(markers)
 
     br6 = tf.TransformBroadcaster()
-    br6.sendTransform((marker_6.pose.pose.position.x, marker_6.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, math.pi/2, 0), rospy.Time.now(), "ar_marker_6", "map")
+    br6.sendTransform((marker_6.pose.pose.position.x, marker_6.pose.pose.position.y, 0), (marker_6.pose.pose.orientation.x,marker_6.pose.pose.orientation.y,marker_6.pose.pose.orientation.z,marker_6.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_6", "map")
 
 def looking_at_marker7(pose):
 
@@ -376,12 +376,12 @@ def publish_marker_7():
     marker_7.pose.pose.position.x = cart_7_pose.pose.pose.position.x
     marker_7.pose.pose.position.y = cart_7_pose.pose.pose.position.y
     marker_7.pose.pose.position.z = 1
-    marker_7.pose.pose.orientation.w = 1
+    marker_7.pose.pose.orientation = cart_7_pose.pose.pose.orientation
     markers.markers.append(marker_7)
     rb1_base_ar_track_pub.publish(markers)
 
     br7 = tf.TransformBroadcaster()
-    br7.sendTransform((marker_7.pose.pose.position.x, marker_7.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, math.pi/2, 0), rospy.Time.now(), "ar_marker_7", "map")
+    br7.sendTransform((marker_7.pose.pose.position.x, marker_7.pose.pose.position.y, 0), (marker_7.pose.pose.orientation.x,marker_7.pose.pose.orientation.y,marker_7.pose.pose.orientation.z,marker_7.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_7", "map")
 
 def looking_at_marker8(pose):
 
@@ -403,12 +403,12 @@ def publish_marker_8():
     marker_8.pose.pose.position.x = cart_8_pose.pose.pose.position.x
     marker_8.pose.pose.position.y = cart_8_pose.pose.pose.position.y
     marker_8.pose.pose.position.z = 1
-    marker_8.pose.pose.orientation.w = 1
+    marker_8.pose.pose.orientation = cart_8_pose.pose.pose.orientation
     markers.markers.append(marker_8)
     rb1_base_ar_track_pub.publish(markers)
 
     br8 = tf.TransformBroadcaster()
-    br8.sendTransform((marker_8.pose.pose.position.x, marker_8.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, math.pi/2, 0), rospy.Time.now(), "ar_marker_8", "map")
+    br8.sendTransform((marker_8.pose.pose.position.x, marker_8.pose.pose.position.y, 0), (marker_8.pose.pose.orientation.x,marker_8.pose.pose.orientation.y,marker_8.pose.pose.orientation.z,marker_8.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_8", "map")
 
 def looking_at_marker9(pose):
 
@@ -430,12 +430,12 @@ def publish_marker_9():
     marker_9.pose.pose.position.x = cart_9_pose.pose.pose.position.x
     marker_9.pose.pose.position.y = cart_9_pose.pose.pose.position.y
     marker_9.pose.pose.position.z = 1
-    marker_9.pose.pose.orientation.w = 1
+    marker_9.pose.pose.orientation = cart_9_pose.pose.pose.orientation
     markers.markers.append(marker_9)
     rb1_base_ar_track_pub.publish(markers)
 
     br9 = tf.TransformBroadcaster()
-    br9.sendTransform((marker_9.pose.pose.position.x, marker_9.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, math.pi/2, 0), rospy.Time.now(), "ar_marker_9", "map")
+    br9.sendTransform((marker_9.pose.pose.position.x, marker_9.pose.pose.position.y, 0), (marker_9.pose.pose.orientation.x,marker_9.pose.pose.orientation.y,marker_9.pose.pose.orientation.z,marker_9.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_9", "map")
 
 
 def main():
