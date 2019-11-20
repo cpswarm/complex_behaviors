@@ -109,7 +109,7 @@ Parameters:
   The starting position y-coordinate.
 * `Y` (real, default: `0`)
   The starting position yaw angle.
-* `pos_type (string, default: `local`)
+* `pos_type` (string, default: `local`)
   Whether relative (`local`) or GPS (`global`) coordinates are used by the flight controller.
 * `output` (string, default: `screen`)
   Whether to show the program output (`screen`) or to write it to a log file (`log`).
