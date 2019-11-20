@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="gui" default="false" />
+    <arg name="world" default="digisky_hangar" />
+
+    <param name="use_sim_time" value="true" />
+
+    <!-- Stage simulator -->
+    <include file="$(find storage)/launch/stage.launch">
+		<arg name="gui" value="$(arg gui)"/>
+		<arg name="world" value="$(arg world)"/>
+    </include>
+    <!--node if="$(arg gui)" name="stage" pkg="stage_ros" type="stageros" args="$(find storage)/world/$(arg world).world" required="true" output="screen"/>
+    <node unless="$(arg gui)" name="stage" pkg="stage_ros" type="stageros" args="-g $(find storage)/world/$(arg world).world" required="true" output="screen"/-->
+    
+
+    <!-- Scout CPS -->
+    <include file="$(find storage)/launch/scout.launch">
+        <arg name="id" value="0" />
+        <arg name="world" value="$(arg world)_map" />
+        <arg name="x" value="1" />
+        <arg name="y" value="-1" />
+        <arg name="yaw" value="-3.14" />
+    </include>
+
+    <!-- Worker CPS -->
+    <include file="$(find storage)/launch/worker.launch">
+        <arg name="id" value="1" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="x" value="-1" />
+        <arg name="y" value="-1" />
+        <arg name="yaw" value="-3.14" />
+    </include>
+
+</launch>
