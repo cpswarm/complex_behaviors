@@ -6,24 +6,34 @@
 
     <param name="use_sim_time" value="true" />
 
+	<!-- robot configuration -->
+	<arg name="odom_topic" default="robotnik_base_control/odom"/>
+	<arg name="cmd_vel_topic" default="robotnik_base_control/cmd_vel"/>
+	<arg name="scan_topic" default="front_laser/scan"/>
+	<arg name="rgb_camera_topic" default="rgbd_camera/image_raw"/>
+	<arg name="depth_camera_topic" default="rgbd_camera/depth"/>
+	<arg name="camera_info_topic" default="rgbd_camera/camera_info"/>
+
+
     <!-- Stage simulator -->
-    <node if="$(arg gui)" name="stage" pkg="stage_ros" type="stageros" args="$(find storage)/world/$(arg world).world" required="true" />
-    <node unless="$(arg gui)" name="stage" pkg="stage_ros" type="stageros" args="-g $(find storage)/world/$(arg world).world" required="true" />
+    <node if="$(arg gui)" name="stage" pkg="stage_ros" type="stageros" args="-u $(find storage)/world/$(arg world).world" required="true" output="screen">
+		<param name="odom_topic" value="$(arg odom_topic)"/>
+		<param name="cmd_vel_topic" value="$(arg cmd_vel_topic)"/>
+		
+		<param name="scan_topic" value="$(arg scan_topic)"/>
+		<param name="rgb_camera_topic" value="$(arg rgb_camera_topic)"/>
+		<param name="depth_camera_topic" value="$(arg depth_camera_topic)"/>
+		<param name="camera_info_topic" value="$(arg camera_info_topic)"/>
+	</node>
+	
+    <node unless="$(arg gui)" name="stage" pkg="stage_ros" type="stageros" args="-g -u $(find storage)/world/$(arg world).world" required="true" output="screen">
+		<param name="odom_topic" value="$(arg odom_topic)"/>
+		<param name="cmd_vel_topic" value="$(arg cmd_vel_topic)"/>
+		<param name="scan_topic" value="$(arg scan_topic)"/>
+		<param name="rgb_camera_topic" value="$(arg rgb_camera_topic)"/>
+		<param name="depth_camera_topic" value="$(arg depth_camera_topic)"/>
+		<param name="camera_info_topic" value="$(arg camera_info_topic)"/>
+	</node>
 
-    <!-- Scout CPS -->
-    <include file="$(find storage)/launch/scout.launch">
-        <arg name="id" value="0" />
-        <arg name="world" value="$(arg world)" />
-        <arg name="x" value="1" />
-        <arg name="y" value="-1" />
-    </include>
-
-    <!-- Worker CPS -->
-    <include file="$(find storage)/launch/worker.launch">
-        <arg name="id" value="1" />
-        <arg name="world" value="$(arg world)" />
-        <arg name="x" value="-1" />
-        <arg name="y" value="-1" />
-    </include>
 
 </launch>

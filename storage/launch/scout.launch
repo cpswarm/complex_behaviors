@@ -4,6 +4,7 @@
     <arg name="vehicle" default="robot" />
     <arg name="x" default="0" />
     <arg name="y" default="0" />
+    <arg name="yaw" default="0"/>
     <arg name="world" default="empty" />
     <arg name="pos_type" default="local" />
     <arg name="output" default="screen" />
@@ -25,12 +26,29 @@
         <include file="$(find storage)/launch/abstraction_library.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="frame" value="$(arg frame)" />
-            <arg name="x" default="$(arg x)" />
-            <arg name="y" default="$(arg y)" />
+            <!--arg name="x" value="$(arg x)" />
+            <arg name="y" value="$(arg y)" /-->
             <arg name="world" value="$(arg world)" />
             <arg name="pos_type" value="$(arg pos_type)" />
             <arg name="output" value="$(arg output)" />
         </include>
+        
+        <!-- Robotnik pkgs -->
+        <include file="$(find storage)/launch/robotnik_robot.launch">
+			<arg name="id_robot" value="robot_$(arg id)"/>
+			<arg name="launch_amcl_and_mapserver" value="true"/>
+			<arg name="launch_gmapping" value="false"/>
+			<arg name="map_file" value="$(arg world)"/>
+	 		<arg name="launch_move_base" value="true"/>
+			<arg name="global_frame" value="map"/>
+			<arg name="launch_base_hw_sim" value="true"/>
+			<arg name="has_elevator" value="true"/>
+			<arg name="launch_move" value="true"/>
+			<arg name="launch_pad" value="false"/>
+			<arg name="x_init_pose" value="$(arg x)"/>
+			<arg name="y_init_pose" value="$(arg y)"/>
+			<arg name="yaw_init_pose" value="$(arg yaw)"/>
+		</include>
 
         <!-- CPSwarm swarm library -->
         <include file="$(find storage)/launch/swarm_library.launch">
