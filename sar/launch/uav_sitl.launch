@@ -8,6 +8,8 @@
     <arg name="Y" default="0" />
     <arg name="pos_type" default="local" />
     <arg name="output" default="screen" />
+    <arg name="behavior" default="random" />
+    <arg name="logging" default="false" />
     <arg name="udp_port_obc" default="$(eval 14540 + id)" />
     <arg name="udp_port_fcu" default="$(eval 14550 + id)" />
     <arg name="udp_port_sim" default="$(eval 14560 + id)" />
@@ -38,13 +40,13 @@
             <arg name="log_output" value="$(arg output)" />
         </include>
 
-        <!-- CPSwarm communication library -->
+        <!-- Communication library -->
         <include file="$(find sar)/launch/uav_communication_library.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
         </include>
 
-        <!-- CPSwarm abstraction library -->
+        <!-- Abstraction library -->
         <include file="$(find sar)/launch/uav_abstraction_library.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="x" value="$(arg x)" />
@@ -53,14 +55,15 @@
             <arg name="output" value="$(arg output)" />
         </include>
 
-        <!-- CPSwarm swarm library -->
+        <!-- Swarm library -->
         <include file="$(find sar)/launch/uav_swarm_library.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
+            <arg name="behavior" value="$(arg behavior)" />
         </include>
 
         <!-- Data logging -->
-        <!--<include file="$(find sar)/launch/logging.launch">
+        <include if="$(arg logging)" file="$(find sar)/launch/logging.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
         </include>-->

@@ -28,17 +28,17 @@ def main():
     ##############
 
     # parse command line arguments
-    parser = argparse.ArgumentParser(description="Analyze the ROS bag files of the CPSwarm search and rescue in terms of area covered over time.", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser(description="Analyze the ROS bag files of the search and rescue coverage in terms of area covered over time.", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('input', help="folder containing the bag files")
     parser.add_argument('-a', '--aggregate', action='store_true', help="aggregate the data of multiple runs")
     parser.add_argument('--conf', type=float, default=0.9, metavar='C', help="confidence for plotting error bars (only in combination with -a)")
     parser.add_argument('-d', '--display', action='store_true', help="display figures visualizing the results")
     parser.add_argument('--fov', type=float, default=0.64, metavar='F', help="the field of view of the UAVs in radian")
-    parser.add_argument('-i', '--input', default='/home/micha/.ros/', metavar='I', help="folder containing the bag files")
     parser.add_argument('-l', '--launch_file', default='gazebo', metavar='L', help="prefix of the launch file name which specifies the starting coordinates of the N UAVs (format <L>_<N>.launch)")
     parser.add_argument('--name_space', default='', metavar='N', help="name space of the messages in the bag files (e.g. /drone1/), required for hardware bag files")
     parser.add_argument('-o', '--output', action='store_true', help="output the results in a text file in the PWD")
     parser.add_argument('--percentages', type=list, default=[0.5, 0.75, 0.875, 0.9375, 0.96875, 1], metavar='P', help="the percentages of covered area to calculate the time for (only in combination with -t)")
-    parser.add_argument('--prefix', default='cpswarm_sar', metavar='P', help="prefix of the bag files")
+    parser.add_argument('--prefix', default='sar', metavar='P', help="prefix of the bag files")
     parser.add_argument('-r', '--res_time', type=int, default=1000, metavar='R', help="the time resolution of the output data in seconds (not in combination with -t)")
     parser.add_argument('-s', '--res_space', type=float, default=0.1, metavar='S', help="the spatial resolution in meter to filter the input data by (minimum distance between two consecutive coordinates)")
     parser.add_argument('--sar_package', default='sar', metavar='P', help="package that contains the launch file which specifies the starting coordinates of the UAVs")

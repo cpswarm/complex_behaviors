@@ -17,10 +17,10 @@ from modules import check_simulation
 ##############
 
 # parse command line arguments
-parser = argparse.ArgumentParser(description="Run the CPSwarm search and rescue coverage simulation.", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser = argparse.ArgumentParser(description="Run the search and rescue coverage simulation.", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser.add_argument('dir', help="directory containing the ROS log files")
 parser.add_argument('-f', '--fails', type=int, default=10, metavar='F', help="maximum number of failure notices read from the log files before terminating the run")
-parser.add_argument('-d', '--dir', default='/home/micha/.ros/log/latest/', metavar='D', help="directory containing the ROS log files")
-parser.add_argument('-l', '--launch_file', default='gazebo_2', metavar='L', help="name of the launch file from the cpswarm_sar package which is executed")
+parser.add_argument('-l', '--launch_file', default='gazebo_2', metavar='L', help="name of the launch file from the sar package which is executed")
 parser.add_argument('-m', '--max_time', type=int, default=3600, metavar='M', help="maximum time in seconds that one simulation run is allowed to take")
 parser.add_argument('-r', '--runs', type=int, default=1, metavar='R', help="number of runs to perform")
 parser.add_argument('-t', '--timeout', type=int, default=60, metavar='T', help="maximum time in seconds that one robot is allowed to do nothing before terminating the run")
@@ -32,7 +32,7 @@ args = parser.parse_args()
 #################
 
 # command to execute
-cmd = ["stdbuf", "-o", "L", "roslaunch", "cpswarm_sar", args.launch_file + ".launch"]
+cmd = ["stdbuf", "-o", "L", "roslaunch", "sar", args.launch_file + ".launch"]
 
 # confirm details
 print("\x1b[1;34m" + "Coverage simulation" + "\x1b[0m")
