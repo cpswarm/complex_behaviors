@@ -152,7 +152,7 @@ Parameters:
   The x-coordinate measured from the origin of the relative localization system.
 * `y` (real, default: `0`)
   The y-coordinate measured from the origin of the relative localization system.
-* `pos_type (string, default: `local`)
+* `pos_type` (string, default: `local`)
   Whether relative (`local`) or GPS (`global`) coordinates are used by the flight controller.
 * `output` (string, default: `screen`)
   Whether to show the program output (`screen`) or to write it to a log file (`log`).
