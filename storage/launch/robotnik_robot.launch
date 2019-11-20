@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<launch>
+	
+	<arg name="id_robot" default="robot"/>
+	<arg name="x_init_pose" default="0"/>
+	<arg name="y_init_pose" default="0"/>
+	<arg name="yaw_init_pose" default="0"/>
+	<arg name="z_init_pose" default="0"/>
+	<arg name="has_elevator" default="false"/>
+	<arg name="xacro_robot" default="rb1_base_std.urdf.xacro"/>
+	<arg name="xacro_robot_elevator" default="rb1_base_std_elevator.urdf.xacro"/>
+	<arg name="launch_robot_localization" default="false"/>
+	<arg name="launch_amcl_and_mapserver" default="false"/>
+	<arg name="launch_gmapping" default="false"/>
+	<arg name="launch_move_base" default="false"/>
+	<arg name="map_file" default="$(find rb1_base_localization)/maps/empty/empty.yaml"/>
+	<arg name="prefix" value="$(arg id_robot)_"/>
+	<arg name="global_frame" default="$(arg prefix)map"/>
+	<arg name="launch_base_hw_sim" default="false"/>
+	<arg name="fake_elevator_physics" default="false"/>
+	<arg name="host"	default="localhost"/>
+	<arg name="rostful_host_robot" default="$(arg host)" />
+	<arg name="rostful_port_robot" default="8080" />
+	<arg name="rostful_init_delay" default="10" />
+	<arg name="launch_move" default="true"/>
+	<arg name="launch_pad" default="false"/>
+
+
+		  
+	<!-- Load the URDF into the ROS Parameter Server -->
+	<!--param unless="$(arg has_elevator)" name="robot_description" 
+	command="$(find xacro)/xacro '$(find rb1_base_description)/robots/$(arg xacro_robot)' prefix:=$(arg prefix) - -inorder"/>
+	<param if="$(arg has_elevator)" name="robot_description" 
+	command="$(find xacro)/xacro '$(find rb1_base_description)/robots/$(arg xacro_robot_elevator)' prefix:=$(arg prefix) - -inorder"/-->
+
+    <!-- bridge to work with the elevator in stage-->
+	<node if="$(arg has_elevator)" name="stage_elevator_bridge_$(arg id_robot)" pkg="ugv_elevator" type="stage_elevator_bridge.py"/>
+	
+	<!-- start robotnik_control nodes -->  
+	<include file="$(find rb1_base_control)/launch/rb1_base_control.launch"> 
+		<arg name="prefix" value="$(arg prefix)"/>
+		<arg name="id_robot" value="$(arg id_robot)"/>
+		<arg name="sim" value="true"/>			
+		<arg name="launch_robot_localization" value="$(arg launch_robot_localization)"/>
+		<arg name="has_elevator" value="$(arg has_elevator)"/>
+		<arg name="fake_elevator_physics" default="$(arg fake_elevator_physics)"/>
+	</include>	
+
+	<!-- pad -->
+	<group if="$(arg launch_pad)">
+		<include file="$(find rb1_base_pad)/launch/rb1_base_pad.launch"/>
+	</group>
+
+	<!-- gmapping -->
+	<include if="$(arg launch_gmapping)" file="$(find rb1_base_localization)/launch/gmapping/gmapping.launch">
+		<arg name="prefix" value="$(arg prefix)"/>
+	</include>
+
+	<!-- base_hw_sim -->
+	<include if="$(arg launch_base_hw_sim)" file="$(find robotnik_base_hw_sim)/launch/rb1_hw_sim.launch">
+		<arg name="prefix" value="$(arg prefix)"/>
+	</include>
+	
+	<!-- Robot local control-->
+	<include file="$(find robotnik_pkgs)/launch/robot_local_control/robot_local_control.launch">
+		<arg name="id_robot" value="$(arg id_robot)"/>
+	</include>	
+
+	<!-- Perception -->
+	<!--include file="$(find robotnik_pkgs)/launch/perception/perception_complete.launch">
+		<arg name="id_robot" value="$(arg id_robot)"/>
+		<arg name="prefix" value="$(arg id_robot)"/>
+		<arg name="tf_prefix" value="$(arg id_robot)_"/>
+	</include-->
+
+	<!-- Navigation -->
+	<include if="$(arg launch_move_base)" file="$(find robotnik_pkgs)/launch/navigation/navigation_complete.launch">
+		<arg name="id_robot" value="$(arg id_robot)"/>
+	</include>
+	
+	<!-- tf to work with the global map frame -->
+	<node pkg="tf" type="static_transform_publisher" name="tf_$(arg id_robot)_map_to_map" args="0 0 0 0 0 0 /map /$(arg id_robot)_map 200"/>
+
+</launch>
