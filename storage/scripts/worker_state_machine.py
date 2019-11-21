@@ -4,7 +4,6 @@ import rospy
 import smach
 import smach_ros
 
-from actionlib.simple_action_client import SimpleActionClient, GoalStatus
 from move_base_msgs.msg import *
 from cpswarm_msgs.msg import *
 from swarmros.msg import *
