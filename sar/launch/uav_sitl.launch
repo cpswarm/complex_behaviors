@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-    <arg name="id" default="1" />
+    <arg name="id" default="0" />
     <arg name="vehicle" default="iris" />
     <arg name="x" default="0" />
     <arg name="y" default="0" />
@@ -11,8 +11,9 @@
     <arg name="behavior" default="random" />
     <arg name="logging" default="false" />
     <arg name="udp_port_obc" default="$(eval 14540 + id)" />
-    <arg name="udp_port_fcu" default="$(eval 14550 + id)" />
+    <arg name="udp_port_fcu" default="$(eval 14580 + id)" />
     <arg name="udp_port_sim" default="$(eval 14560 + id)" />
+    <arg name="tcp_port_sim" default="$(eval 4560 + id)" />
 
     <group ns="/cpswarm/$(arg vehicle)_$(arg id)">
 
@@ -20,22 +21,22 @@
         <node pkg="sar" type="uav_sar_simulation.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true" />
 
         <!-- PX4 SITL and Gazebo vehicle spawn URDF -->
-        <include file="$(find sar)/launch/px4.launch">
+        <include file="$(find px4)/launch/single_vehicle_spawn.launch">
             <arg name="x" value="$(arg x)" />
             <arg name="y" value="$(arg y)" />
             <arg name="Y" value="$(arg Y)" />
             <arg name="vehicle" value="$(arg vehicle)" />
             <arg name="mavlink_udp_port" value="$(arg udp_port_sim)" />
-            <arg name="namespace" value="/cpswarm" />
-            <arg name="id" value="$(arg id)" />
-            <arg name="output" value="$(arg output)" />
+            <arg name="mavlink_tcp_port" value="$(arg tcp_port_sim)" />
+            <arg name="ID" value="$(arg id)" />
         </include>
 
         <!-- MAVROS -->
         <include file="$(find mavros)/launch/px4.launch">
             <arg name="fcu_url" value="udp://:$(arg udp_port_obc)@localhost:$(arg udp_port_fcu)" />
             <arg name="gcs_url" value="" />
-            <arg name="tgt_system" value="$(arg id)" />
+            <!--<arg name="tgt_system" value="$(arg id)" />-->
+            <arg name="tgt_system" value="$(eval 1 + id)" />
             <arg name="tgt_component" value="1" />
             <arg name="log_output" value="$(arg output)" />
         </include>

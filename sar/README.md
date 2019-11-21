@@ -85,8 +85,8 @@ The following parameters allow to configure the simulation:
 The `uav_sitl.lauch` creates a distinct namespace `/cpswarm/$(arg vehicle)_$(arg id)`. It launches:
 * `sar/scripts/uav_sar_simulation.py`
   The UAV behavior state machine.
-* `sar/px4.launch`
-  The PX4 flight controller as SITL which will spawn a new UAV in the simulator.
+* `px4/single_vehicle_spawn.launch`
+  The PX4 flight controller as SITL which spawns a new UAV in the simulator.
 * `mavros/px4.launch`
   The MAVROS node which connects to the simulated PX4 flight controller.
 * `sar/uav_communication_library.launch`
@@ -99,7 +99,7 @@ The `uav_sitl.lauch` creates a distinct namespace `/cpswarm/$(arg vehicle)_$(arg
   A node for logging information about the mission. Only launched if `logging=true`.
 
 Parameters:
-* `id` (integer, default: `1`)
+* `id` (integer, default: `0`)
   The identifier (ID) of the UAV in the swarm.
 * `vehicle` (string, default: `iris`)
   The type of UAV that is simulated.
@@ -118,11 +118,13 @@ Parameters:
 * `logging` (boolean, default: `false`)
   Whether to log data to bag files.
 * `udp_port_obc` (integer, default: `14540 + id`)
-  The port number at which the simulated on board computer running MAVROS listens to incoming connections.
-* `udp_port_fcu` (integer, default: `14550 + id`)
-  The port number at which the simulated flight controller PX4 listens for incoming connections from the on board computer.
+  The UDP port at which the simulated on board computer running MAVROS listens to incoming connections from the simulated flight controller PX4.
+* `udp_port_fcu` (integer, default: `14580 + id`)
+  The UDP port at which the simulated flight controller PX4 listens for incoming connections from the on board computer.
 * `udp_port_sim` (integer, default: `14560 + id`)
-  The port number which the simulated flight controller PX4 uses to communicate with the simulator.
+  The UDP port which the simulated flight controller PX4 uses to communicate with the simulator.
+* `tcp_port_sim` (integer, default: `4560 + id`)
+  The TCP port which the simulated flight controller PX4 uses to communicate with the simulator.
 
 ### Hardware
 To run the code on deployed on real hardware, execute the launch file
@@ -144,7 +146,7 @@ It creates a distinct namespace `$(arg vehicle)_$(arg id)`. It launches:
   A node for logging information about the mission. Only launched if `logging=true`.
 
 Parameters:
-* `id` (integer, default: `1`)
+* `id` (integer, default: `0`)
   The identifier (ID) of the UAV in the swarm.
 * `vehicle` (string, default: `drone`)
   The type of the UAV that is executed. It is used to create the namespace.
@@ -166,16 +168,13 @@ Parameters:
 ### Included Launch Files
 In both cases, software simulations and hardware missions, there are several launch files included hierarchically.
 
-#### px4.launch
-TODO: simulation only, check if still required
-
 #### uav_communication_library.launch
 The communication library enables communication between CPSs in the swarm. It launches:
 * `swarmros/bridge`
   The communication library bridge that forwards topics between multiple ROS instances.
 
 Parameters:
-* `id` (integer, default: `1`)
+* `id` (integer, default: `0`)
   The identifier (ID) of the UAV in the swarm.
 * `output` (string, default: `screen`)
   Whether to show the program output (`screen`) or to write it to a log file (`log`).
@@ -245,7 +244,7 @@ The swarm library launches the swarm algorithms and swarm functions required to 
   Nodes to assign tasks between CPSs.
 
 Parameters:
-* `id` (integer, default: `1`)
+* `id` (integer, default: `0`)
   The identifier (ID) of the UAV in the swarm.
 * `output` (string, default: `screen`)
   Whether to show the program output (`screen`) or to write it to a log file (`log`).
@@ -262,7 +261,7 @@ Swarm algorithms to perform coverage and tracking for SAR performing random move
   A tracking algorithm that moves the UAV over the target.
 
 Parameters:
-* `id` (integer, default: `1`)
+* `id` (integer, default: `0`)
   The identifier (ID) of the UAV in the swarm.
 * `output` (string, default: `screen`)
   Whether to show the program output (`screen`) or to write it to a log file (`log`).
@@ -277,7 +276,7 @@ Swarm algorithms to perform coverage and tracking for SAR performing random move
   A tracking algorithm that moves the UAV over the target.
 
 Parameters:
-* `id` (integer, default: `1`)
+* `id` (integer, default: `0`)
   The identifier (ID) of the UAV in the swarm.
 * `output` (string, default: `screen`)
   Whether to show the program output (`screen`) or to write it to a log file (`log`).
@@ -292,7 +291,7 @@ Swarm algorithms to perform coverage and tracking for SAR performing random move
   A flocking based tracking algorithm.
 
 Parameters:
-* `id` (integer, default: `1`)
+* `id` (integer, default: `0`)
   The identifier (ID) of the UAV in the swarm.
 * `output` (string, default: `screen`)
   Whether to show the program output (`screen`) or to write it to a log file (`log`).
@@ -303,7 +302,7 @@ Logging of data. This launch file launches:
   A node for logging information about the mission from ROS topics to ROS bag files.
 
 Parameters:
-* `id` (integer, default: `1`)
+* `id` (integer, default: `0`)
   The identifier (ID) of the UAV in the swarm.
 * `output` (string, default: `screen`)
   Whether to show the program output (`screen`) or to write it to a log file (`log`).

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-    <arg name="id" default="1" />
+    <arg name="id" default="0" />
     <arg name="vehicle" default="drone" />
     <arg name="x" default="0" />
     <arg name="y" default="0" />
@@ -20,7 +20,7 @@
         <include file="$(find mavros)/launch/px4.launch">
             <arg name="fcu_url" value="$(arg fcu_url)" />
             <arg name="gcs_url" value="" />
-            <arg name="tgt_system" value="$(arg id)" />
+            <arg name="tgt_system" value="$(eval 1 + id)" />
             <arg name="tgt_component" value="1" />
             <arg name="log_output" value="$(arg output)" />
         </include>
