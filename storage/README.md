@@ -48,21 +48,25 @@ Each launch file has a set of parameters. They are inherited through the hierarc
 ### Simulation
 For simulation with the Stage simulator, execute the launch file
 ```
-roslaunch storage stage_<n>_<m>.launch
+roslaunch storage stage.launch
 ```
-where `<n>` is the number of scout UGVs and `<m>` the number of worker UGVs in the swarm. It launches:
+It launches:
 * `stage_ros/stageros`
   The Stage simulator.
 * `sar/scout.launch`
-  All required nodes to simulate the scout UGVs. It is launched `<n>` times.
+  All required nodes to simulate the scout UGVs. It is launched `scouts` times.
 * `sar/worker.launch`
-  All required nodes to simulate the worker UGVs. It is launched `<m>` times.
+  All required nodes to simulate the worker UGVs. It is launched `workers` times.
 
 The following parameters allow to configure the simulation:
 * `gui` (boolean, default: `false`)
   Whether to show the graphical user interface of the Stage simulator.
 * `world` (string, default: `empty`)
   The world file to load into the Stage simulator. It defines the environment of the simulation.
+* `scouts` (integer, default: `1`)
+  The number of scout robots in the simulation. Minimum `1`, maximum `10`.
+* `workers` (integer, default: `1`)
+  The number of worker robots in the simulation. Minimum `1`, maximum `10`.
 * `rng_seed` (integer, default: `0`)
   The seed used for random number generation. In the default case, a random seed is generated.
 
@@ -224,4 +228,4 @@ The world to be simulated is configured in the `world` directory. For the world 
 
 Additionally, there is the `settings.inc` file which specifies the common properties such as the robot models to be used in the simulations.
 
-For more information refer to the [Stage reference](https://rtv.github.io/Stage/).
+For more information refer to the [Stage reference](https://codedocs.xyz/CodeFinder2/Stage/).
