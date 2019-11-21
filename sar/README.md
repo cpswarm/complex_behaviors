@@ -3,6 +3,8 @@
 This package performs search and rescue (SAR) with a heterogeneous swarm of cyber physical systems (CPSs), i.e., unmanned aerial and ground vehicles (UAVs and UGVs). It is part of the complex behaviors library.
 
 ## Overview
+To perform SAR, a swarm of UAVs covers an area. Once a target is found, it is tracked by the UAVs and the UGVs are informed. The most suitable UGV is selected to rescue the target by moving to its position. Once the target is rescued, the tracking UAVs continue coverage while the rescuing UGV returns home.
+
 SAR is a complex behavior that is implemented by finite state machines (FSMs). Each state represents a behavior and transitions are triggered by events. This package contains the FSMs, the definition of events exchanged between CPSs, and launch files that allow to start simulations and perform real world missions.
 
 ## Dependencies
@@ -11,7 +13,7 @@ This package depends on the following message definitions:
 * [mavros_msgs](https://wiki.ros.org/mavros_msgs)
 * [cpswarm_msgs](https://cpswarm.github.io/cpswarm_msgs/html/index-msg.html)
 
-The communication between CPSs is based on the [CPSwarm Communication Library](https://github.com/cpswarm/swarmio).
+The communication between CPSs is based on the [communication library](https://github.com/cpswarm/swarmio).
 
 The following packages of the [swarm behaviors library](https://github.com/cpswarm/swarm_behaviors) are required:
 * uav_random_direction (only if `behavior=random`)
@@ -83,7 +85,7 @@ The following parameters allow to configure the simulation:
   The seed used for random number generation. In the default case, a random seed is generated.
 
 The `uav_sitl.lauch` creates a distinct namespace `/cpswarm/$(arg vehicle)_$(arg id)`. It launches:
-* `sar/scripts/uav_sar_simulation.py`
+* `sar/uav_sar_simulation.py`
   The UAV behavior state machine.
 * `px4/single_vehicle_spawn.launch`
   The PX4 flight controller as SITL which spawns a new UAV in the simulator.
@@ -127,7 +129,7 @@ Parameters:
   The TCP port which the simulated flight controller PX4 uses to communicate with the simulator.
 
 ### Hardware
-To run the code on deployed on real hardware, execute the launch file
+To run the code on deployed on hardware, execute the launch file
 ```
 roslaunch uav_hitl.launch
 ```
@@ -176,7 +178,7 @@ The communication library enables communication between CPSs in the swarm. It la
 Parameters:
 * `id` (integer, default: `0`)
   The identifier (ID) of the UAV in the swarm.
-* `output` (string, default: `screen`)
+* `output` (string, default: `log`)
   Whether to show the program output (`screen`) or to write it to a log file (`log`).
 
 #### uav_abstraction_library.launch
@@ -213,7 +215,7 @@ From the hardware drivers library it launches for real world missions (if `obc=t
   A node for ultra wideband (UWB) localization.
 
 Parameters
-* `id` (integer, default: `1`)
+* `id` (integer, default: `0`)
   The identifier (ID) of the UAV in the swarm.
 * `x` (real, default: `0`)
   The x-coordinate measured from the origin of the relative localization system.
@@ -223,7 +225,7 @@ Parameters
   Whether relative (`local`) or GPS (`global`) coordinates are used by the flight controller.
 * `obc` (boolean, default: `false`)
   Whether the code is executed on the onboard computer (OBC) of the UAV.
-* `output` (string, default: `screen`)
+* `output` (string, default: `log`)
   Whether to show the program output (`screen`) or to write it to a log file (`log`).
 
 #### uav_swarm_library.launch
@@ -246,7 +248,7 @@ The swarm library launches the swarm algorithms and swarm functions required to 
 Parameters:
 * `id` (integer, default: `0`)
   The identifier (ID) of the UAV in the swarm.
-* `output` (string, default: `screen`)
+* `output` (string, default: `log`)
   Whether to show the program output (`screen`) or to write it to a log file (`log`).
 * `behavior` (string, default: `random`)
   The behavior of the UAV for SAR. It must correspond to one of the launch files `uav_sar_*.launch`.
@@ -263,7 +265,7 @@ Swarm algorithms to perform coverage and tracking for SAR performing random move
 Parameters:
 * `id` (integer, default: `0`)
   The identifier (ID) of the UAV in the swarm.
-* `output` (string, default: `screen`)
+* `output` (string, default: `log`)
   Whether to show the program output (`screen`) or to write it to a log file (`log`).
 
 ##### uav_sar_optimal.launch
@@ -278,7 +280,7 @@ Swarm algorithms to perform coverage and tracking for SAR performing random move
 Parameters:
 * `id` (integer, default: `0`)
   The identifier (ID) of the UAV in the swarm.
-* `output` (string, default: `screen`)
+* `output` (string, default: `log`)
   Whether to show the program output (`screen`) or to write it to a log file (`log`).
 
 ##### uav_sar_flocking.launch
@@ -293,7 +295,7 @@ Swarm algorithms to perform coverage and tracking for SAR performing random move
 Parameters:
 * `id` (integer, default: `0`)
   The identifier (ID) of the UAV in the swarm.
-* `output` (string, default: `screen`)
+* `output` (string, default: `log`)
   Whether to show the program output (`screen`) or to write it to a log file (`log`).
 
 #### logging.launch
@@ -304,7 +306,7 @@ Logging of data. This launch file launches:
 Parameters:
 * `id` (integer, default: `0`)
   The identifier (ID) of the UAV in the swarm.
-* `output` (string, default: `screen`)
+* `output` (string, default: `log`)
   Whether to show the program output (`screen`) or to write it to a log file (`log`).
 
 ## Scripts
@@ -443,4 +445,4 @@ Optional arguments:
   Name of the yaml param file which specifies the coordinates of the environment.
 
 ## Communication Library Configuration
-The communication library configuration `param/uav_swarmros.cfg` defines the data exchanged between the CPS in the swarm and between the CPSs and the ground control station. This includes the events that trigger the FSM state changes. Refer to the [Communication Library](https://github.com/cpswarm/swarmio) documentation for more information.
+The communication library configuration `param/uav_swarmros.cfg` defines the data exchanged between the CPSs in the swarm and between the CPSs and the ground control station. This includes the events that trigger the FSM state changes. Refer to the [Communication Library](https://github.com/cpswarm/swarmio) documentation for more information.
