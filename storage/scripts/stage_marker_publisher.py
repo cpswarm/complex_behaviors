@@ -35,71 +35,19 @@
 import rospy
 import rospkg
 import tf
+from tf.transformations import euler_from_quaternion
 import math
 import time
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import PoseWithCovariance, Pose, TransformStamped
 from ar_track_alvar_msgs.msg import AlvarMarkers, AlvarMarker
 
-#definition of frame positions
-
-#check if some robot is close to it and publish the transformation.
-# subscribe to robot positions
-# check if some robot is close and aligned with some QR
-# publish the transform between the frame and the robot (same orientation)
-
-#callbacks updating the position of the robots
-
-#callbacks checking if the robot has a cart picked
-
-
-
-# loop checking the position of the robots to publish the transforms.
-
-
-#if has a cart dont publish the frame of the carts, only the door frame
-#
-# #publish frame with: ar_track_alvar_msgs/AlvarMarkers
-# header: 
-#  seq: 162
-#  stamp: 
-#    secs: 0
-#    nsecs:         0
-#  frame_id: ''
-#markers: 
-#  - 
-#    header: 
-#      seq: 0
-#      stamp: 
-#        secs: 3391
-#        nsecs: 332000000
-#      frame_id: "rb1_base_c_front_rgbd_camera_rgb_optical_frame"
-#    id: 1
-#    confidence: 0
-#    pose: 
-#      header: 
-#        seq: 0
-#        stamp: 
-#          secs: 0
-#          nsecs:         0
-#        frame_id: ''
-#      pose: 
-#        position: 
-#          x: -0.598308814619
-#          y: -0.218161761489
-#          z: 1.87468495538
-#        orientation: 
-#          x: 1.0
-#          y: 0.0
-#          z: -2.2964231681e-08
-#          w: 6.30003754992e-08
-
-#
-# publish also by TF the frame
-
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y        
 
 rb1_base_pose = Odometry()
-
 
 rb1_base_ar_track_pub = rospy.Publisher('ar_pose_marker', AlvarMarkers, queue_size=10)
 
@@ -163,8 +111,41 @@ def callback_pose_cart_9(data):
     global cart_9_pose
     cart_9_pose = data
 
+#get the face of the cart that the robot is looking    
+def get_yaw_cart_faced(marker):
+	
+    orientation_list = [marker.pose.pose.orientation.x,marker.pose.pose.orientation.y,marker.pose.pose.orientation.z,marker.pose.pose.orientation.w]
+    (roll, pitch, yaw) = euler_from_quaternion (orientation_list)    
+    #create 4 points around the cart   
+    point_0_x = marker.pose.pose.position.x + 0.5 * math.cos(yaw) - 0 * math.sin(yaw)
+    point_1_x = marker.pose.pose.position.x + 0 * math.cos(yaw) - 0.5 * math.sin(yaw) 
+    point_2_x = marker.pose.pose.position.x - 0.5 * math.cos(yaw) - 0 * math.sin(yaw) 
+    point_3_x = marker.pose.pose.position.x + 0 * math.cos(yaw) + 0.5 * math.sin(yaw) 
+    point_0_y = marker.pose.pose.position.y + 0.5 * math.sin(yaw) + 0 * math.cos(yaw)
+    point_1_y = marker.pose.pose.position.y + 0 * math.sin(yaw) + 0.5 * math.cos(yaw)
+    point_2_y = marker.pose.pose.position.y - 0.5 * math.sin(yaw) + 0 * math.cos(yaw)
+    point_3_y = marker.pose.pose.position.y + 0 * math.sin(yaw) - 0.5 * math.cos(yaw)
+    point_0 = Point(point_0_x,point_0_y)
+    point_1 = Point(point_1_x,point_1_y)
+    point_2 = Point(point_2_x,point_2_y)
+    point_3 = Point(point_3_x,point_3_y)
+    points = [point_0, point_1, point_2, point_3]
+    
+    #min distance between the faces of the cart and the robot
+    distances = []
+    distances.append(math.sqrt(pow(rb1_base_pose.pose.pose.position.x-point_0_x,2)+(pow(rb1_base_pose.pose.pose.position.y-point_0_y,2))))
+    distances.append(math.sqrt(pow(rb1_base_pose.pose.pose.position.x-point_1_x,2)+(pow(rb1_base_pose.pose.pose.position.y-point_1_y,2))))
+    distances.append(math.sqrt(pow(rb1_base_pose.pose.pose.position.x-point_2_x,2)+(pow(rb1_base_pose.pose.pose.position.y-point_2_y,2))))
+    distances.append(math.sqrt(pow(rb1_base_pose.pose.pose.position.x-point_3_x,2)+(pow(rb1_base_pose.pose.pose.position.y-point_3_y,2))))
+    
+    cart_faced = distances.index(min(distances))
+
+    yaw_faced = math.atan2(points[cart_faced].y-marker.pose.pose.position.y,points[cart_faced].x-marker.pose.pose.position.x)
+    
+    return yaw_faced
+
 def looking_at_marker0(pose):
-    #Eucledian distance between cart and pose
+    #Eucledian distance between cart_0 and pose
     distance = math.sqrt(pow((pose.position.x - cart_0_pose.pose.pose.position.x ),2) + pow((pose.position.y - cart_0_pose.pose.pose.position.y),2))
     #rospy.loginfo("Distance from marker 0 %f", distance)
     if distance > detection_radius:
@@ -185,11 +166,11 @@ def publish_marker_0():
     marker_0.pose.pose.orientation = cart_0_pose.pose.pose.orientation   
     markers.markers.append(marker_0)
     rb1_base_ar_track_pub.publish(markers)
+    
+    yaw_faced = get_yaw_cart_faced(marker_0)
 
-    br1 = tf.TransformBroadcaster()
-    #tr1 = Transform()
-    #br1.sendTransform((marker_1.pose.pose.position.x, marker_1.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, math.pi/2, 0), rospy.Time.now(), "ar_marker_1", "rb1_base_a_front_rgbd_camera_rgb_optical_frame")
-    br1.sendTransform((marker_0.pose.pose.position.x, marker_0.pose.pose.position.y, 0), (marker_0.pose.pose.orientation.x,marker_0.pose.pose.orientation.y,marker_0.pose.pose.orientation.z,marker_0.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_0", "map")
+    br1 = tf.TransformBroadcaster()    
+    br1.sendTransform((marker_0.pose.pose.position.x, marker_0.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced), rospy.Time.now(), "ar_marker_0", "map")
 
 def looking_at_marker1(pose):
     #Eucledian distance between cart and pose
@@ -213,6 +194,8 @@ def publish_marker_1():
     marker_1.pose.pose.orientation = cart_1_pose.pose.pose.orientation
     markers.markers.append(marker_1)
     rb1_base_ar_track_pub.publish(markers)
+    
+    yaw_faced = get_yaw_cart_faced(marker_1)
 
     br1 = tf.TransformBroadcaster()
     #tr1 = Transform()
@@ -242,6 +225,8 @@ def publish_marker_2():
     marker_2.pose.pose.orientation = cart_2_pose.pose.pose.orientation
     markers.markers.append(marker_2)
     rb1_base_ar_track_pub.publish(markers)
+    
+    yaw_faced = get_yaw_cart_faced(marker_2)
 
     br2 = tf.TransformBroadcaster()
     br2.sendTransform((marker_2.pose.pose.position.x, marker_2.pose.pose.position.y, 0), (marker_2.pose.pose.orientation.x,marker_2.pose.pose.orientation.y,marker_2.pose.pose.orientation.z,marker_2.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_2", "map")
@@ -269,6 +254,8 @@ def publish_marker_3():
     marker_3.pose.pose.orientation = cart_3_pose.pose.pose.orientation
     markers.markers.append(marker_3)
     rb1_base_ar_track_pub.publish(markers)
+    
+    yaw_faced = get_yaw_cart_faced(marker_3)
 
     br3 = tf.TransformBroadcaster()
     br3.sendTransform((marker_3.pose.pose.position.x, marker_3.pose.pose.position.y, 0), (marker_3.pose.pose.orientation.x,marker_3.pose.pose.orientation.y,marker_3.pose.pose.orientation.z,marker_3.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_3", "map")
@@ -298,6 +285,8 @@ def publish_marker_4():
     marker_4.pose.pose.orientation = cart_4_pose.pose.pose.orientation
     markers.markers.append(marker_4)
     rb1_base_ar_track_pub.publish(markers)
+    
+    yaw_faced = get_yaw_cart_faced(marker_4)
 
     br4 = tf.TransformBroadcaster()
     br4.sendTransform((marker_4.pose.pose.position.x, marker_4.pose.pose.position.y, 0), (marker_4.pose.pose.orientation.x,marker_4.pose.pose.orientation.y,marker_4.pose.pose.orientation.z,marker_4.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_4", "map")
@@ -325,6 +314,8 @@ def publish_marker_5():
     marker_5.pose.pose.orientation = cart_5_pose.pose.pose.orientation
     markers.markers.append(marker_5)
     rb1_base_ar_track_pub.publish(markers)
+    
+    yaw_faced = get_yaw_cart_faced(marker_5)
 
     br5 = tf.TransformBroadcaster()
     br5.sendTransform((marker_5.pose.pose.position.x, marker_5.pose.pose.position.y, 0), (marker_5.pose.pose.orientation.x,marker_5.pose.pose.orientation.y,marker_5.pose.pose.orientation.z,marker_5.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_5", "map")
@@ -352,6 +343,8 @@ def publish_marker_6():
     marker_6.pose.pose.orientation = cart_6_pose.pose.pose.orientation
     markers.markers.append(marker_6)
     rb1_base_ar_track_pub.publish(markers)
+    
+    yaw_faced = get_yaw_cart_faced(marker_6)
 
     br6 = tf.TransformBroadcaster()
     br6.sendTransform((marker_6.pose.pose.position.x, marker_6.pose.pose.position.y, 0), (marker_6.pose.pose.orientation.x,marker_6.pose.pose.orientation.y,marker_6.pose.pose.orientation.z,marker_6.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_6", "map")
@@ -379,6 +372,8 @@ def publish_marker_7():
     marker_7.pose.pose.orientation = cart_7_pose.pose.pose.orientation
     markers.markers.append(marker_7)
     rb1_base_ar_track_pub.publish(markers)
+    
+    yaw_faced = get_yaw_cart_faced(marker_7)
 
     br7 = tf.TransformBroadcaster()
     br7.sendTransform((marker_7.pose.pose.position.x, marker_7.pose.pose.position.y, 0), (marker_7.pose.pose.orientation.x,marker_7.pose.pose.orientation.y,marker_7.pose.pose.orientation.z,marker_7.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_7", "map")
@@ -406,6 +401,8 @@ def publish_marker_8():
     marker_8.pose.pose.orientation = cart_8_pose.pose.pose.orientation
     markers.markers.append(marker_8)
     rb1_base_ar_track_pub.publish(markers)
+    
+    yaw_faced = get_yaw_cart_faced(marker_8)
 
     br8 = tf.TransformBroadcaster()
     br8.sendTransform((marker_8.pose.pose.position.x, marker_8.pose.pose.position.y, 0), (marker_8.pose.pose.orientation.x,marker_8.pose.pose.orientation.y,marker_8.pose.pose.orientation.z,marker_8.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_8", "map")
@@ -433,6 +430,8 @@ def publish_marker_9():
     marker_9.pose.pose.orientation = cart_9_pose.pose.pose.orientation
     markers.markers.append(marker_9)
     rb1_base_ar_track_pub.publish(markers)
+    
+    yaw_faced = get_yaw_cart_faced(marker_9)
 
     br9 = tf.TransformBroadcaster()
     br9.sendTransform((marker_9.pose.pose.position.x, marker_9.pose.pose.position.y, 0), (marker_9.pose.pose.orientation.x,marker_9.pose.pose.orientation.y,marker_9.pose.pose.orientation.z,marker_9.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_9", "map")
