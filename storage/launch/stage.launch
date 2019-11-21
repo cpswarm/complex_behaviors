@@ -17,125 +17,145 @@
     <!-- Scout UGVs -->
     <include file="$(find storage)/launch/scout.launch" if="$(eval scouts > 0)">
         <arg name="id" value="0" />
-        <arg name="world" value="$(arg world)" />
         <arg name="x" value="-0.5" />
         <arg name="y" value="-9.5" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="simulation" value="true" />
     </include>
     <include file="$(find storage)/launch/scout.launch" if="$(eval scouts > 1)">
         <arg name="id" value="1" />
-        <arg name="world" value="$(arg world)" />
         <arg name="x" value="-1.5" />
         <arg name="y" value="-9.5" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="simulation" value="true" />
     </include>
     <include file="$(find storage)/launch/scout.launch" if="$(eval scouts > 2)">
         <arg name="id" value="2" />
-        <arg name="world" value="$(arg world)" />
         <arg name="x" value="-2.5" />
         <arg name="y" value="-9.5" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="simulation" value="true" />
     </include>
     <include file="$(find storage)/launch/scout.launch" if="$(eval scouts > 3)">
         <arg name="id" value="3" />
-        <arg name="world" value="$(arg world)" />
         <arg name="x" value="-3.5" />
         <arg name="y" value="-9.5" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="simulation" value="true" />
     </include>
     <include file="$(find storage)/launch/scout.launch" if="$(eval scouts > 4)">
         <arg name="id" value="4" />
-        <arg name="world" value="$(arg world)" />
         <arg name="x" value="-4.5" />
         <arg name="y" value="-9.5" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="simulation" value="true" />
     </include>
     <include file="$(find storage)/launch/scout.launch" if="$(eval scouts > 5)">
         <arg name="id" value="5" />
-        <arg name="world" value="$(arg world)" />
         <arg name="x" value="-5.5" />
         <arg name="y" value="-9.5" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="simulation" value="true" />
     </include>
     <include file="$(find storage)/launch/scout.launch" if="$(eval scouts > 6)">
         <arg name="id" value="6" />
-        <arg name="world" value="$(arg world)" />
         <arg name="x" value="-6.5" />
         <arg name="y" value="-9.5" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="simulation" value="true" />
     </include>
     <include file="$(find storage)/launch/scout.launch" if="$(eval scouts > 7)">
         <arg name="id" value="7" />
-        <arg name="world" value="$(arg world)" />
         <arg name="x" value="-7.5" />
         <arg name="y" value="-9.5" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="simulation" value="true" />
     </include>
     <include file="$(find storage)/launch/scout.launch" if="$(eval scouts > 8)">
         <arg name="id" value="8" />
-        <arg name="world" value="$(arg world)" />
         <arg name="x" value="-8.5" />
         <arg name="y" value="-9.5" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="simulation" value="true" />
     </include>
     <include file="$(find storage)/launch/scout.launch" if="$(eval scouts > 9)">
         <arg name="id" value="9" />
-        <arg name="world" value="$(arg world)" />
         <arg name="x" value="-9.5" />
         <arg name="y" value="-9.5" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="simulation" value="true" />
     </include>
 
     <!-- Worker UGVs -->
     <include file="$(find storage)/launch/worker.launch" if="$(eval workers > 0)">
         <arg name="id" value="10" />
-        <arg name="world" value="$(arg world)" />
         <arg name="x" value="0.5" />
         <arg name="y" value="-9.5" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="simulation" value="true" />
     </include>
     <include file="$(find storage)/launch/worker.launch" if="$(eval workers > 1)">
         <arg name="id" value="11" />
-        <arg name="world" value="$(arg world)" />
         <arg name="x" value="1.5" />
         <arg name="y" value="-9.5" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="simulation" value="true" />
     </include>
     <include file="$(find storage)/launch/worker.launch" if="$(eval workers > 2)">
         <arg name="id" value="12" />
-        <arg name="world" value="$(arg world)" />
         <arg name="x" value="2.5" />
         <arg name="y" value="-9.5" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="simulation" value="true" />
     </include>
     <include file="$(find storage)/launch/worker.launch" if="$(eval workers > 3)">
         <arg name="id" value="13" />
-        <arg name="world" value="$(arg world)" />
         <arg name="x" value="3.5" />
         <arg name="y" value="-9.5" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="simulation" value="true" />
     </include>
     <include file="$(find storage)/launch/worker.launch" if="$(eval workers > 4)">
         <arg name="id" value="14" />
-        <arg name="world" value="$(arg world)" />
         <arg name="x" value="4.5" />
         <arg name="y" value="-9.5" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="simulation" value="true" />
     </include>
     <include file="$(find storage)/launch/worker.launch" if="$(eval workers > 5)">
         <arg name="id" value="15" />
-        <arg name="world" value="$(arg world)" />
         <arg name="x" value="5.5" />
         <arg name="y" value="-9.5" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="simulation" value="true" />
     </include>
     <include file="$(find storage)/launch/worker.launch" if="$(eval workers > 6)">
         <arg name="id" value="16" />
-        <arg name="world" value="$(arg world)" />
         <arg name="x" value="6.5" />
         <arg name="y" value="-9.5" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="simulation" value="true" />
     </include>
     <include file="$(find storage)/launch/worker.launch" if="$(eval workers > 7)">
         <arg name="id" value="17" />
-        <arg name="world" value="$(arg world)" />
         <arg name="x" value="7.5" />
         <arg name="y" value="-9.5" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="simulation" value="true" />
     </include>
     <include file="$(find storage)/launch/worker.launch" if="$(eval workers > 8)">
         <arg name="id" value="18" />
-        <arg name="world" value="$(arg world)" />
         <arg name="x" value="8.5" />
         <arg name="y" value="-9.5" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="simulation" value="true" />
     </include>
     <include file="$(find storage)/launch/worker.launch" if="$(eval workers > 9)">
         <arg name="id" value="19" />
-        <arg name="world" value="$(arg world)" />
         <arg name="x" value="9.5" />
         <arg name="y" value="-9.5" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="simulation" value="true" />
     </include>
 
 </launch>
