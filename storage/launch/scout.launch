@@ -8,7 +8,7 @@
     <arg name="pos_type" default="local" />
     <arg name="simulation" default="false" />
     <arg name="output" default="screen" />
-    <arg name="logging" default="false" />
+    <arg name="logging" default="true" />
 
     <arg name="frame" value="$(arg vehicle)_$(arg id)" />
 
