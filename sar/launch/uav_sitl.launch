@@ -8,7 +8,7 @@
     <arg name="Y" default="0" />
     <arg name="pos_type" default="local" />
     <arg name="output" default="screen" />
-    <arg name="behavior" default="random" />
+    <arg name="behavior" default="optimal" />
     <arg name="logging" default="false" />
     <arg name="udp_port_obc" default="$(eval 14540 + id)" />
     <arg name="udp_port_fcu" default="$(eval 14580 + id)" />
