@@ -198,9 +198,7 @@ def publish_marker_1():
     yaw_faced = get_yaw_cart_faced(marker_1)
 
     br1 = tf.TransformBroadcaster()
-    #tr1 = Transform()
-    #br1.sendTransform((marker_1.pose.pose.position.x, marker_1.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, math.pi/2, 0), rospy.Time.now(), "ar_marker_1", "rb1_base_a_front_rgbd_camera_rgb_optical_frame")
-    br1.sendTransform((marker_1.pose.pose.position.x, marker_1.pose.pose.position.y, 0), (marker_1.pose.pose.orientation.x,marker_1.pose.pose.orientation.y,marker_1.pose.pose.orientation.z,marker_1.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_1", "map")
+    br1.sendTransform((marker_1.pose.pose.position.x, marker_1.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced), rospy.Time.now(), "ar_marker_1", "map")
 
 
 def looking_at_marker2(pose):
@@ -229,7 +227,7 @@ def publish_marker_2():
     yaw_faced = get_yaw_cart_faced(marker_2)
 
     br2 = tf.TransformBroadcaster()
-    br2.sendTransform((marker_2.pose.pose.position.x, marker_2.pose.pose.position.y, 0), (marker_2.pose.pose.orientation.x,marker_2.pose.pose.orientation.y,marker_2.pose.pose.orientation.z,marker_2.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_2", "map")
+    br2.sendTransform((marker_2.pose.pose.position.x, marker_2.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced), rospy.Time.now(), "ar_marker_2", "map")
 
 def looking_at_marker3(pose):
 
@@ -249,7 +247,7 @@ def publish_marker_3():
     marker_3.header.stamp = rospy.Time.now()
     marker_3.id = 3
     marker_3.pose.pose.position.x = cart_3_pose.pose.pose.position.x
-    marker_3.pose.pose.position.y = cart_3_pose.pose.pose.position.x
+    marker_3.pose.pose.position.y = cart_3_pose.pose.pose.position.y
     marker_3.pose.pose.position.z = 1
     marker_3.pose.pose.orientation = cart_3_pose.pose.pose.orientation
     markers.markers.append(marker_3)
@@ -258,7 +256,7 @@ def publish_marker_3():
     yaw_faced = get_yaw_cart_faced(marker_3)
 
     br3 = tf.TransformBroadcaster()
-    br3.sendTransform((marker_3.pose.pose.position.x, marker_3.pose.pose.position.y, 0), (marker_3.pose.pose.orientation.x,marker_3.pose.pose.orientation.y,marker_3.pose.pose.orientation.z,marker_3.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_3", "map")
+    br3.sendTransform((marker_3.pose.pose.position.x, marker_3.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced), rospy.Time.now(), "ar_marker_3", "map")
 
 
 
@@ -289,7 +287,7 @@ def publish_marker_4():
     yaw_faced = get_yaw_cart_faced(marker_4)
 
     br4 = tf.TransformBroadcaster()
-    br4.sendTransform((marker_4.pose.pose.position.x, marker_4.pose.pose.position.y, 0), (marker_4.pose.pose.orientation.x,marker_4.pose.pose.orientation.y,marker_4.pose.pose.orientation.z,marker_4.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_4", "map")
+    br4.sendTransform((marker_4.pose.pose.position.x, marker_4.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced), rospy.Time.now(), "ar_marker_4", "map")
 
 def looking_at_marker5(pose):
 
@@ -318,7 +316,7 @@ def publish_marker_5():
     yaw_faced = get_yaw_cart_faced(marker_5)
 
     br5 = tf.TransformBroadcaster()
-    br5.sendTransform((marker_5.pose.pose.position.x, marker_5.pose.pose.position.y, 0), (marker_5.pose.pose.orientation.x,marker_5.pose.pose.orientation.y,marker_5.pose.pose.orientation.z,marker_5.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_5", "map")
+    br5.sendTransform((marker_5.pose.pose.position.x, marker_5.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced), rospy.Time.now(), "ar_marker_5", "map")
     
 def looking_at_marker6(pose):
 
@@ -347,7 +345,7 @@ def publish_marker_6():
     yaw_faced = get_yaw_cart_faced(marker_6)
 
     br6 = tf.TransformBroadcaster()
-    br6.sendTransform((marker_6.pose.pose.position.x, marker_6.pose.pose.position.y, 0), (marker_6.pose.pose.orientation.x,marker_6.pose.pose.orientation.y,marker_6.pose.pose.orientation.z,marker_6.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_6", "map")
+    br6.sendTransform((marker_6.pose.pose.position.x, marker_6.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced), rospy.Time.now(), "ar_marker_6", "map")
 
 def looking_at_marker7(pose):
 
@@ -376,7 +374,7 @@ def publish_marker_7():
     yaw_faced = get_yaw_cart_faced(marker_7)
 
     br7 = tf.TransformBroadcaster()
-    br7.sendTransform((marker_7.pose.pose.position.x, marker_7.pose.pose.position.y, 0), (marker_7.pose.pose.orientation.x,marker_7.pose.pose.orientation.y,marker_7.pose.pose.orientation.z,marker_7.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_7", "map")
+    br7.sendTransform((marker_7.pose.pose.position.x, marker_7.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced), rospy.Time.now(), "ar_marker_7", "map")
 
 def looking_at_marker8(pose):
 
@@ -405,7 +403,7 @@ def publish_marker_8():
     yaw_faced = get_yaw_cart_faced(marker_8)
 
     br8 = tf.TransformBroadcaster()
-    br8.sendTransform((marker_8.pose.pose.position.x, marker_8.pose.pose.position.y, 0), (marker_8.pose.pose.orientation.x,marker_8.pose.pose.orientation.y,marker_8.pose.pose.orientation.z,marker_8.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_8", "map")
+    br8.sendTransform((marker_8.pose.pose.position.x, marker_8.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced), rospy.Time.now(), "ar_marker_8", "map")
 
 def looking_at_marker9(pose):
 
@@ -434,7 +432,7 @@ def publish_marker_9():
     yaw_faced = get_yaw_cart_faced(marker_9)
 
     br9 = tf.TransformBroadcaster()
-    br9.sendTransform((marker_9.pose.pose.position.x, marker_9.pose.pose.position.y, 0), (marker_9.pose.pose.orientation.x,marker_9.pose.pose.orientation.y,marker_9.pose.pose.orientation.z,marker_9.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_9", "map")
+    br9.sendTransform((marker_9.pose.pose.position.x, marker_9.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced), rospy.Time.now(), "ar_marker_9", "map")
 
 
 def main():
