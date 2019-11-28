@@ -17,10 +17,10 @@
     </include>
 
     <!-- Managing boxes -->
-    <!--include file="$(find target_monitor)/launch/target_monitor.launch">
+    <include file="$(find target_monitor)/launch/target_monitor.launch">
         <arg name="id" value="$(arg id)" />
         <arg name="output" value="$(arg output)" />
-    </include-->
+    </include>
 
     <!-- Assigning of boxes -->
     <include file="$(find task_allocation)/launch/task_allocation.launch">
