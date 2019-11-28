@@ -48,6 +48,7 @@
 			<arg name="x_init_pose" value="$(arg x)"/>
 			<arg name="y_init_pose" value="$(arg y)"/>
 			<arg name="yaw_init_pose" value="$(arg yaw)"/>
+			<arg name="worker" value="true"/>
 		</include>
 
         <!-- CPSwarm swarm library -->
