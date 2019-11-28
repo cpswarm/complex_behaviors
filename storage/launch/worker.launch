@@ -36,7 +36,7 @@
 
         <!-- Robotnik pkgs -->
         <include file="$(find storage)/launch/robotnik_robot.launch">
-			<arg name="id_robot" value="robot_$(arg id)"/>
+			<arg name="id_robot" value="$(arg frame)"/>
 			<arg name="launch_amcl_and_mapserver" value="true"/>
 			<arg name="launch_gmapping" value="false"/>
 			<arg name="map_file" value="$(arg world)"/>
