@@ -25,8 +25,6 @@
 	<arg name="launch_move" default="true"/>
 	<arg name="launch_pad" default="false"/>
 	<arg name="worker" default="false"/>
-
-
 		  
 	<!-- Load the URDF into the ROS Parameter Server -->
 	<!--param unless="$(arg has_elevator)" name="robot_description" 
@@ -61,18 +59,6 @@
 	<include if="$(arg launch_base_hw_sim)" file="$(find robotnik_base_hw_sim)/launch/rb1_hw_sim.launch">
 		<arg name="prefix" value="$(arg prefix)"/>
 	</include>
-	
-	<!-- Robot local control-->
-	<include file="$(find robotnik_pkgs)/launch/robot_local_control/robot_local_control.launch">
-		<arg name="id_robot" value="$(arg id_robot)"/>
-	</include>	
-
-	<!-- Perception -->
-	<!--include file="$(find robotnik_pkgs)/launch/perception/perception_complete.launch">
-		<arg name="id_robot" value="$(arg id_robot)"/>
-		<arg name="prefix" value="$(arg id_robot)"/>
-		<arg name="tf_prefix" value="$(arg id_robot)_"/>
-	</include-->
 
 	<!-- Navigation -->
 	<include if="$(arg launch_move_base)" file="$(find robotnik_pkgs)/launch/navigation/navigation_complete.launch">
@@ -80,7 +66,11 @@
 	</include>
 	
 	<!-- Fake marker publisher-->
+	<node if="$(arg worker)" name="stage_marker_publisher_worker" pkg="storage" type="stage_marker_publisher_worker.py">
+		<param name="id_robot" value="$(arg id_robot)"/>
+	</node>
 	<node unless="$(arg worker)" name="stage_marker_publisher" pkg="storage" type="stage_marker_publisher.py"/>
+	
 	
 	<!-- tf to work with the global map frame -->
 	<node pkg="tf" type="static_transform_publisher" name="tf_$(arg id_robot)_map_to_map" args="0 0 0 0 0 0 /map /$(arg id_robot)_map 200"/>

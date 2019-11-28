@@ -8,6 +8,7 @@
     <arg name="world" default="empty" />
     <arg name="pos_type" default="local" />
     <arg name="output" default="screen" />
+    <arg name="worker" default="true" />
 
     <arg name="frame" value="$(arg vehicle)_$(arg id)" />
 
@@ -35,7 +36,7 @@
 
         <!-- Robotnik pkgs -->
         <include file="$(find storage)/launch/robotnik_robot.launch">
-			<arg name="id_robot" value="robot_$(arg id)"/>
+			<arg name="id_robot" value="$(arg frame)"/>
 			<arg name="launch_amcl_and_mapserver" value="true"/>
 			<arg name="launch_gmapping" value="false"/>
 			<arg name="map_file" value="$(arg world)"/>
@@ -48,8 +49,14 @@
 			<arg name="x_init_pose" value="$(arg x)"/>
 			<arg name="y_init_pose" value="$(arg y)"/>
 			<arg name="yaw_init_pose" value="$(arg yaw)"/>
-			<arg name="worker" value="true"/>
+			<arg name="worker" value="$(arg worker)"/>
 		</include>
+		
+		<!-- pick n place action -->
+		<include file="$(find ugv_picknplace)/launch/ugv_picknplace.launch">            
+            <arg name="output" value="$(arg output)" />
+            <arg name="id_robot" value="$(arg frame)"/>
+        </include>
 
         <!-- CPSwarm swarm library -->
         <include file="$(find storage)/launch/swarm_library.launch">

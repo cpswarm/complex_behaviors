@@ -49,10 +49,9 @@ class Point:
 
 rb1_base_pose = Odometry()
 
-rb1_base_ar_track_pub = rospy.Publisher('ar_pose_marker', AlvarMarkers, queue_size=10)
+#rb1_base_ar_track_pub = rospy.Publisher('ar_pose_marker', AlvarMarkers, queue_size=10)
 
-detection_radius = 3
-minimum_detection_radius = 0.4
+detection_radius = 2
 cart_0_pose = Odometry()
 cart_1_pose = Odometry()
 cart_2_pose = Odometry()
@@ -63,6 +62,8 @@ cart_6_pose = Odometry()
 cart_7_pose = Odometry()
 cart_8_pose = Odometry()
 cart_9_pose = Odometry()
+_name = ""
+_cart_marker_name = ""
 
 
 def callback_pose_rb1_base(data):
@@ -149,119 +150,115 @@ def looking_at_marker0(pose):
     #Eucledian distance between cart_0 and pose
     distance = math.sqrt(pow((pose.position.x - cart_0_pose.pose.pose.position.x ),2) + pow((pose.position.y - cart_0_pose.pose.pose.position.y),2))
     #rospy.loginfo("Distance from marker 0 %f", distance)
-    if distance > detection_radius or distance < minimum_detection_radius:
+    if distance > detection_radius:
         return False
     return True
 
 def publish_marker_0():
-    global rb1_base_ar_track_pub
+    #global rb1_base_ar_track_pub
     markers = AlvarMarkers()
     markers.markers = []
     marker_0 = AlvarMarker()
     marker_0.header.frame_id = "map"
     marker_0.header.stamp = rospy.Time.now()
     marker_0.id = 0
-    if cart_0_pose.pose.pose.position.x !=0 and cart_0_pose.pose.pose.position.y !=0 :
-		marker_0.pose.pose.position.x = cart_0_pose.pose.pose.position.x
-		marker_0.pose.pose.position.y = cart_0_pose.pose.pose.position.y
-		marker_0.pose.pose.position.z = 1
-		marker_0.pose.pose.orientation = cart_0_pose.pose.pose.orientation   
-		markers.markers.append(marker_0)
-		rb1_base_ar_track_pub.publish(markers)
-		
-		yaw_faced = get_yaw_cart_faced(marker_0)
+    marker_0.pose.pose.position.x = cart_0_pose.pose.pose.position.x
+    marker_0.pose.pose.position.y = cart_0_pose.pose.pose.position.y
+    marker_0.pose.pose.position.z = 1
+    marker_0.pose.pose.orientation = cart_0_pose.pose.pose.orientation   
+    markers.markers.append(marker_0)
+    #rb1_base_ar_track_pub.publish(markers)
+    
+    yaw_faced = get_yaw_cart_faced(marker_0)
 
-		br1 = tf.TransformBroadcaster()    
-		br1.sendTransform((marker_0.pose.pose.position.x, marker_0.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced), rospy.Time.now(), "ar_marker_0", "map")
+    br1 = tf.TransformBroadcaster()    
+    br1.sendTransform((marker_0.pose.pose.position.x, marker_0.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced + math.pi), rospy.Time.now(), _cart_marker_name, "map")
 
 def looking_at_marker1(pose):
     #Eucledian distance between cart and pose
     distance = math.sqrt(pow((pose.position.x - cart_1_pose.pose.pose.position.x ),2) + pow((pose.position.y - cart_1_pose.pose.pose.position.y),2))
     #rospy.loginfo("Distance from marker 1 %f", distance)
-    if distance > detection_radius or distance < minimum_detection_radius:
+    if distance > detection_radius:
         return False
     return True
 
 def publish_marker_1():
-    global rb1_base_ar_track_pub
+    #global rb1_base_ar_track_pub
     markers = AlvarMarkers()
     markers.markers = []
     marker_1 = AlvarMarker()
     marker_1.header.frame_id = "map"
     marker_1.header.stamp = rospy.Time.now()
     marker_1.id = 1
-    if cart_1_pose.pose.pose.position.x !=0 and cart_1_pose.pose.pose.position.y !=0 :
-		marker_1.pose.pose.position.x = cart_1_pose.pose.pose.position.x
-		marker_1.pose.pose.position.y = cart_1_pose.pose.pose.position.y
-		marker_1.pose.pose.position.z = 1
-		marker_1.pose.pose.orientation = cart_1_pose.pose.pose.orientation
-		markers.markers.append(marker_1)
-		rb1_base_ar_track_pub.publish(markers)
-		
-		yaw_faced = get_yaw_cart_faced(marker_1)
+    marker_1.pose.pose.position.x = cart_1_pose.pose.pose.position.x
+    marker_1.pose.pose.position.y = cart_1_pose.pose.pose.position.y
+    marker_1.pose.pose.position.z = 1
+    marker_1.pose.pose.orientation = cart_1_pose.pose.pose.orientation
+    markers.markers.append(marker_1)
+    #rb1_base_ar_track_pub.publish(markers)
+    
+    yaw_faced = get_yaw_cart_faced(marker_1)
 
-		br1 = tf.TransformBroadcaster()
-		br1.sendTransform((marker_1.pose.pose.position.x, marker_1.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced), rospy.Time.now(), "ar_marker_1", "map")
+    br1 = tf.TransformBroadcaster()
+    br1.sendTransform((marker_1.pose.pose.position.x, marker_1.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced + math.pi), rospy.Time.now(), _cart_marker_name, "map")
 
 
 def looking_at_marker2(pose):
     #Eucledian distance between cart and pose
     distance = math.sqrt(pow((pose.position.x - cart_2_pose.pose.pose.position.x ),2) + pow((pose.position.y - cart_2_pose.pose.pose.position.y),2))
     #rospy.loginfo("Distance from marker 2 %f", distance)
-    if distance > detection_radius or distance < minimum_detection_radius:
+    if distance > detection_radius:
         return False
     return True
 
 def publish_marker_2():
-    global rb1_base_ar_track_pub
+    #global rb1_base_ar_track_pub
     markers = AlvarMarkers()
     markers.markers = []
     marker_2 = AlvarMarker()
     marker_2.header.frame_id = "map"
     marker_2.header.stamp = rospy.Time.now()
     marker_2.id = 2
-    if cart_2_pose.pose.pose.position.x !=0 and cart_2_pose.pose.pose.position.y !=0 :
-		marker_2.pose.pose.position.x = cart_2_pose.pose.pose.position.x
-		marker_2.pose.pose.position.y = cart_2_pose.pose.pose.position.y
-		marker_2.pose.pose.position.z = 1
-		marker_2.pose.pose.orientation = cart_2_pose.pose.pose.orientation
-		markers.markers.append(marker_2)
-		rb1_base_ar_track_pub.publish(markers)
-		
-		yaw_faced = get_yaw_cart_faced(marker_2)
+    marker_2.pose.pose.position.x = cart_2_pose.pose.pose.position.x
+    marker_2.pose.pose.position.y = cart_2_pose.pose.pose.position.y
+    marker_2.pose.pose.position.z = 1
+    marker_2.pose.pose.orientation = cart_2_pose.pose.pose.orientation
+    markers.markers.append(marker_2)
+    #rb1_base_ar_track_pub.publish(markers)
+    
+    yaw_faced = get_yaw_cart_faced(marker_2)
 
-		br2 = tf.TransformBroadcaster()
-		br2.sendTransform((marker_2.pose.pose.position.x, marker_2.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced), rospy.Time.now(), "ar_marker_2", "map")
+    br2 = tf.TransformBroadcaster()
+    br2.sendTransform((marker_2.pose.pose.position.x, marker_2.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced + math.pi), rospy.Time.now(), _cart_marker_name, "map")
 
 def looking_at_marker3(pose):
 
     #Eucledian distance between cart and pose
     distance = math.sqrt(pow((pose.position.x - cart_3_pose.pose.pose.position.x ),2) + pow((pose.position.y - cart_3_pose.pose.pose.position.y),2))
     #rospy.loginfo("Distance from marker 3 %f", distance)
-    if distance > detection_radius or distance < minimum_detection_radius:
+    if distance > detection_radius:
         return False
     return True
 
 def publish_marker_3():
-    global rb1_base_ar_track_pub
+    #global rb1_base_ar_track_pub
     markers = AlvarMarkers()
     markers.markers = []
     marker_3 = AlvarMarker()
     marker_3.header.frame_id = "map"
     marker_3.header.stamp = rospy.Time.now()
     marker_3.id = 3
-    if cart_3_pose.pose.pose.position.x !=0 and cart_3_pose.pose.pose.position.y !=0 :
-		marker_3.pose.pose.position.x = cart_3_pose.pose.pose.position.x
-		marker_3.pose.pose.position.y = cart_3_pose.pose.pose.position.y
-		marker_3.pose.pose.position.z = 1
-		marker_3.pose.pose.orientation = cart_3_pose.pose.pose.orientation
-		markers.markers.append(marker_3)
-		rb1_base_ar_track_pub.publish(markers)
-		
-		yaw_faced = get_yaw_cart_faced(marker_3)
+    marker_3.pose.pose.position.x = cart_3_pose.pose.pose.position.x
+    marker_3.pose.pose.position.y = cart_3_pose.pose.pose.position.y
+    marker_3.pose.pose.position.z = 1
+    marker_3.pose.pose.orientation = cart_3_pose.pose.pose.orientation
+    markers.markers.append(marker_3)
+    #rb1_base_ar_track_pub.publish(markers)
+    
+    yaw_faced = get_yaw_cart_faced(marker_3)
 
-		br3 = tf.TransformBroadcaster()
-		br3.sendTransform((marker_3.pose.pose.position.x, marker_3.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced), rospy.Time.now(), "ar_marker_3", "map")
+    br3 = tf.TransformBroadcaster()
+    br3.sendTransform((marker_3.pose.pose.position.x, marker_3.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced + math.pi), rospy.Time.now(), _cart_marker_name, "map")
 
 
 
@@ -270,182 +267,179 @@ def looking_at_marker4(pose):
     #Eucledian distance between cart and pose
     distance = math.sqrt(pow((pose.position.x - cart_4_pose.pose.pose.position.x ),2) + pow((pose.position.y - cart_4_pose.pose.pose.position.y),2))
     #rospy.loginfo("Distance from marker 4 %f", distance)
-    if distance > detection_radius or distance < minimum_detection_radius:
+    if distance > detection_radius:
         return False
     return True
 
 def publish_marker_4():
-    global rb1_base_ar_track_pub
+    #global rb1_base_ar_track_pub
     markers = AlvarMarkers()
     markers.markers = []
     marker_4 = AlvarMarker()
     marker_4.header.frame_id = "map"
     marker_4.header.stamp = rospy.Time.now()
     marker_4.id = 4
-    if cart_4_pose.pose.pose.position.x !=0 and cart_4_pose.pose.pose.position.y !=0 :
-		marker_4.pose.pose.position.x = cart_4_pose.pose.pose.position.x
-		marker_4.pose.pose.position.y = cart_4_pose.pose.pose.position.y
-		marker_4.pose.pose.position.z = 1
-		marker_4.pose.pose.orientation = cart_4_pose.pose.pose.orientation
-		markers.markers.append(marker_4)
-		rb1_base_ar_track_pub.publish(markers)
-		
-		yaw_faced = get_yaw_cart_faced(marker_4)
+    marker_4.pose.pose.position.x = cart_4_pose.pose.pose.position.x
+    marker_4.pose.pose.position.y = cart_4_pose.pose.pose.position.y
+    marker_4.pose.pose.position.z = 1
+    marker_4.pose.pose.orientation = cart_4_pose.pose.pose.orientation
+    markers.markers.append(marker_4)
+    #rb1_base_ar_track_pub.publish(markers)
+    
+    yaw_faced = get_yaw_cart_faced(marker_4)
 
-		br4 = tf.TransformBroadcaster()
-		br4.sendTransform((marker_4.pose.pose.position.x, marker_4.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced), rospy.Time.now(), "ar_marker_4", "map")
+    br4 = tf.TransformBroadcaster()
+    br4.sendTransform((marker_4.pose.pose.position.x, marker_4.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced + math.pi), rospy.Time.now(), _cart_marker_name, "map")
 
 def looking_at_marker5(pose):
 
     #Eucledian distance between cart and pose
     distance = math.sqrt(pow((pose.position.x - cart_5_pose.pose.pose.position.x ),2) + pow((pose.position.y - cart_5_pose.pose.pose.position.y),2))
     #rospy.loginfo("Distance from marker 5 %f", distance)
-    if distance > detection_radius or distance < minimum_detection_radius:
+    if distance > detection_radius:
         return False
     return True
 
 def publish_marker_5():
-    global rb1_base_ar_track_pub
+    #global rb1_base_ar_track_pub
     markers = AlvarMarkers()
     markers.markers = []
     marker_5 = AlvarMarker()
     marker_5.header.frame_id = "map"
     marker_5.header.stamp = rospy.Time.now()
     marker_5.id = 5
-    if cart_5_pose.pose.pose.position.x !=0 and cart_5_pose.pose.pose.position.y !=0 :
-		marker_5.pose.pose.position.x = cart_5_pose.pose.pose.position.x
-		marker_5.pose.pose.position.y = cart_5_pose.pose.pose.position.y
-		marker_5.pose.pose.position.z = 1
-		marker_5.pose.pose.orientation = cart_5_pose.pose.pose.orientation
-		markers.markers.append(marker_5)
-		rb1_base_ar_track_pub.publish(markers)
-		
-		yaw_faced = get_yaw_cart_faced(marker_5)
+    marker_5.pose.pose.position.x = cart_5_pose.pose.pose.position.x
+    marker_5.pose.pose.position.y = cart_5_pose.pose.pose.position.y
+    marker_5.pose.pose.position.z = 1
+    marker_5.pose.pose.orientation = cart_5_pose.pose.pose.orientation
+    markers.markers.append(marker_5)
+    #rb1_base_ar_track_pub.publish(markers)
+    
+    yaw_faced = get_yaw_cart_faced(marker_5)
 
-		br5 = tf.TransformBroadcaster()
-		br5.sendTransform((marker_5.pose.pose.position.x, marker_5.pose.pose.position.y, 0), (marker_5.pose.pose.orientation.x,marker_5.pose.pose.orientation.y,marker_5.pose.pose.orientation.z,marker_5.pose.pose.orientation.w), rospy.Time.now(), "ar_marker_5", "map")
-
+    br5 = tf.TransformBroadcaster()
+    br5.sendTransform((marker_5.pose.pose.position.x, marker_5.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced + math.pi), rospy.Time.now(), _cart_marker_name, "map")
+    
 def looking_at_marker6(pose):
 
     #Eucledian distance between cart and pose
     distance = math.sqrt(pow((pose.position.x - cart_6_pose.pose.pose.position.x ),2) + pow((pose.position.y - cart_6_pose.pose.pose.position.y),2))
     #rospy.loginfo("Distance from marker 6 %f", distance)
-    if distance > detection_radius or distance < minimum_detection_radius:
+    if distance > detection_radius:
         return False
     return True
 
 def publish_marker_6():
-    global rb1_base_ar_track_pub
+    #global rb1_base_ar_track_pub
     markers = AlvarMarkers()
     markers.markers = []
     marker_6 = AlvarMarker()
     marker_6.header.frame_id = "map"
     marker_6.header.stamp = rospy.Time.now()
     marker_6.id = 6
-    if cart_6_pose.pose.pose.position.x !=0 and cart_6_pose.pose.pose.position.y !=0 :
-		marker_6.pose.pose.position.x = cart_6_pose.pose.pose.position.x
-		marker_6.pose.pose.position.y = cart_6_pose.pose.pose.position.y
-		marker_6.pose.pose.position.z = 1
-		marker_6.pose.pose.orientation = cart_6_pose.pose.pose.orientation
-		markers.markers.append(marker_6)
-		rb1_base_ar_track_pub.publish(markers)
-		
-		yaw_faced = get_yaw_cart_faced(marker_6)
+    marker_6.pose.pose.position.x = cart_6_pose.pose.pose.position.x
+    marker_6.pose.pose.position.y = cart_6_pose.pose.pose.position.y
+    marker_6.pose.pose.position.z = 1
+    marker_6.pose.pose.orientation = cart_6_pose.pose.pose.orientation
+    markers.markers.append(marker_6)
+    #rb1_base_ar_track_pub.publish(markers)
+    
+    yaw_faced = get_yaw_cart_faced(marker_6)
 
-		br6 = tf.TransformBroadcaster()
-		br6.sendTransform((marker_6.pose.pose.position.x, marker_6.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced), rospy.Time.now(), "ar_marker_6", "map")
+    br6 = tf.TransformBroadcaster()
+    br6.sendTransform((marker_6.pose.pose.position.x, marker_6.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced + math.pi), rospy.Time.now(), _cart_marker_name, "map")
 
 def looking_at_marker7(pose):
 
     #Eucledian distance between cart and pose
     distance = math.sqrt(pow((pose.position.x - cart_7_pose.pose.pose.position.x ),2) + pow((pose.position.y - cart_7_pose.pose.pose.position.y),2))
     #rospy.loginfo("Distance from marker 7 %f", distance)
-    if distance > detection_radius or distance < minimum_detection_radius:
+    if distance > detection_radius:
         return False
     return True
 
 def publish_marker_7():
-    global rb1_base_ar_track_pub
+    #global rb1_base_ar_track_pub
     markers = AlvarMarkers()
     markers.markers = []
     marker_7 = AlvarMarker()
     marker_7.header.frame_id = "map"
     marker_7.header.stamp = rospy.Time.now()
     marker_7.id = 7
-    if cart_7_pose.pose.pose.position.x !=0 and cart_7_pose.pose.pose.position.y !=0 :
-		marker_7.pose.pose.position.x = cart_7_pose.pose.pose.position.x
-		marker_7.pose.pose.position.y = cart_7_pose.pose.pose.position.y
-		marker_7.pose.pose.position.z = 1
-		marker_7.pose.pose.orientation = cart_7_pose.pose.pose.orientation
-		markers.markers.append(marker_7)
-		rb1_base_ar_track_pub.publish(markers)
-		
-		yaw_faced = get_yaw_cart_faced(marker_7)
+    marker_7.pose.pose.position.x = cart_7_pose.pose.pose.position.x
+    marker_7.pose.pose.position.y = cart_7_pose.pose.pose.position.y
+    marker_7.pose.pose.position.z = 1
+    marker_7.pose.pose.orientation = cart_7_pose.pose.pose.orientation
+    markers.markers.append(marker_7)
+    #rb1_base_ar_track_pub.publish(markers)
+    
+    yaw_faced = get_yaw_cart_faced(marker_7)
 
-		br7 = tf.TransformBroadcaster()
-		br7.sendTransform((marker_7.pose.pose.position.x, marker_7.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced), rospy.Time.now(), "ar_marker_7", "map")
+    br7 = tf.TransformBroadcaster()
+    br7.sendTransform((marker_7.pose.pose.position.x, marker_7.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced + math.pi), rospy.Time.now(), _cart_marker_name, "map")
 
 def looking_at_marker8(pose):
 
     #Eucledian distance between cart and pose
     distance = math.sqrt(pow((pose.position.x - cart_8_pose.pose.pose.position.x ),2) + pow((pose.position.y - cart_8_pose.pose.pose.position.y),2))
     #rospy.loginfo("Distance from marker 8 %f", distance)
-    if distance > detection_radius or distance < minimum_detection_radius:
+    if distance > detection_radius:
         return False
     return True
 
 def publish_marker_8():
-    global rb1_base_ar_track_pub
+    #global rb1_base_ar_track_pub
     markers = AlvarMarkers()
     markers.markers = []
     marker_8 = AlvarMarker()
     marker_8.header.frame_id = "map"
     marker_8.header.stamp = rospy.Time.now()
     marker_8.id = 8
-    if cart_8_pose.pose.pose.position.x !=0 and cart_8_pose.pose.pose.position.y !=0 :
-		marker_8.pose.pose.position.x = cart_8_pose.pose.pose.position.x
-		marker_8.pose.pose.position.y = cart_8_pose.pose.pose.position.y
-		marker_8.pose.pose.position.z = 1
-		marker_8.pose.pose.orientation = cart_8_pose.pose.pose.orientation
-		markers.markers.append(marker_8)
-		rb1_base_ar_track_pub.publish(markers)
-		
-		yaw_faced = get_yaw_cart_faced(marker_8)
+    marker_8.pose.pose.position.x = cart_8_pose.pose.pose.position.x
+    marker_8.pose.pose.position.y = cart_8_pose.pose.pose.position.y
+    marker_8.pose.pose.position.z = 1
+    marker_8.pose.pose.orientation = cart_8_pose.pose.pose.orientation
+    markers.markers.append(marker_8)
+    #rb1_base_ar_track_pub.publish(markers)
+    
+    yaw_faced = get_yaw_cart_faced(marker_8)
 
-		br8 = tf.TransformBroadcaster()
-		br8.sendTransform((marker_8.pose.pose.position.x, marker_8.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced), rospy.Time.now(), "ar_marker_8", "map")
+    br8 = tf.TransformBroadcaster()
+    br8.sendTransform((marker_8.pose.pose.position.x, marker_8.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced + math.pi), rospy.Time.now(), _cart_marker_name, "map")
 
 def looking_at_marker9(pose):
 
     #Eucledian distance between cart and pose
     distance = math.sqrt(pow((pose.position.x - cart_9_pose.pose.pose.position.x ),2) + pow((pose.position.y - cart_9_pose.pose.pose.position.y),2))
     #rospy.loginfo("Distance from marker 9 %f", distance)
-    if distance > detection_radius or distance < minimum_detection_radius:
+    if distance > detection_radius:
         return False
     return True
 
 def publish_marker_9():
-    global rb1_base_ar_track_pub
+    #global rb1_base_ar_track_pub
     markers = AlvarMarkers()
     markers.markers = []
     marker_9 = AlvarMarker()
     marker_9.header.frame_id = "map"
     marker_9.header.stamp = rospy.Time.now()
     marker_9.id = 9
-    if cart_9_pose.pose.pose.position.x !=0 and cart_9_pose.pose.pose.position.y !=0 :
-		marker_9.pose.pose.position.x = cart_9_pose.pose.pose.position.x
-		marker_9.pose.pose.position.y = cart_9_pose.pose.pose.position.y
-		marker_9.pose.pose.position.z = 1
-		marker_9.pose.pose.orientation = cart_9_pose.pose.pose.orientation
-		markers.markers.append(marker_9)
-		rb1_base_ar_track_pub.publish(markers)
-		
-		yaw_faced = get_yaw_cart_faced(marker_9)
-		br9 = tf.TransformBroadcaster()
-		br9.sendTransform((marker_9.pose.pose.position.x, marker_9.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced), rospy.Time.now(), "ar_marker_9", "map")
+    marker_9.pose.pose.position.x = cart_9_pose.pose.pose.position.x
+    marker_9.pose.pose.position.y = cart_9_pose.pose.pose.position.y
+    marker_9.pose.pose.position.z = 1
+    marker_9.pose.pose.orientation = cart_9_pose.pose.pose.orientation
+    markers.markers.append(marker_9)
+    #rb1_base_ar_track_pub.publish(markers)
+    
+    yaw_faced = get_yaw_cart_faced(marker_9)
+
+    br9 = tf.TransformBroadcaster()
+    br9.sendTransform((marker_9.pose.pose.position.x, marker_9.pose.pose.position.y, 0), tf.transformations.quaternion_from_euler(0, 0, yaw_faced + math.pi), rospy.Time.now(), _cart_marker_name, "map")
 
 
 def main():
+	
+    global _name, _cart_marker_name
 
     rospy.init_node("stage_frame_mapping_node")
 
@@ -456,6 +450,14 @@ def main():
     rospy.loginfo('%s: starting'%(_name))
 
     rate = rospy.Rate(100) # 100hz
+    
+    try:
+        robot_id = rospy.get_param('~id_robot', default = "robot_0")
+    except:
+        rospy.logerr("%s::rosSetup: you have not set a id_robot parameter. I cannot work without it: %s" % (_name, robot_id))
+        return -1
+
+    _cart_marker_name = robot_id + "_cart"
 
     ## subscriptions
 
@@ -473,51 +475,38 @@ def main():
     rospy.Subscriber("/cart_7/base_pose_ground_truth", Odometry, callback_pose_cart_7)
     rospy.Subscriber("/cart_8/base_pose_ground_truth", Odometry, callback_pose_cart_8)
     rospy.Subscriber("/cart_9/base_pose_ground_truth", Odometry, callback_pose_cart_9)
-    
-    first_time = True
  
     while not rospy.is_shutdown():
 
 	if looking_at_marker0(rb1_base_pose.pose.pose):
-		if not first_time:
-			publish_marker_0()
+		publish_marker_0()
 
 	if looking_at_marker1(rb1_base_pose.pose.pose):
-		if not first_time:
-			publish_marker_1()
+		publish_marker_1()
 
 	if looking_at_marker2(rb1_base_pose.pose.pose):
-		if not first_time:
-			publish_marker_2()    
+		publish_marker_2()    
 
 	if looking_at_marker3(rb1_base_pose.pose.pose):
-		if not first_time:
-			publish_marker_3()
+		publish_marker_3()
 
 	if looking_at_marker4(rb1_base_pose.pose.pose):
-		if not first_time:
-			publish_marker_4()
+		publish_marker_4()
 
 	if looking_at_marker5(rb1_base_pose.pose.pose):
-		if not first_time:
-			publish_marker_5()
+		publish_marker_5()
 
 	if looking_at_marker6(rb1_base_pose.pose.pose):
-		if not first_time:
-			publish_marker_6()
+		publish_marker_6()
 
 	if looking_at_marker7(rb1_base_pose.pose.pose):
-		if not first_time:
-			publish_marker_7()
+		publish_marker_7()
 
 	if looking_at_marker8(rb1_base_pose.pose.pose):
-		if not first_time:
-			publish_marker_8()
+		publish_marker_8()
 
 	if looking_at_marker9(rb1_base_pose.pose.pose):
-		if not first_time:
-			publish_marker_9()
-	first_time = False
+		publish_marker_9()
 
         rate.sleep()
 

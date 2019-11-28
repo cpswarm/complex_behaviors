@@ -16,21 +16,25 @@
     
 
     <!-- Scout CPS -->
+    <!-- rb1_base( pose [ -7 1 0 0 ] name "scout_0" color "red") -->
     <include file="$(find storage)/launch/scout.launch">
         <arg name="id" value="0" />
         <arg name="world" value="$(arg world)_map" />
-        <arg name="x" value="1" />
-        <arg name="y" value="-1" />
-        <arg name="yaw" value="-3.14" />
+        <arg name="x" value="-7" />
+        <arg name="y" value="1" />
+        <arg name="yaw" value="-1.57" />
+        <arg name="vehicle" value="scout" />
     </include>
 
     <!-- Worker CPS -->
+    <!--rb1_base( pose [ -7 -2 0 0 ] name "carrier_0" color "green")-->
     <include file="$(find storage)/launch/worker.launch">
-        <arg name="id" value="1" />
-        <arg name="world" value="$(arg world)" />
-        <arg name="x" value="-1" />
-        <arg name="y" value="-1" />
-        <arg name="yaw" value="-3.14" />
+        <arg name="id" value="0" />
+        <arg name="world" value="$(arg world)_map" />
+        <arg name="x" value="-7" />
+        <arg name="y" value="-2" />
+        <arg name="yaw" value="-1.57" />
+        <arg name="vehicle" value="carrier" />
     </include>
 
 </launch>
