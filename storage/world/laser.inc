@@ -1,7 +1,7 @@
 define laser ranger
 (
 	sensor(
-    range [ 0.0  30.0 ]
+    range [ 0.0  10.0 ]
     fov 270
    samples 1081
   )
