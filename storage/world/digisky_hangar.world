@@ -51,9 +51,3 @@ cart(pose [ 2.18 4.5 0 210.000 ] name "cart_6" color "gray")
 cart(pose [ 7 1.8 0 80.000 ] name "cart_7" color "gray")
 cart(pose [ 3.441 1.8 0 180.000 ] name "cart_8" color "gray")
 cart(pose [ 6 5.0 0 180.000 ] name "cart_9" color "gray")
-
-#agent(
-#    pose [1 0 0 90]
-#    name "robot_2"
-#    color "blue"
-#)

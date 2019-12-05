@@ -58,5 +58,5 @@ window
     size [800 600] 
     rotate [0 0]
     scale 100
-    show_data 1
+    show_data 0
 )
