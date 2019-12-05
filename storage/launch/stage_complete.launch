@@ -3,7 +3,11 @@
 
     <arg name="gui" default="false" />
     <arg name="world" default="digisky_hangar" />
+    <arg name="scouts" default="1" />
+    <arg name="workers" default="1" />
+    <arg name="rng_seed" default="0" />
 
+    <param name="rng_seed" value="$(arg rng_seed)" />
     <param name="use_sim_time" value="true" />
 
     <!-- Stage simulator -->
@@ -13,26 +17,65 @@
     </include>
     
 
-    <!-- Scout CPS -->
+    <!-- Scout CPSs -->
     <!-- rb1_base( pose [ -7 1 0 0 ] name "scout_0" color "red") -->
-    <include file="$(find storage)/launch/scout.launch">
+    <include file="$(find storage)/launch/scout.launch" if="$(eval scouts > 0)">
         <arg name="id" value="0" />
         <arg name="world" value="$(arg world)_map" />
         <arg name="x" value="-7" />
         <arg name="y" value="1" />
         <arg name="yaw" value="-1.57" />
-        <arg name="vehicle" value="scout" />
     </include>
+    <!-- rb1_base( pose [ -7 0 0 0 ] name "scout_1" color "red") -->
+    <include file="$(find storage)/launch/scout.launch" if="$(eval scouts > 1)">
+        <arg name="id" value="1" />
+        <arg name="world" value="$(arg world)_map" />
+        <arg name="x" value="-7" />
+        <arg name="y" value="0" />
+        <arg name="yaw" value="-1.57" />
+    </include>
+    
 
     <!-- Worker CPS -->
     <!--rb1_base( pose [ -7 -2 0 0 ] name "carrier_0" color "green")-->
-    <include file="$(find storage)/launch/worker.launch">
+    <include file="$(find storage)/launch/worker.launch" if="$(eval workers > 0)">
         <arg name="id" value="0" />
         <arg name="world" value="$(arg world)_map" />
         <arg name="x" value="-7" />
         <arg name="y" value="-2" />
         <arg name="yaw" value="-1.57" />
-        <arg name="vehicle" value="carrier" />
+    </include>
+    <!--rb1_base( pose [ -7 -3 0 0 ] name "carrier_1" color "green")-->
+    <include file="$(find storage)/launch/worker.launch" if="$(eval workers > 1)">
+        <arg name="id" value="1" />
+        <arg name="world" value="$(arg world)_map" />
+        <arg name="x" value="-7" />
+        <arg name="y" value="-3" />
+        <arg name="yaw" value="-1.57" />
+    </include>
+        <!--rb1_base( pose [ -7 -4 0 0 ] name "carrier_2" color "green")-->
+    <include file="$(find storage)/launch/worker.launch" if="$(eval workers > 2)">
+        <arg name="id" value="2" />
+        <arg name="world" value="$(arg world)_map" />
+        <arg name="x" value="-7" />
+        <arg name="y" value="-4" />
+        <arg name="yaw" value="-1.57" />
+    </include>
+        <!--rb1_base( pose [ -7 -5 0 0 ] name "carrier_3" color "green")-->
+    <include file="$(find storage)/launch/worker.launch" if="$(eval workers > 3)">
+        <arg name="id" value="3" />
+        <arg name="world" value="$(arg world)_map" />
+        <arg name="x" value="-7" />
+        <arg name="y" value="-5" />
+        <arg name="yaw" value="-1.57" />
+    </include>
+        <!--rb1_base( pose [ -7 -6 0 0 ] name "carrier_4" color "green")-->
+    <include file="$(find storage)/launch/worker.launch" if="$(eval workers > 4)">
+        <arg name="id" value="4" />
+        <arg name="world" value="$(arg world)_map" />
+        <arg name="x" value="-7" />
+        <arg name="y" value="-6" />
+        <arg name="yaw" value="-1.57" />
     </include>
 
 </launch>
