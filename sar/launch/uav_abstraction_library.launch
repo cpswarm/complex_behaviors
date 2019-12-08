@@ -95,14 +95,21 @@
             <arg name="output" value="$(arg output)" />
         </include>
 
-        <!-- Sonar sensor driver -->
+        <!-- Sonar sensor driver 
         <include file="$(find obc_ros_sonar)/launch/obc_ros_sonar.launch">
+            <arg name="id" value="$(arg id)" />
+            <arg name="output" value="$(arg output)" />
+        </include> -->
+
+        <!-- UWB localization node -->
+        <include file="$(find obc_ros_uwb)/launch/obc_ros_uwb.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
         </include>
 
-        <!-- UWB localization node -->
-        <include file="$(find obc_ros_uwb)/launch/obc_ros_uwb.launch">
+        <!-- Lidar driver -->
+        <include file="$(find obc_ros_lidar)/launch/obc_ros_lidar.launch">
+            <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
         </include>
 
