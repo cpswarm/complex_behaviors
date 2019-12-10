@@ -11,23 +11,6 @@ floorplan
     size [20 20 1]
 )
 
-# set agent(s)
-# robot_0
-#agent(
-#    pose [1 -1 0 90]
-#    name "robot"
-#    color "red"
-#)
-
-# robot_1
-#agent(
-#    pose [-1 -1 0 90]
-#    name "robot"
-#    color "green"
-#)
-
-# the order matters because we want to differentiate between carts and robots
-
 # robot_0
 rb1_base( pose [ -7 1 0 0 ] name "scout_0" color "red")
 rb1_base( pose [ -7 0 0 0 ] name "scout_1" color "red")
