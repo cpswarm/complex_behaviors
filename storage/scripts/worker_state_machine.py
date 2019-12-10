@@ -128,7 +128,8 @@ def main():
                      smach_ros.SimpleActionState('pick_and_place',
                          PickAndPlaceAction,
                          goal_slots=['box_id','target_pose']),
-                     transitions={'succeeded':'PublishState', 'aborted':'MoveToHome'},
+                     #transitions={'succeeded':'PublishState', 'aborted':'MoveToHome'},
+                     transitions={'succeeded':'IdleThreads', 'aborted':'IdleThreads'},
                      remapping={'box_id':'box_id','target_pose':'box_position'})
                 
                 # ADD PublishState to WorkerBehavior #
@@ -136,7 +137,7 @@ def main():
                     smach_ros.SimpleActionState('cmd/target_done',
                         TargetAction,
                         goal_slots=['id', 'pose']),
-                    transitions={'succeeded':'MoveToHome', 'aborted':'MoveToHome'},
+                    transitions={'succeeded':'IdleThreads', 'aborted':'IdleThreads'},
                     remapping={'id':'box_id', 'pose':'box_position'})
 
                 # ADD MoveToHome to WorkerBehavior #
@@ -150,7 +151,7 @@ def main():
                     return goal
 
                 smach.StateMachine.add('MoveToHome',
-                    smach_ros.SimpleActionState('cmd/moveto',
+                    smach_ros.SimpleActionState('move_base',
                         MoveBaseAction,
                         goal_cb=move_home_cb),
                     transitions={'succeeded':'IdleThreads', 'aborted':'IdleThreads'})
@@ -188,8 +189,8 @@ def main():
             transitions={})
 
     # Create and start the introspection server (uncomment if needed)
-    #sis = smach_ros.IntrospectionServer('smach_server', top_sm, '/SM_TOP')
-    #sis.start()
+    sis = smach_ros.IntrospectionServer('smach_server', top_sm, '/SM_TOP')
+    sis.start()
 
     # Execute SMACH plan
     outcome = top_sm.execute()
