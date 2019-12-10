@@ -106,7 +106,7 @@ def main():
 				smach.StateMachine.add('TakeOff',
 					smach_ros.SimpleActionState('cmd/takeoff',
 						TakeOffAction,
-						goal=TakeOffGoal(0.9)),
+						goal=TakeOffGoal(1.8)),
 					transitions={'succeeded':'IdleThreads2'})
 
 				#  ===================================== IdleThreads2 =====================================
