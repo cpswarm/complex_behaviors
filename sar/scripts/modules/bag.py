@@ -109,57 +109,6 @@ class Bag:
             self.rescued = t.secs + t.nsecs / 1000000000.0 - self.tstart
             break
 
-        t0 = 0.0;
-        for topic,msg,t in bag.read_messages(ns + 'bridge/events/launch'):
-            t0 = t.secs + t.nsecs / 1000000000.0
-            print("{0:.2f} {1}".format(t.secs + t.nsecs / 1000000000.0 - t0, topic))
-            break
-        for topic,msg,t in bag.read_messages(ns + 'cmd/takeoff/goal'):
-            print("{0:.2f} {1}".format(t.secs + t.nsecs / 1000000000.0 - t0, topic))
-            break
-        for topic,msg,t in bag.read_messages(ns + 'cmd/takeoff/result'):
-            print("{0:.2f} {1}".format(t.secs + t.nsecs / 1000000000.0 - t0, topic))
-            break
-        for topic,msg,t in bag.read_messages(ns + 'bridge/events/mission_start'):
-            print("{0:.2f} {1}".format(t.secs + t.nsecs / 1000000000.0 - t0, topic))
-            break
-        for topic,msg,t in bag.read_messages(ns + 'uav_coverage/goal'):
-            print("{0:.2f} {1}".format(t.secs + t.nsecs / 1000000000.0 - t0, topic))
-            break
-        for topic,msg,t in bag.read_messages(ns + 'bridge/events/cps_selection'):
-            print("{0:.2f} {1}".format(t.secs + t.nsecs / 1000000000.0 - t0, topic))
-            break
-        for topic,msg,t in bag.read_messages(ns + 'uav_coverage/result'):
-            print("{0:.2f} {1}".format(t.secs + t.nsecs / 1000000000.0 - t0, topic))
-            break
-        for topic,msg,t in bag.read_messages(ns + 'cmd/assign_task/goal'):
-            print("{0:.2f} {1}".format(t.secs + t.nsecs / 1000000000.0 - t0, topic))
-            break
-        for topic,msg,t in bag.read_messages(ns + 'target_found'):
-            print("{0:.2f} {1}".format(t.secs + t.nsecs / 1000000000.0 - t0, topic))
-            break
-        for topic,msg,t in bag.read_messages(ns + 'cps_selected'):
-            print("{0:.2f} {1}".format(t.secs + t.nsecs / 1000000000.0 - t0, topic))
-            break
-        for topic,msg,t in bag.read_messages(ns + 'cmd/assign_task/result'):
-            print("{0:.2f} {1}".format(t.secs + t.nsecs / 1000000000.0 - t0, topic))
-            break
-        for topic,msg,t in bag.read_messages(ns + 'uav_tracking/goal'):
-            print("{0:.2f} {1}".format(t.secs + t.nsecs / 1000000000.0 - t0, topic))
-            break
-        for topic,msg,t in bag.read_messages(ns + 'target_lost'):
-            print("{0:.2f} {1}".format(t.secs + t.nsecs / 1000000000.0 - t0, topic))
-            break
-        for topic,msg,t in bag.read_messages(ns + 'uav_tracking/cancel'):
-            print("{0:.2f} {1}".format(t.secs + t.nsecs / 1000000000.0 - t0, topic))
-            break
-        for topic,msg,t in bag.read_messages(ns + 'uav_tracking/result'):
-            print("{0:.2f} {1}".format(t.secs + t.nsecs / 1000000000.0 - t0, topic))
-            break
-        for topic,msg,t in bag.read_messages(ns + 'bridge/events/mission_abort'):
-            print("{0:.2f} {1}".format(t.secs + t.nsecs / 1000000000.0 - t0, topic))
-            break
-
         # close bag
         bag.close()
 

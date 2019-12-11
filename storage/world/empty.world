@@ -6,22 +6,109 @@ floorplan
 (
     name "empty.png"
     bitmap "empty.png"
-    size [20 20 1]
+    size [22 22 1]
 )
 
-# set agent(s)
+# set scout agents
 agent(
-    pose [1 -1 0 90]
+    pose [-0.5 -9.5 0 90]
     name "robot_0"
     color "red"
 )
 agent(
-    pose [-1 -1 0 90]
+    pose [-1.5 -9.5 0 90]
     name "robot_1"
+    color "red"
+)
+agent(
+    pose [-2.5 -9.5 0 90]
+    name "robot_2"
+    color "red"
+)
+agent(
+    pose [-3.5 -9.5 0 90]
+    name "robot_3"
+    color "red"
+)
+agent(
+    pose [-4.5 -9.5 0 90]
+    name "robot_4"
+    color "red"
+)
+agent(
+    pose [-5.5 -9.5 0 90]
+    name "robot_5"
+    color "red"
+)
+agent(
+    pose [-6.5 -9.5 0 90]
+    name "robot_6"
+    color "red"
+)
+agent(
+    pose [-7.5 -9.5 0 90]
+    name "robot_7"
+    color "red"
+)
+agent(
+    pose [-8.5 -9.5 0 90]
+    name "robot_8"
+    color "red"
+)
+agent(
+    pose [-9.5 -9.5 0 90]
+    name "robot_9"
+    color "red"
+)
+
+# set worker agents
+agent(
+    pose [0.5 -9.5 0 90]
+    name "robot_10"
     color "green"
 )
-#agent(
-#    pose [1 0 0 90]
-#    name "robot_2"
-#    color "blue"
-#)
+agent(
+    pose [1.5 -9.5 0 90]
+    name "robot_11"
+    color "green"
+)
+agent(
+    pose [2.5 -9.5 0 90]
+    name "robot_12"
+    color "green"
+)
+agent(
+    pose [3.5 -9.5 0 90]
+    name "robot_13"
+    color "green"
+)
+agent(
+    pose [4.5 -9.5 0 90]
+    name "robot_14"
+    color "green"
+)
+agent(
+    pose [5.5 -9.5 0 90]
+    name "robot_15"
+    color "green"
+)
+agent(
+    pose [6.5 -9.5 0 90]
+    name "robot_16"
+    color "green"
+)
+agent(
+    pose [7.5 -9.5 0 90]
+    name "robot_17"
+    color "green"
+)
+agent(
+    pose [8.5 -9.5 0 90]
+    name "robot_18"
+    color "green"
+)
+agent(
+    pose [9.5 -9.5 0 90]
+    name "robot_19"
+    color "green"
+)

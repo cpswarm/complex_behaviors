@@ -1,15 +1,17 @@
 <?xml version="1.0"?>
 <launch>
 
-    <arg name="id" default="1" />
+    <arg name="id" default="0" />
     <arg name="vehicle" default="drone" />
     <arg name="x" default="0" />
     <arg name="y" default="0" />
     <arg name="pos_type" default="local" />
     <arg name="output" default="screen" />
+    <arg name="behavior" default="random" />
+    <arg name="logging" default="true" />
     <arg name="fcu_url" default="/dev/ttyS2:57600" />
 
-    <group ns="$(arg vehicle)$(arg id)">
+    <group ns="$(arg vehicle)_$(arg id)">
 
         <!-- Behavior state machine -->
         <node pkg="sar" type="uav_sar_demonstration.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true" />
@@ -18,18 +20,18 @@
         <include file="$(find mavros)/launch/px4.launch">
             <arg name="fcu_url" value="$(arg fcu_url)" />
             <arg name="gcs_url" value="" />
-            <arg name="tgt_system" value="$(arg id)" />
+            <arg name="tgt_system" value="$(eval 1 + id)" />
             <arg name="tgt_component" value="1" />
             <arg name="log_output" value="$(arg output)" />
         </include>
 
-        <!-- CPSwarm communication library -->
+        <!-- Communication library -->
         <include file="$(find sar)/launch/uav_communication_library.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
         </include>
 
-        <!-- CPSwarm abstraction library -->
+        <!-- Abstraction library -->
         <include file="$(find sar)/launch/uav_abstraction_library.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="x" value="$(arg x)" />
@@ -39,14 +41,15 @@
             <arg name="output" value="$(arg output)" />
         </include>
 
-        <!-- CPSwarm swarm library -->
+        <!-- Swarm library -->
         <include file="$(find sar)/launch/uav_swarm_library.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
+            <arg name="behavior" value="$(arg behavior)" />
         </include>
 
         <!-- Data logging -->
-        <include file="$(find sar)/launch/logging.launch">
+        <include if="$(arg logging)" file="$(find sar)/launch/logging.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
         </include>

@@ -1,13 +1,12 @@
 <?xml version="1.0"?>
 <launch>
 
-    <arg name="id" default="1" />
+    <arg name="id" default="0" />
     <arg name="output" default="log" />
+    <arg name="behavior" default="random" />
 
-    <!-- CPSwarm SAR algorithms -->
-    <!--include file="$(find sar)/launch/uav_sar_optimal.launch"> -->
-        <!--     <include file="$(find sar)/launch/uav_sar_flocking.launch"> -->
-    <include file="$(find sar)/launch/uav_sar_m18.launch">
+    <!-- SAR algorithms -->
+    <include file="$(find sar)/launch/uav_sar_$(arg behavior).launch">
         <arg name="id" value="$(arg id)" />
         <arg name="output" value="$(arg output)" />
     </include>
