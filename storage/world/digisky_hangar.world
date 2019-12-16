@@ -11,12 +11,12 @@ floorplan
     size [20 20 1]
 )
 
-# robot_0
+# scouts
 rb1_base( pose [ -7 1 0 0 ] name "scout_0" color "red")
 rb1_base( pose [ -7 0 0 0 ] name "scout_1" color "red")
 
 
-# robot_1
+# carriers
 rb1_base( pose [ -7 -2 0 0 ] name "carrier_0" color "green")
 rb1_base( pose [ -7 -3 0 0 ] name "carrier_1" color "green")
 rb1_base( pose [ -7 -4 0 0 ] name "carrier_2" color "green")
