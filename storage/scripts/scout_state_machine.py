@@ -22,6 +22,12 @@ class Idle(smach.State):
 
 def main():
 	rospy.init_node('state_machine_node')
+
+	try:
+		id = rospy.get_param('~id')
+	except:
+		rospy.logerr("id param must be specify")
+		return -1	
 	
 	# Create a TOP level SMACH state machine
 	top_sm = smach.StateMachine(['succeeded', 'preempted', 'aborted'])
@@ -64,7 +70,7 @@ def main():
 				# ADD Search to ScoutBehavior #
 				smach.StateMachine.add('Search',
 					#smach_ros.SimpleActionState('ugv_coverage',
-					smach_ros.SimpleActionState('search_carts',
+					smach_ros.SimpleActionState('search_carts_' + str(id),
 						CoverageAction,
 						result_slots=['target_id', 'target_pose']),
 					transitions={'succeeded':'AssignBox'},
@@ -73,7 +79,7 @@ def main():
 				# ADD Task Allocation to ScoutBehavior #
 				smach.StateMachine.add('AssignBox',
 					#smach_ros.SimpleActionState('cmd/task_allocation_auction',
-					smach_ros.SimpleActionState('cart_assignment',
+					smach_ros.SimpleActionState('cart_assignment_' + str(id),
 						TaskAllocationAction,
 						goal_slots=['task_id', 'task_pose'],
 						result_slots=['task_id', 'winner', 'task_pose']),
