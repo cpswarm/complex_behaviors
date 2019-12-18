@@ -14,11 +14,18 @@
     <group ns="$(arg frame)">
 
         <!-- Behavior state machine -->
-        <node pkg="storage" type="scout_state_machine.py" name="scout_state_machine_$(arg id)" output="$(arg output)" required="true" />
+        <node pkg="storage" type="scout_state_machine.py" name="scout_state_machine_$(arg id)" output="$(arg output)" required="true">
+            <param name="id" type="int" value="$(arg id)"/>
+        </node>
        
         <!-- carts_management -->
-        <node pkg="robotnik_pkgs" type="search_carts.py" name="search_carts" output="$(arg output)" required="true" />
-        <node pkg="robotnik_pkgs" type="cart_assignment.py" name="cart_assignment" output="$(arg output)" required="true" />
+        <node pkg="robotnik_pkgs" type="search_carts.py" name="search_carts_$(arg id)" output="$(arg output)" required="true">
+            <param name="id" type="int" value="$(arg id)"/>
+        </node>
+        <node pkg="robotnik_pkgs" type="cart_assignment.py" name="cart_assignment_$(arg id)" output="$(arg output)" required="true">
+            <param name="id" type="int" value="$(arg id)"/>
+        </node>
+
         <!-- CPSwarm communication library -->
         <include file="$(find storage)/launch/communication_library.launch">
             <arg name="id" value="$(arg id)" />

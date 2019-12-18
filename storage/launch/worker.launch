@@ -15,7 +15,9 @@
     <group ns="$(arg frame)">
 
         <!-- Behavior state machine -->
-        <node pkg="storage" type="worker_state_machine.py" name="worker_state_machine_$(arg id)" output="$(arg output)" required="true" />
+        <node pkg="storage" type="worker_state_machine.py" name="worker_state_machine_$(arg id)" output="$(arg output)" required="true">
+            <param name="id" type="int" value="$(arg id)"/>
+        </node>
 
         <!-- CPSwarm communication library -->
         <include file="$(find storage)/launch/communication_library.launch">
