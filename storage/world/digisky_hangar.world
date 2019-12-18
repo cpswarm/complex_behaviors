@@ -12,16 +12,16 @@ floorplan
 )
 
 # scouts
-rb1_base( pose [ -7 1 0 0 ] name "scout_0" color "red")
-rb1_base( pose [ -7 0 0 0 ] name "scout_1" color "red")
+rb1_base( pose [ -7 3.75 0 0 ] name "scout_0" color "red")
+rb1_base( pose [ -7 2.5 0 0 ] name "scout_1" color "red")
 
 
 # carriers
-rb1_base( pose [ -7 -2 0 0 ] name "carrier_0" color "green")
-rb1_base( pose [ -7 -3 0 0 ] name "carrier_1" color "green")
-rb1_base( pose [ -7 -4 0 0 ] name "carrier_2" color "green")
-rb1_base( pose [ -7 -5 0 0 ] name "carrier_3" color "green")
-rb1_base( pose [ -7 -6 0 0 ] name "carrier_4" color "green")
+rb1_base( pose [ -7 1 0 0 ] name "carrier_0" color "green")
+rb1_base( pose [ -7 0 0 0 ] name "carrier_1" color "green")
+rb1_base( pose [ -7 -1 0 0 ] name "carrier_2" color "green")
+rb1_base( pose [ -7 -2 0 0 ] name "carrier_3" color "green")
+rb1_base( pose [ -7 -3 0 0 ] name "carrier_4" color "green")
 
 
 cart(pose [ -0.0 2.0 0 170.000 ] name "cart_0" color "gray")
