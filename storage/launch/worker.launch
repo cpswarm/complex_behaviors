@@ -74,6 +74,7 @@
         <include file="$(find storage)/launch/logging.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
+            <arg name="name" value="worker" />
         </include>
 
     </group>

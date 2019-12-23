@@ -3,9 +3,10 @@
 
     <arg name="id" default="0" />
     <arg name="output" default="log" />
+    <arg name="name" default="robot" />
 
     <!-- Node for recording data from logging topic to bag files -->
-    <node pkg="rosbag" type="record" name="record_$(arg id)" output="$(arg output)" required="true" args="-o cpswarm_storage_ugv_$(arg id)
+    <node pkg="rosbag" type="record" name="record_$(arg id)" output="$(arg output)" required="true" args="-o cpswarm_storage_ugv_$(arg name)_$(arg id)
         pos_provider/pose
         target_done
         target_found
