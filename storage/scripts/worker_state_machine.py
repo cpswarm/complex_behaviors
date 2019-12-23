@@ -129,12 +129,13 @@ def main():
                          PickAndPlaceAction,
                          goal_slots=['box_id','target_pose']),
                      #transitions={'succeeded':'PublishState', 'aborted':'MoveToHome'},
-                     transitions={'succeeded':'IdleThreads', 'aborted':'IdleThreads'},
+                     transitions={'succeeded':'PublishState', 'aborted':'IdleThreads'},
                      remapping={'box_id':'box_id','target_pose':'box_position'})
                 
                 # ADD PublishState to WorkerBehavior #
                 smach.StateMachine.add('PublishState',
-                    smach_ros.SimpleActionState('cmd/target_done',
+                    #smach_ros.SimpleActionState('cmd/target_done',
+                    smach_ros.SimpleActionState('target_done',
                         TargetAction,
                         goal_slots=['id', 'pose']),
                     transitions={'succeeded':'IdleThreads', 'aborted':'IdleThreads'},
