@@ -14,10 +14,10 @@
     <!-- set table behavior -->
 
     <!-- Move to action server -->
-    <include file="$(find moveto)/launch/moveto.launch">
+    <!--include file="$(find moveto)/launch/moveto.launch">
         <arg name="id" value="$(arg id)" />
         <arg name="output" value="$(arg output)" />
-    </include>
+    </include-->
 
     <!-- Mission area services -->
     <include file="$(find area_provider)/launch/area_provider.launch">
@@ -29,13 +29,13 @@
     </include>
 
     <!-- Position controller -->
-    <include file="$(find navigation_pos_controller)/launch/navigation_pos_controller.launch">
+    <!--include file="$(find navigation_pos_controller)/launch/navigation_pos_controller.launch">
         <arg name="id" value="$(arg id)" />
         <arg name="frame" value="$(arg frame)" />
         <arg name="x" value="$(arg x)" />
         <arg name="y" value="$(arg y)" />
         <arg name="output" value="$(arg output)" />
-    </include>
+    </include-->
 
     <!-- Position provider -->
     <include file="$(find navigation_pos_provider)/launch/navigation_pos_provider_sim.launch">
@@ -48,15 +48,15 @@
     </include>
 
     <!-- Velocity provider -->
-    <include file="$(find navigation_vel_provider)/launch/navigation_vel_provider.launch">
+    <!--include file="$(find navigation_vel_provider)/launch/navigation_vel_provider.launch">
         <arg name="id" value="$(arg id)" />
         <arg name="output" value="$(arg output)" />
-    </include>
+    </include-->
 
     <!-- Obstacle detection -->
-    <include file="$(find obstacle_detection)/launch/obstacle_detection.launch">
+    <!--include file="$(find obstacle_detection)/launch/obstacle_detection.launch">
         <arg name="id" value="$(arg id)" />
         <arg name="output" value="$(arg output)" />
-    </include>
+    </include-->
 
 </launch>
