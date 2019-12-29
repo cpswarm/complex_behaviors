@@ -1,6 +1,0 @@
- - define events and parameters in param/swarmros.cfg
- - adjust state machine in scripts/storage_simulation.py
- - add launch files for gazebo
- - add turtlebot configuration
- - pos_type arg can be removed?
- - update readme
