@@ -221,7 +221,7 @@ Parameters
   The x-coordinate measured from the origin of the relative localization system.
 * `y` (real, default: `0`)
   The y-coordinate measured from the origin of the relative localization system.
-* `pos_type (string, default: `local`)
+* `pos_type` (string, default: `local`)
   Whether relative (`local`) or GPS (`global`) coordinates are used by the flight controller.
 * `obc` (boolean, default: `false`)
   Whether the code is executed on the onboard computer (OBC) of the UAV.

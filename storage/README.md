@@ -168,7 +168,7 @@ Parameters
   The y-coordinate measured from the origin of the relative localization system.
 * `world` (string)
   The world file to be loaded by the map server when running simulations.
-* `pos_type (string, default: `local`)
+* `pos_type` (string, default: `local`)
   Whether relative (`local`) or GPS (`global`) coordinates are used.
 * `simulation` (boolean, default: `false`)
   Whether the behavior is executed in simulation.
