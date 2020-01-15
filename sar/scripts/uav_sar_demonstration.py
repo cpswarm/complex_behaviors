@@ -33,6 +33,10 @@ class Idle(smach.State):
 def main():
 	rospy.init_node('state_machine_node')
 	
+	if not rospy.has_param('~altitude'):
+		rospy.logerr('Altitude not specified, cannot perform simulation!')
+		return
+
 	# Create a TOP level SMACH state machine
 	top_sm = smach.StateMachine(['succeeded', 'preempted', 'aborted'])
 	
@@ -106,7 +110,7 @@ def main():
 				smach.StateMachine.add('TakeOff',
 					smach_ros.SimpleActionState('cmd/takeoff',
 						TakeOffAction,
-						goal=TakeOffGoal(0.9)),
+						goal=TakeOffGoal(rospy.get_param('~altitude'))),
 					transitions={'succeeded':'IdleThreads2'})
 
 				#  ===================================== IdleThreads2 =====================================
@@ -149,6 +153,7 @@ def main():
 				smach.StateMachine.add('Coverage',
 					smach_ros.SimpleActionState('uav_coverage',
 						CoverageAction,
+						goal=CoverageGoal(rospy.get_param('~altitude')),
 						result_slots=['target_id', 'target_pose']),
 					transitions={'succeeded':'SelectRover'},
 					remapping={'target_id':'target_id', 'target_pose':'target_pose'})
@@ -162,12 +167,17 @@ def main():
 					transitions={'succeeded':'Tracking', 'aborted':'SelectRover'},
 					remapping={'task_id':'target_id', 'task_pose':'target_pose', 'winner':'selected_cps_UUID'})
 
+				def tracking_goal_cb(userdata, goal):
+					tracking_goal = TrackingGoal()
+					tracking_goal.target = userdata.target
+					tracking_goal.altitude = rospy.get_param('~altitude')
+					return tracking_goal
 
 				# ADD Tracking to SarBehavior #
 				smach.StateMachine.add('Tracking',
 					smach_ros.SimpleActionState('uav_tracking',
 						TrackingAction,
-						goal_slots=['target']),
+						goal_cb=tracking_goal_cb),
 					transitions={'succeeded':'Coverage', 'aborted':'Coverage'},
 					remapping={'target':'target_id'})
 
@@ -175,6 +185,7 @@ def main():
 # 				smach.StateMachine.add('LocalCoverage',
 # 					smach_ros.SimpleActionState('uav_local_coverage',
 # 						CoverageAction,
+# 						goal=CoverageGoal(rospy.get_param('~altitude')),
 # 						result_slots=['target_id', 'target_pose']),
 # 					transitions={'aborted':'Coverage', 'succeeded':'SelectRover'},
 # 					remapping={'target_id':'target_id', 'target_pose':'pose'})
