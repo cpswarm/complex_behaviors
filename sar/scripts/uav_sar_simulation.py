@@ -74,7 +74,7 @@ def main():
 					smach_ros.SimpleActionState('cmd/takeoff',
 						TakeOffAction,
 						goal=TakeOffGoal(rospy.get_param('~altitude'))),
-					transitions={'succeeded':'LocalCoverage'})
+					transitions={'succeeded':'Coverage'})
 
 				# ADD Coverage to SarBehavior #
 				smach.StateMachine.add('Coverage',
