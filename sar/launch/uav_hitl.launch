@@ -5,6 +5,7 @@
     <arg name="vehicle" default="drone" />
     <arg name="x" default="0" />
     <arg name="y" default="0" />
+    <arg name="altitude" default="1.5" />
     <arg name="pos_type" default="local" />
     <arg name="output" default="screen" />
     <arg name="behavior" default="random" />
@@ -14,7 +15,9 @@
     <group ns="$(arg vehicle)_$(arg id)">
 
         <!-- Behavior state machine -->
-        <node pkg="sar" type="uav_sar_demonstration.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true" />
+        <node pkg="sar" type="uav_sar_demonstration.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true">
+            <param name="altitude" value="$(arg altitude)" />
+        </node>
 
         <!-- MAVROS -->
         <include file="$(find mavros)/launch/px4.launch">

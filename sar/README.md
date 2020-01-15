@@ -111,6 +111,8 @@ Parameters:
   The starting position y-coordinate.
 * `Y` (real, default: `0`)
   The starting position yaw angle.
+* `altitude` (real, default: `1.5`)
+  The altitude at which the UAVs operate.
 * `pos_type` (string, default: `local`)
   Whether relative (`local`) or GPS (`global`) coordinates are used by the flight controller.
 * `output` (string, default: `screen`)
@@ -156,6 +158,8 @@ Parameters:
   The x-coordinate measured from the origin of the relative localization system.
 * `y` (real, default: `0`)
   The y-coordinate measured from the origin of the relative localization system.
+* `altitude` (real, default: `1.5`)
+  The altitude at which the UAVs operate.
 * `pos_type` (string, default: `local`)
   Whether relative (`local`) or GPS (`global`) coordinates are used by the flight controller.
 * `output` (string, default: `screen`)
@@ -221,7 +225,7 @@ Parameters
   The x-coordinate measured from the origin of the relative localization system.
 * `y` (real, default: `0`)
   The y-coordinate measured from the origin of the relative localization system.
-* `pos_type (string, default: `local`)
+* `pos_type` (string, default: `local`)
   Whether relative (`local`) or GPS (`global`) coordinates are used by the flight controller.
 * `obc` (boolean, default: `false`)
   Whether the code is executed on the onboard computer (OBC) of the UAV.
