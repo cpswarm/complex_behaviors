@@ -115,7 +115,7 @@ def main():
 						goal=CoverageGoal(rospy.get_param('~altitude')),
 						result_slots=['target_id', 'target_pose']),
 					transitions={'aborted':'Coverage', 'succeeded':'SelectRover'},
-					remapping={'target_id':'target_id', 'target_pose':'pose'})
+					remapping={'target_id':'target_id', 'target_pose':'target_pose'})
 
 			#  ===================================== SarBehavior END =====================================
 
