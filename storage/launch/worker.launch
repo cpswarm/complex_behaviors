@@ -18,9 +18,14 @@
         <node pkg="storage" type="worker_state_machine.py" name="worker_state_machine_$(arg id)" output="$(arg output)" required="true">
             <param name="id" type="int" value="$(arg id)"/>
         </node>
+        
+        <!-- change_place_pose_bridge -->
+        <node pkg="ugv_picknplace" type="change_place_poses_bridge.py" name="change_place_poses_bridge" output="$(arg output)" required="true">            
+        </node>
+
+
         <!-- target_done -->
-        <node pkg="robotnik_pkgs" type="target_done.py" name="target_done" output="$(arg output)" required="true">
-            
+        <node pkg="robotnik_pkgs" type="target_done.py" name="target_done" output="$(arg output)" required="true">            
         </node>
 
         <!-- CPSwarm communication library -->
@@ -71,11 +76,11 @@
         </include>
 
         <!-- Data logging -->
-        <include file="$(find storage)/launch/logging.launch">
+        <!--include file="$(find storage)/launch/logging.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
             <arg name="name" value="worker" />
-        </include>
+        </include-->
 
     </group>
 
