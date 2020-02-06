@@ -177,7 +177,7 @@ def main():
 				smach.StateMachine.add('Tracking',
 					smach_ros.SimpleActionState('uav_tracking',
 						TrackingAction,
-						goal_cb=tracking_goal_c,
+						goal_cb=tracking_goal_cb,
 						input_keys=['target']),
 					transitions={'succeeded':'Coverage', 'aborted':'Coverage'},
 					remapping={'target':'target_id'})
