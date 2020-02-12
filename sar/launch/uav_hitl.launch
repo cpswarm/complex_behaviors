@@ -63,6 +63,12 @@
             <arg name="output" value="$(arg output)" />
         </include>
 
+        <!-- Gobal position forwarding for Monitoring tool -->
+        <include file="$(find g_pos_fwd/launch/g_pos_fwd.launch">
+            <arg name="id" value="$(arg id)" />
+            <arg name="output" value="$(arg output)" />
+        </include>
+
     </group>
 
 </launch>
