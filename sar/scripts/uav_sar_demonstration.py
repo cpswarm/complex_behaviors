@@ -158,14 +158,43 @@ def main():
 					transitions={'succeeded':'SelectRover'},
 					remapping={'target_id':'target_id', 'target_pose':'target_pose'})
 
-				# ADD SelectRover to SarBehavior #
+				#  ===================================== SelectRoverThreads =====================================
+				# Callback for custom outcomes
+				def selectrover_outcb(outcome_map):
+					if outcome_map['LostEventMonitoring'] == 'invalid':
+						rospy.loginfo('Returning target_lost Event')
+						return 'target_lost'
+					return outcome_map['TaskAllocation']
+
+				# Create a Concurrence container
+				selectrover_concurrence = smach.Concurrence(
+					input_keys=['target_id','target_pose'],
+					outcomes=['succeeded', 'aborted', 'target_lost'],
+					default_outcome='aborted',
+					child_termination_cb=lambda so: True,
+					outcome_cb=selectrover_outcb)
+
+				# Open the container
+				with selectrover_concurrence:
+					# ADD TaskAllocation to SelectRoverThreads #
+					smach.Concurrence.add('TaskAllocation',
+						smach_ros.SimpleActionState('cmd/task_allocation_auction',
+							TaskAllocationAction,
+							goal_slots=['task_id', 'task_pose'],
+							result_slots=['task_id', 'winner', 'task_pose']),
+						remapping={'task_id':'target_id', 'task_pose':'target_pose'})
+
+					# ADD LostEventMonitoring to SelectRoverThreads #
+					smach.Concurrence.add('LostEventMonitoring',
+						smach_ros.MonitorState('target_lost',
+							TargetPositionEvent,
+							cond_cb=lambda ud, msg: False))
+				#  ===================================== SelectRoverThreads END =====================================
+
+				# ADD SelectRoverThreads to SarBehavior #
 				smach.StateMachine.add('SelectRover',
-					smach_ros.SimpleActionState('cmd/task_allocation_auction',
-						TaskAllocationAction,
-						goal_slots=['task_id', 'task_pose'],
-						result_slots=['task_id', 'winner', 'task_pose']),
-					transitions={'succeeded':'Tracking', 'aborted':'SelectRover'},
-					remapping={'task_id':'target_id', 'task_pose':'target_pose', 'winner':'selected_cps_UUID'})
+					selectrover_concurrence,
+					transitions={'succeeded':'Tracking', 'aborted':'SelectRover', 'target_lost':'LocalCoverage'})
 
 				def tracking_goal_cb(userdata, goal):
 					tracking_goal = TrackingGoal()
