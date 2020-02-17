@@ -15,7 +15,7 @@
     <group ns="$(arg vehicle)_$(arg id)">
 
         <!-- Behavior state machine -->
-        <node pkg="sar" type="uav_sar_test.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true">
+        <node pkg="sar" type="uav_sar_test_v2.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true">
             <param name="altitude" value="$(arg altitude)" />
         </node>
 
