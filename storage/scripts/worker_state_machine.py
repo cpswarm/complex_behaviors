@@ -143,6 +143,13 @@ def main():
 
                 # ADD MoveToHome to WorkerBehavior #
                 def move_home_cb(ud, goal):
+                    #publisher for showing the state at MT
+                    state_publisher = rospy.Publisher('cps_state', cpswarm_msgs.msg.StateEvent, queue_size=10)
+                    state_msg = cpswarm_msgs.msg.StateEvent()
+                    state_msg.swarmio.name = "cps_state"
+                    state_msg.state = "[Moving] Going HOME"
+                    state_publisher.publish(state_msg)
+                    
                     goal = MoveBaseGoal()
                     goal.target_pose.header.frame_id = ns+'_odom'
                     goal.target_pose.pose.position.x = 0 # TODO: should be parameter!
@@ -175,10 +182,16 @@ def main():
             transitions={'goHome':'GoHome'})
 
         def move_home_cb(ud, goal):
+            #publisher for showing the state at MT
+            state_publisher = rospy.Publisher('cps_state', cpswarm_msgs.msg.StateEvent, queue_size=10)
+            state_msg = cpswarm_msgs.msg.StateEvent()
+            state_msg.swarmio.name = "cps_state"
+            state_msg.state = "[Moving] Going HOME"
+            state_publisher.publish(state_msg)
             goal = MoveBaseGoal()
             goal.target_pose.pose.position.x = 0 # TODO: should be parameter!
             goal.target_pose.pose.position.y = -4
-            goal.target_pose.pose.orientation.w = 1;
+            goal.target_pose.pose.orientation.w = 1
             rospy.loginfo('Going HOME: %.2f, %.2f', goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
             return goal
 
