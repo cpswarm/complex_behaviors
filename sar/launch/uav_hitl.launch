@@ -58,10 +58,10 @@
         </include>
 
         <!-- Forwarding for GUI -->
-        <include file="$(find swarmros_forwarder)/launch/swarmros_forwarder.launch">
+        <!--include file="$(find swarmros_forwarder)/launch/swarmros_forwarder.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
-        </include>
+        </include-->
 
         <!-- Gobal position forwarding for Monitoring tool -->
         <include file="$(find g_pos_fwd)/launch/g_pos_fwd.launch">
