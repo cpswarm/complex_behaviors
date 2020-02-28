@@ -29,6 +29,23 @@ class Idle(smach.State):
 			
 		return 'succeeded'
 
+class TargetFound(smach.State):
+	def __init__(self):
+	    smach.State.__init__(self, outcomes=['succeeded'], input_keys=['target_id', 'target_pose'], output_keys=['target_id', 'target_pose'])
+
+	def execute(self, userdata):
+		pub = rospy.Publisher('target_found', TargetPositionEvent, queue_size=1)
+		
+		target_event = TargetPositionEvent()
+		target_event.swarmio.name = "target_found"
+		target_event.swarmio.node = ""
+	 	target_event.id = userdata.target_id
+	 	target_event.pose = userdata.target_pose
+	 	rospy.sleep(1.0)
+	 	pub.publish(target_event)
+	 	rospy.loginfo('Re-publishing target_found event for target %d at [%.2f, %.2f]', target_event.id, target_event.pose.position.x, target_event.pose.position.y)
+			
+		return 'succeeded'
 
 def main():
 	rospy.init_node('state_machine_node')
@@ -164,8 +181,13 @@ def main():
 						TaskAllocationAction,
 						goal_slots=['task_id', 'task_pose'],
 						result_slots=['task_id', 'winner', 'task_pose']),
-					transitions={'succeeded':'Tracking', 'aborted':'SelectRover'},
+					transitions={'succeeded':'Tracking', 'aborted':'TargetFound'},
 					remapping={'task_id':'target_id', 'task_pose':'target_pose'})
+				
+				# ADD TargetFound to SarBehavior #
+				smach.StateMachine.add('TargetFound',
+					TargetFound(),
+					transitions={'succeeded': 'SelectRover'})
 
 				def tracking_goal_cb(userdata, goal):
 					tracking_goal = TrackingGoal()
