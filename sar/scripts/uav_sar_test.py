@@ -43,7 +43,7 @@ class TargetFound(smach.State):
 	 	target_event.pose = userdata.target_pose
 	 	rospy.sleep(1.0)
 	 	pub.publish(target_event)
-	 	rospy.loginfo('Re-publishing target_found event for target %d at [%.2f, %.2f]', target_event.id, target_event.pose.position.x, target_event.pose.position.y)
+	 	rospy.loginfo('Re-publishing target_found event for target %d at [%.2f, %.2f]', target_event.id, target_event.pose.pose.position.x, target_event.pose.pose.position.y)
 			
 		return 'succeeded'
 
