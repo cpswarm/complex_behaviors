@@ -9,6 +9,7 @@ import std_srvs.srv
 from cpswarm_msgs.msg import *
 from swarmros.msg import *
 from uav_mavros_takeoff.msg import *
+from geometry_msgs.msg import PoseStamped
 
 
 # define state Idle
@@ -29,7 +30,27 @@ class Idle(smach.State):
 			
 		return 'succeeded'
 
+
+class GoToTarget(smach.State):
+
+	def __init__(self):
+	    smach.State.__init__(self, outcomes=['succeeded'], input_keys=['target_id', 'target_pose'], output_keys=['target_id', 'target_pose'])
+
+	def execute(self, userdata):
+		pub = rospy.Publisher('pos_controller/goal_position', TargetPositionEvent, queue_size=1)
+		
+		target_pose = PoseStamped()
+		target_pose.pose = userdata.target_pose.pose
+		target_pose.pose.position.z = 1.5
+	 	rospy.sleep(0.5)
+	 	pub.publish(target_pose)
+	 	rospy.loginfo('Move to target pos at [%.2f, %.2f]', target_pose.pose.position.x, target_pose.pose.position.y)
+			
+		return 'succeeded'
+
+	
 class TargetFound(smach.State):
+
 	def __init__(self):
 	    smach.State.__init__(self, outcomes=['succeeded'], input_keys=['target_id', 'target_pose'], output_keys=['target_id', 'target_pose'])
 
@@ -41,11 +62,12 @@ class TargetFound(smach.State):
 		target_event.swarmio.node = ""
 	 	target_event.id = userdata.target_id
 	 	target_event.pose = userdata.target_pose
-	 	rospy.sleep(1.0)
+	 	rospy.sleep(0.5)
 	 	pub.publish(target_event)
 	 	rospy.loginfo('Re-publishing target_found event for target %d at [%.2f, %.2f]', target_event.id, target_event.pose.pose.position.x, target_event.pose.pose.position.y)
 			
 		return 'succeeded'
+
 
 def main():
 	rospy.init_node('state_machine_node')
@@ -174,6 +196,11 @@ def main():
 						result_slots=['target_id', 'target_pose']),
 					transitions={'succeeded':'SelectRover'},
 					remapping={'target_id':'target_id', 'target_pose':'target_pose'})
+				
+				# ADD GoToTarget to SarBehavior #
+				smach.StateMachine.add('GoToTarget',
+					GoToTarget(),
+					transitions={'succeeded': 'SelectRover'})
 
 				# ADD SelectRover to SarBehavior #
 				smach.StateMachine.add('SelectRover',
