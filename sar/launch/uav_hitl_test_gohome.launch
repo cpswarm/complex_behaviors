@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<launch>
+	
+	<arg name="id" default="0" />
+    <arg name="vehicle" default="drone" />
+    <arg name="x" default="0" />
+    <arg name="y" default="0" />
+    <arg name="altitude" default="1.5" />
+    <arg name="pos_type" default="local" />
+    <arg name="output" default="screen" />
+    <arg name="behavior" default="random" />
+    <arg name="logging" default="true" />
+    <arg name="fcu_url" default="/dev/ttyS2:57600" />
+
+    <group ns="/cpswarm/$(arg vehicle)_$(arg id)">
+
+        <!-- Behavior state machine -->
+        <node pkg="sar" type="uav_sar_stop.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true">
+            <param name="altitude" value="$(arg altitude)" />
+            <rosparam file="$(find sar)/param/home.yaml" command="load" />
+        </node>
+
+        <!-- PX4 SITL and Gazebo vehicle spawn URDF -->
+        <include file="$(find px4)/launch/single_vehicle_spawn.launch">
+            <arg name="x" value="$(arg x)" />
+            <arg name="y" value="$(arg y)" />
+            <arg name="Y" value="$(arg Y)" />
+            <arg name="vehicle" value="$(arg vehicle)" />
+            <arg name="mavlink_udp_port" value="$(arg udp_port_sim)" />
+            <arg name="mavlink_tcp_port" value="$(arg tcp_port_sim)" />
+            <arg name="ID" value="$(arg id)" />
+        </include>
+
+        <!-- MAVROS -->
+        <include file="$(find mavros)/launch/px4.launch">
+            <arg name="fcu_url" value="udp://:$(arg udp_port_obc)@localhost:$(arg udp_port_fcu)" />
+            <arg name="gcs_url" value="" />
+            <!--<arg name="tgt_system" value="$(arg id)" />-->
+            <arg name="tgt_system" value="$(eval 1 + id)" />
+            <arg name="tgt_component" value="1" />
+            <arg name="log_output" value="$(arg output)" />
+        </include>
+
+        <!-- Communication library -->
+        <include file="$(find sar)/launch/uav_communication_library.launch">
+            <arg name="id" value="$(arg id)" />
+            <arg name="output" value="$(arg output)" />
+        </include>
+
+        <!-- Abstraction library -->
+        <include file="$(find sar)/launch/uav_abstraction_library.launch">
+            <arg name="id" value="$(arg id)" />
+            <arg name="x" value="$(arg x)" />
+            <arg name="y" value="$(arg y)" />
+            <arg name="pos_type" value="$(arg pos_type)" />
+            <arg name="output" value="$(arg output)" />
+        </include>
+
+        <!-- Swarm library -->
+        <include file="$(find sar)/launch/uav_swarm_library.launch">
+            <arg name="id" value="$(arg id)" />
+            <arg name="output" value="$(arg output)" />
+            <arg name="behavior" value="$(arg behavior)" />
+        </include>
+
+        <!-- CPS Navigation -->
+        <!--include file="$(find sar)/launch/cps_navigation.launch">
+            <arg name="id" value="$(arg id)" />
+            <arg name="output" value="$(arg output)" />
+        </include-->
+        
+        <!-- Task Organizer -->
+        <include file="$(find task_organizer)/launch/task_organizer.launch">
+            <arg name="id" value="$(arg id)" />
+            <arg name="output" value="$(arg output)" />
+        </include>     
+
+        <!-- Data logging -->
+        <include if="$(arg logging)" file="$(find sar)/launch/logging.launch">
+            <arg name="id" value="$(arg id)" />
+            <arg name="output" value="$(arg output)" />
+        </include>
+        
+        <!-- Gobal position forwarding for Monitoring tool -->
+        <include file="$(find g_pos_fwd)/launch/g_pos_fwd.launch">
+            <arg name="id" value="$(arg id)" />
+            <arg name="output" value="$(arg output)" />
+        </include>
+
+    </group>
+
+</launch>
