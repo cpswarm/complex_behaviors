@@ -41,7 +41,7 @@ class GoToTarget(smach.State):
 		
 		target_pose = PoseStamped()
 		target_pose.pose = userdata.target_pose.pose
-		target_pose.pose.position.z = 1.5
+		target_pose.pose.position.z = rospy.get_param('~altitude')
 	 	rospy.sleep(0.5)
 	 	pub.publish(target_pose)
 	 	rospy.loginfo('Move to target pos at [%.2f, %.2f]', target_pose.pose.position.x, target_pose.pose.position.y)
@@ -194,7 +194,7 @@ def main():
 						CoverageAction,
 						goal=CoverageGoal(rospy.get_param('~altitude')),
 						result_slots=['target_id', 'target_pose']),
-					transitions={'succeeded':'SelectRover'},
+					transitions={'succeeded':'GoToTarget'},
 					remapping={'target_id':'target_id', 'target_pose':'target_pose'})
 				
 				# ADD GoToTarget to SarBehavior #
