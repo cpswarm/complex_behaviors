@@ -1,0 +1,34 @@
+# general setup
+include "rb1_base.inc"
+include "cart.inc"
+include "settings.inc"
+
+# set floorplan
+floorplan
+(
+    name "robotnik_warehouse_map.png"
+    bitmap "robotnik_warehouse_map.png"
+    size [26 12 1]
+)
+# scouts
+rb1_base( pose [ -6 -1.5 0 0 ] name "scout_0" color "red")
+rb1_base( pose [ -6 -3.5 0 0 ] name "scout_1" color "red")
+
+
+# carriers
+rb1_base( pose [ -8 -1.5 0 0 ] name "carrier_0" color "green")
+rb1_base( pose [ -8 -3.5 0 0 ] name "carrier_1" color "green")
+rb1_base( pose [ -9 -2.5 0 0 ] name "carrier_2" color "green")
+rb1_base( pose [ -10 -1.5 0 0 ] name "carrier_3" color "green")
+rb1_base( pose [ -10 -3.5 0 0 ] name "carrier_4" color "green")
+
+cart(pose [ 3.40 0.3 0 170.000 ] name "cart_0" color "gray")
+cart(pose [ -0.17 -2.58 0 110.000 ] name "cart_1" color "gray")
+cart(pose [ 2.06 -1.5 0 90.000 ] name "cart_2" color "gray")
+cart(pose [ -2.05 -0.52 0 180.000 ] name "cart_3" color "gray")
+cart(pose [ -4.03 -1.07 0 50.000 ] name "cart_4" color "gray")
+cart(pose [ 3.23 -3.42 0 20.000 ] name "cart_5" color "gray")
+cart(pose [ 6.37 -0.15 0 210.000 ] name "cart_6" color "gray")
+cart(pose [ 6.17 -2.94 0 80.000 ] name "cart_7" color "gray")
+cart(pose [ -3.27 -3.61 0 180.000 ] name "cart_8" color "gray")
+cart(pose [ 0.47 0.27 0 180.000 ] name "cart_9" color "gray")
