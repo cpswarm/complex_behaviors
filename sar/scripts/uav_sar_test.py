@@ -37,7 +37,7 @@ class GoToTarget(smach.State):
 	    smach.State.__init__(self, outcomes=['succeeded'], input_keys=['target_id', 'target_pose'], output_keys=['target_id', 'target_pose'])
 
 	def execute(self, userdata):
-		pub = rospy.Publisher('pos_controller/goal_position', TargetPositionEvent, queue_size=1)
+		pub = rospy.Publisher('pos_controller/goal_position', PoseStamped, queue_size=1)
 		
 		target_pose = PoseStamped()
 		target_pose.pose = userdata.target_pose.pose
