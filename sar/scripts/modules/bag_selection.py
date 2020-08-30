@@ -24,7 +24,7 @@ def select_run(log_path, prefix, suffix, multi):
 
     # no available runs
     if len(runs) == 0:
-        sys.stderr.write("No cpswarm_sar bag files found in {0}\n".format(log_path))
+        sys.stderr.write("No sar bag files found in {0}\n".format(log_path))
         sys.stderr.write("The required file name format is {0}_uav_<i>_<date + time>{1}\n".format(prefix, suffix))
         sys.exit(1)
 
