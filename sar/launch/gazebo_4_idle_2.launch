@@ -15,16 +15,32 @@
     <!-- UAV 1 -->
     <include file="$(find sar)/launch/uav_sitl.launch">
         <arg name="id" value="0" />
-        <arg name="x" value="1" />
-        <arg name="y" value="3.5" />
+        <arg name="x" value="5.86" />
+        <arg name="y" value="0.27" />
         <arg name="Y" value="1.571" />
     </include>
 
     <!-- UAV 2 -->
     <include file="$(find sar)/launch/uav_sitl.launch">
         <arg name="id" value="1" />
-        <arg name="x" value="0" />
-        <arg name="y" value="-3.5" />
+        <arg name="x" value="1.05" />
+        <arg name="y" value="-1.54" />
+        <arg name="Y" value="1.571" />
+    </include>
+
+    <!-- UAV 3 -->
+    <include file="$(find sar)/launch/uav_sitl_idle.launch">
+        <arg name="id" value="2" />
+        <arg name="x" value="1" />
+        <arg name="y" value="4" />
+        <arg name="Y" value="1.571" />
+    </include>
+
+    <!-- UAV 4 -->
+    <include file="$(find sar)/launch/uav_sitl_idle.launch">
+        <arg name="id" value="3" />
+        <arg name="x" value="3" />
+        <arg name="y" value="0" />
         <arg name="Y" value="1.571" />
     </include>
 

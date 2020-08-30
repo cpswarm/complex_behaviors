@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="id" default="0" />
+    <arg name="vehicle" default="pelican" />
+    <arg name="x" default="0" />
+    <arg name="y" default="0" />
+    <arg name="Y" default="0" />
+    <arg name="output" default="screen" />
+
+    <!-- AscTec flight controller -->
+<!--     <include file="$(find asctec_hl_interface)/launch/fcu.launch" /> -->
+
+    <!-- Spawn a AscTec Pelican UAV -->
+    <include file="$(find pelican_gazebo)/launch/spawn_pelican.launch">
+        <arg name="x" value="$(arg x)" />
+        <arg name="y" value="$(arg y)" />
+        <arg name="z" value="0" />
+    </include>
+
+    <!-- Publish information about simulated model  -->
+    <include file="$(find pelican_gazebo)/launch/pelican_gazebo_topics.launch" />
+
+</launch>

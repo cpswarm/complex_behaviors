@@ -4,8 +4,10 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /UAV 11/Status1
-      Splitter Ratio: 0.33528265357017517
+        - /Pose1/Status1
+        - /Area1
+        - /Area1/Status1
+      Splitter Ratio: 0.33138400316238403
     Tree Height: 707
   - Class: rviz/Selection
     Name: Selection
@@ -48,7 +50,7 @@ Visualization Manager:
         Y: 0
         Z: 0
       Plane: XY
-      Plane Cell Count: 20
+      Plane Cell Count: 32
       Reference Frame: <Fixed Frame>
       Value: true
     - Alpha: 1
@@ -59,84 +61,34 @@ Visualization Manager:
       Enabled: true
       Head Length: 0.20000000298023224
       Head Radius: 0.20000000298023224
-      Name: UAV 1
+      Name: Pose
       Shaft Length: 0.20000000298023224
       Shaft Radius: 0.10000000149011612
       Shape: Arrow
-      Topic: /cpswarm/iris_0/pos_provider/pose
-      Unreliable: false
-      Value: true
-    - Alpha: 1
-      Axes Length: 1
-      Axes Radius: 0.10000000149011612
-      Class: rviz/Pose
-      Color: 252; 233; 79
-      Enabled: true
-      Head Length: 0.20000000298023224
-      Head Radius: 0.20000000298023224
-      Name: UAV 2
-      Shaft Length: 0.20000000298023224
-      Shaft Radius: 0.10000000149011612
-      Shape: Arrow
-      Topic: /cpswarm/iris_1/pos_provider/pose
-      Unreliable: false
-      Value: true
-    - Alpha: 1
-      Axes Length: 1
-      Axes Radius: 0.10000000149011612
-      Class: rviz/Pose
-      Color: 114; 159; 207
-      Enabled: true
-      Head Length: 0.20000000298023224
-      Head Radius: 0.20000000298023224
-      Name: UAV 3
-      Shaft Length: 0.20000000298023224
-      Shaft Radius: 0.10000000149011612
-      Shape: Arrow
-      Topic: /cpswarm/iris_2/pos_provider/pose
+      Topic: /drone_0/pos_provider/pose
       Unreliable: false
       Value: true
     - Alpha: 1
       Class: rviz/PointStamped
-      Color: 164; 0; 0
+      Color: 204; 41; 204
       Enabled: true
       History Length: 1
-      Name: Goal UAV 1
-      Radius: 0.20000000298023224
-      Topic: /cpswarm/iris_0/coverage_path/waypoint
-      Unreliable: false
-      Value: true
-    - Alpha: 1
-      Class: rviz/PointStamped
-      Color: 196; 160; 0
-      Enabled: true
-      History Length: 1
-      Name: Goal UAV 2
-      Radius: 0.20000000298023224
-      Topic: /cpswarm/iris_1/coverage_path/waypoint
-      Unreliable: false
-      Value: true
-    - Alpha: 1
-      Class: rviz/PointStamped
-      Color: 32; 74; 135
-      Enabled: true
-      History Length: 1
-      Name: Goal UAV 3
-      Radius: 0.20000000298023224
-      Topic: /cpswarm/iris_2/coverage_path/waypoint
+      Name: Goal
+      Radius: 0.25
+      Topic: /drone_0/pos_controller/waypoint
       Unreliable: false
       Value: true
     - Alpha: 1
       Buffer Length: 1
       Class: rviz/Path
-      Color: 239; 41; 41
+      Color: 25; 255; 0
       Enabled: true
       Head Diameter: 0.30000001192092896
       Head Length: 0.20000000298023224
       Length: 0.30000001192092896
       Line Style: Lines
-      Line Width: 0.029999999329447746
-      Name: Path UAV 1
+      Line Width: 0.5
+      Name: Path
       Offset:
         X: 0
         Y: 0
@@ -146,53 +98,7 @@ Visualization Manager:
       Radius: 0.029999999329447746
       Shaft Diameter: 0.10000000149011612
       Shaft Length: 0.10000000149011612
-      Topic: /cpswarm/iris_0/coverage_path/path
-      Unreliable: false
-      Value: true
-    - Alpha: 1
-      Buffer Length: 1
-      Class: rviz/Path
-      Color: 252; 233; 79
-      Enabled: true
-      Head Diameter: 0.30000001192092896
-      Head Length: 0.20000000298023224
-      Length: 0.30000001192092896
-      Line Style: Lines
-      Line Width: 0.029999999329447746
-      Name: Path UAV 2
-      Offset:
-        X: 0
-        Y: 0
-        Z: 0
-      Pose Color: 255; 85; 255
-      Pose Style: None
-      Radius: 0.029999999329447746
-      Shaft Diameter: 0.10000000149011612
-      Shaft Length: 0.10000000149011612
-      Topic: /cpswarm/iris_1/coverage_path/path
-      Unreliable: false
-      Value: true
-    - Alpha: 1
-      Buffer Length: 1
-      Class: rviz/Path
-      Color: 114; 159; 207
-      Enabled: true
-      Head Diameter: 0.30000001192092896
-      Head Length: 0.20000000298023224
-      Length: 0.30000001192092896
-      Line Style: Lines
-      Line Width: 0.029999999329447746
-      Name: Path UAV 3
-      Offset:
-        X: 0
-        Y: 0
-        Z: 0
-      Pose Color: 255; 85; 255
-      Pose Style: None
-      Radius: 0.029999999329447746
-      Shaft Diameter: 0.10000000149011612
-      Shaft Length: 0.10000000149011612
-      Topic: /cpswarm/iris_2/coverage_path/path
+      Topic: /drone_0/coverage_path/path
       Unreliable: false
       Value: true
     - Alpha: 0.699999988079071
@@ -200,8 +106,8 @@ Visualization Manager:
       Color Scheme: map
       Draw Behind: false
       Enabled: true
-      Name: Map
-      Topic: /cpswarm/iris_0/area/map
+      Name: Area
+      Topic: /drone_0/area/map
       Unreliable: false
       Use Timestamp: false
       Value: true
@@ -242,11 +148,11 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 60.127750396728516
+      Scale: 43.611637115478516
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
-      X: 0.18030700087547302
-      Y: 0.030610665678977966
+      X: 3.1982884407043457
+      Y: -0.13380669057369232
     Saved: ~
 Window Geometry:
   Displays:
@@ -265,4 +171,4 @@ Window Geometry:
     collapsed: false
   Width: 1920
   X: 3840
-  Y: 0
+  Y: 110

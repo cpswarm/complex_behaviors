@@ -18,6 +18,7 @@
         <arg name="x" value="0" />
         <arg name="y" value="0" />
         <arg name="Y" value="1.571" />
+        <arg name="vehicle" value="pelican" />
     </include>
 
 </launch>
