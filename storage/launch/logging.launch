@@ -81,7 +81,7 @@
     map
     base_scan
     cmd_vel
-    area_provider/map
+    area/map
     bridge/nodes
     bridge/uuid
     cmd/moveto/cancel
