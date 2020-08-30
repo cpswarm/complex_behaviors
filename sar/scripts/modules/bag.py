@@ -134,7 +134,7 @@ class Bag:
         bag = rosbag.Bag(self.folder + '/' + self.file)
 
         # read goal coordinates
-        goal_coords = [msg[1].pose.position for msg in bag.read_messages(ns + 'pos_controller/goal_position/local')]
+        goal_coords = [msg[1].pose.position for msg in bag.read_messages(ns + 'pos_controller/goal_position')]
         self.goal = [[coord.x + self.origin[0] for coord in goal_coords], [coord.y + self.origin[1] for coord in goal_coords]]
 
         # read actual pose coordinates
