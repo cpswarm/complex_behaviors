@@ -8,7 +8,6 @@ import std_srvs.srv
 
 from cpswarm_msgs.msg import *
 from swarmros.msg import *
-from uav_mavros_takeoff.msg import *
 
 
 # define state Idle
@@ -104,13 +103,13 @@ def main():
 				# ADD IdleThreads to SarBehavior #
 				smach.StateMachine.add('IdleThreads',
 					idlethreads_concurrence,
-					transitions={'launch':'TakeOff'})
+					transitions={'launch':'Takeoff'})
 
-				# ADD TakeOff to SarBehavior #
-				smach.StateMachine.add('TakeOff',
+				# ADD Takeoff to SarBehavior #
+				smach.StateMachine.add('Takeoff',
 					smach_ros.SimpleActionState('cmd/takeoff',
-						TakeOffAction,
-						goal=TakeOffGoal(rospy.get_param('~altitude'))),
+						TakeoffAction,
+						goal=TakeoffGoal(rospy.get_param('~altitude'))),
 					transitions={'succeeded':'IdleThreads2'})
 
 				#  ===================================== IdleThreads2 =====================================
