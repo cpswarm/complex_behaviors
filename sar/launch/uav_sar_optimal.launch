@@ -22,4 +22,16 @@
         <arg name="output" value="$(arg output)" />
     </include>
 
+    <!-- Area division -->
+    <include file="$(find area_division)/launch/area_division.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- Coverage path generator -->
+    <include file="$(find coverage_path)/launch/coverage_path.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
 </launch>
