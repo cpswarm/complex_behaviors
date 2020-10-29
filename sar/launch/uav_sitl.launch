@@ -7,16 +7,20 @@
     <arg name="y" default="0" />
     <arg name="Y" default="0" />
     <arg name="altitude" default="1.5" />
-    <arg name="pos_type" default="local" />
-    <arg name="output" default="screen" />
-    <arg name="behavior" default="optimal" />
+    <arg name="pos_type" default="local" /> <!-- global, local -->
+    <arg name="output" default="screen" /> <!-- screen, log -->
+    <arg name="behavior" default="flocking" /> <!-- random, optimal, flocking -->
     <arg name="logging" default="false" />
+    <arg name="ip_gcs" default="192.168.4.170" />
     <arg name="udp_port_obc" default="$(eval 14540 + id)" />
     <arg name="udp_port_fcu" default="$(eval 14580 + id)" />
     <arg name="udp_port_sim" default="$(eval 14560 + id)" />
     <arg name="tcp_port_sim" default="$(eval 4560 + id)" />
 
-    <group ns="/cpswarm/$(arg vehicle)_$(arg id)">
+    <!-- Console verbosity level -->
+    <env name="ROSCONSOLE_CONFIG_FILE" value="$(find sar)/param/rosconsole.config" />
+
+    <group ns="$(arg vehicle)_$(arg id)">
 
         <!-- Behavior state machine -->
         <node pkg="sar" type="uav_sar_simulation.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true">
@@ -38,7 +42,6 @@
         <include file="$(find mavros)/launch/px4.launch">
             <arg name="fcu_url" value="udp://:$(arg udp_port_obc)@localhost:$(arg udp_port_fcu)" />
             <arg name="gcs_url" value="" />
-            <!--<arg name="tgt_system" value="$(arg id)" />-->
             <arg name="tgt_system" value="$(eval 1 + id)" />
             <arg name="tgt_component" value="1" />
             <arg name="log_output" value="$(arg output)" />
