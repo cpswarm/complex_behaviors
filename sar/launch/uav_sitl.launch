@@ -13,6 +13,7 @@
     <arg name="logging" default="false" />
     <arg name="ip_gcs" default="192.168.4.170" />
     <arg name="udp_port_obc" default="$(eval 14540 + id)" />
+    <arg name="udp_port_gcs" default="$(eval 14550 + id)" />
     <arg name="udp_port_fcu" default="$(eval 14580 + id)" />
     <arg name="udp_port_sim" default="$(eval 14560 + id)" />
     <arg name="tcp_port_sim" default="$(eval 4560 + id)" />
@@ -41,7 +42,7 @@
         <!-- MAVROS -->
         <include file="$(find mavros)/launch/px4.launch">
             <arg name="fcu_url" value="udp://:$(arg udp_port_obc)@localhost:$(arg udp_port_fcu)" />
-            <arg name="gcs_url" value="" />
+            <arg name="gcs_url" value="udp://$(arg udp_port_gcs)@$(arg ip_gcs)" />
             <arg name="tgt_system" value="$(eval 1 + id)" />
             <arg name="tgt_component" value="1" />
             <arg name="log_output" value="$(arg output)" />
