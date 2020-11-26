@@ -2,7 +2,7 @@
 <launch>
 
     <arg name="id" default="0" />
-    <arg name="vehicle" default="drone" />
+    <arg name="fcu" default="apm" /> <!-- px4, apm -->
     <arg name="x" default="0" />
     <arg name="y" default="0" />
     <arg name="altitude" default="1.5" />
@@ -10,9 +10,9 @@
     <arg name="output" default="screen" />
     <arg name="behavior" default="random" />
     <arg name="logging" default="true" />
-    <arg name="fcu_url" default="/dev/ttyS2:57600" />
+    <arg name="fcu_url" default="/dev/ttyS0:921600" />
 
-    <group ns="$(arg vehicle)_$(arg id)">
+    <group ns="uav_$(arg id)">
 
         <!-- Behavior state machine -->
         <node pkg="sar" type="uav_sar_demonstration.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true">
@@ -20,7 +20,7 @@
         </node>
 
         <!-- MAVROS -->
-        <include file="$(find mavros)/launch/px4.launch">
+        <include file="$(find mavros)/launch/$(arg fcu).launch">
             <arg name="fcu_url" value="$(arg fcu_url)" />
             <arg name="gcs_url" value="" />
             <arg name="tgt_system" value="$(eval 1 + id)" />

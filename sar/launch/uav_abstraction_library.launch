@@ -6,6 +6,7 @@
     <arg name="y" default="0" />
     <arg name="pos_type" default="local" />
     <arg name="obc" default="false" />
+    <arg name="fcu" default="px4" />
     <arg name="output" default="log" />
 
 
@@ -24,7 +25,8 @@
     </include>
 
     <!-- Take off service -->
-    <include file="$(find uav_mavros_takeoff)/launch/mavros_takeoff.launch">
+    <include file="$(find uav_mavros_takeoff)/launch/uav_mavros_takeoff.launch">
+        <arg name="fcu" value="$(arg fcu)" />
         <arg name="id" value="$(arg id)" />
         <arg name="output" value="$(arg output)" />
     </include>
