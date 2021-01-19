@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 import rospy
@@ -29,10 +29,10 @@ def main():
 	if not rospy.has_param('~altitude'):
 		rospy.logerr('Altitude not specified, cannot perform simulation!')
 		return
-	
+
 	# Create a TOP level SMACH state machine
 	top_sm = smach.StateMachine(['succeeded', 'preempted', 'aborted'])
-	
+
 	# Open the container
 	with top_sm:
 
@@ -51,7 +51,7 @@ def main():
 			default_outcome='missionAbort',
 			child_termination_cb=lambda so: True,
 			outcome_cb=out_cb)
-	
+
 		# Open the container
 		with sarthreads_concurrence:
 
@@ -81,7 +81,7 @@ def main():
 						CoverageAction,
 						goal=CoverageGoal(rospy.get_param('~altitude')),
 						result_slots=['target_id', 'target_pose']),
-					transitions={'succeeded':'SelectRover'},
+					transitions={'succeeded':'Tracking'},
 					remapping={'target_id':'target_id', 'target_pose':'target_pose'})
 
 				#  ===================================== SelectRoverThreads =====================================
@@ -136,7 +136,7 @@ def main():
 						goal_cb=tracking_goal_cb),
 					transitions={'succeeded':'Coverage', 'aborted':'LocalCoverage'},
 					remapping={'target':'target_id'})
-				
+
 				# ADD LocalCoverage to SarBehavior #
 				smach.StateMachine.add('LocalCoverage',
 					smach_ros.SimpleActionState('uav_local_coverage',
@@ -182,11 +182,11 @@ def main():
 		smach.StateMachine.add('MissionAbort',
 			missionabort_sm,
 			transitions={'succeeded':'SarThreads'})
-	
+
 	# Create and start the introspection server (uncomment if needed)
 	sis = smach_ros.IntrospectionServer('smach_server', top_sm, '/SM_TOP')
 	sis.start()
-	
+
 	# Execute SMACH plan
 	outcome = top_sm.execute()
 
@@ -194,7 +194,7 @@ def main():
 	rospy.spin()
 	sis.stop()
 
-	
+
 if __name__ == '__main__':
 	try:
 		main()

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import rospy
 import smach
@@ -210,13 +210,13 @@ def main():
 					remapping={'target':'target_id'})
 
 				# ADD LocalCoverage to SarBehavior #
-# 				smach.StateMachine.add('LocalCoverage',
-# 					smach_ros.SimpleActionState('uav_local_coverage',
-# 						CoverageAction,
-# 						goal=CoverageGoal(rospy.get_param('~altitude')),
-# 						result_slots=['target_id', 'target_pose']),
-# 					transitions={'aborted':'Coverage', 'succeeded':'SelectRover'},
-# 					remapping={'target_id':'target_id', 'target_pose':'pose'})
+				smach.StateMachine.add('LocalCoverage',
+					smach_ros.SimpleActionState('uav_local_coverage',
+						CoverageAction,
+						goal=CoverageGoal(rospy.get_param('~altitude')),
+						result_slots=['target_id', 'target_pose']),
+					transitions={'aborted':'Coverage', 'succeeded':'SelectRover'},
+					remapping={'target_id':'target_id', 'target_pose':'pose'})
 				
 			#  ===================================== SarBehavior END =====================================
 
