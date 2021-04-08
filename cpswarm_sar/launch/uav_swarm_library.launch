@@ -6,7 +6,7 @@
     <arg name="behavior" default="random" />
 
     <!-- SAR algorithms -->
-    <include file="$(find sar)/launch/uav_sar_$(arg behavior).launch">
+    <include file="$(find cpswarm_sar)/launch/uav_sar_$(arg behavior).launch">
         <arg name="id" value="$(arg id)" />
         <arg name="output" value="$(arg output)" />
     </include>

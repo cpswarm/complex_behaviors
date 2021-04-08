@@ -32,7 +32,7 @@ args = parser.parse_args()
 #################
 
 # command to execute
-cmd = ["stdbuf", "-o", "L", "roslaunch", "sar", args.launch_file + ".launch"]
+cmd = ["stdbuf", "-o", "L", "roslaunch", "cpswarm_sar", args.launch_file + ".launch"]
 
 # confirm details
 print("\x1b[1;34m" + "Coverage simulation" + "\x1b[0m")

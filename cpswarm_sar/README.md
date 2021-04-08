@@ -1,6 +1,6 @@
-# sar
+# cpswarm_sar
 
-This package performs search and rescue (SAR) with a heterogeneous swarm of cyber physical systems (CPSs), i.e., unmanned aerial and ground vehicles (UAVs and UGVs). It is part of the complex behaviors library.
+This package performs search and rescue (SAR) with a heterogeneous swarm of cyber physical systems (CPSs), i.e., unmanned aerial and ground vehicles (UAVs and UGVs). It is part of the complex behaviors library. Use case of the CPSwarm project.
 
 ## Overview
 To perform SAR, a swarm of UAVs covers an area. Once a target is found, it is tracked by the UAVs and the UGVs are informed. The most suitable UGV is selected to rescue the target by moving to its position. Once the target is rescued, the tracking UAVs continue coverage while the rescuing UGV returns home.
@@ -68,12 +68,12 @@ Each launch file has a set of parameters. They are inherited through the hierarc
 ### Simulation
 For simulation with the Gazebo simulator, execute the launch file
 ```
-roslaunch sar gazebo_<n>.launch
+roslaunch cpswarm_sar gazebo_<n>.launch
 ```
 where `<n>` is the number of UAVs in the swarm to be simulated. It launches:
 * `gazebo_ros/empty_world.launch`
   The Gazebo simulator.
-* `sar/uav_sitl.launch`
+* `cpswarm_sar/uav_sitl.launch`
   All required nodes to simulate the UAVs. It is launched `<n>` times.
 
 The following parameters allow to configure the simulation:
@@ -85,19 +85,19 @@ The following parameters allow to configure the simulation:
   The seed used for random number generation. In the default case, a random seed is generated.
 
 The `uav_sitl.lauch` creates a distinct namespace `/cpswarm/$(arg vehicle)_$(arg id)`. It launches:
-* `sar/uav_sar_simulation.py`
+* `cpswarm_sar/uav_sar_simulation.py`
   The UAV behavior state machine.
 * `px4/single_vehicle_spawn.launch`
   The PX4 flight controller as SITL which spawns a new UAV in the simulator.
 * `mavros/px4.launch`
   The MAVROS node which connects to the simulated PX4 flight controller.
-* `sar/uav_communication_library.launch`
+* `cpswarm_sar/uav_communication_library.launch`
   The communication library enabling communication between CPSs in the swarm.
-* `sar/uav_abstraction_library.launch`
+* `cpswarm_sar/uav_abstraction_library.launch`
   The abstraction library which launches the required nodes to access the hardware functionality.
-* `sar/uav_swarm_library.launch`
+* `cpswarm_sar/uav_swarm_library.launch`
   The swarm algorithms and swarm functions required to perform the SAR mission.
-* `sar/logging.launch`
+* `cpswarm_sar/logging.launch`
   A node for logging information about the mission. Only launched if `logging=true`.
 
 Parameters:
@@ -136,17 +136,17 @@ To run the code on deployed on hardware, execute the launch file
 roslaunch uav_hitl.launch
 ```
 It creates a distinct namespace `$(arg vehicle)_$(arg id)`. It launches:
-* `sar/uav_sar_demonstration.py`
+* `cpswarm_sar/uav_sar_demonstration.py`
   The UAV behavior state machine.
 * `mavros/px4.launch`
   The MAVROS node which connects to the PX4 flight controller.
-* `sar/uav_communication_library.launch`
+* `cpswarm_sar/uav_communication_library.launch`
   The communication library enabling communication between CPSs in the swarm.
-* `sar/uav_abstraction_library.launch`
+* `cpswarm_sar/uav_abstraction_library.launch`
   The abstraction library which launches the required nodes to access the hardware functionality.
-* `sar/uav_swarm_library.launch`
+* `cpswarm_sar/uav_swarm_library.launch`
   The swarm algorithms and swarm functions required to perform the SAR mission.
-* `sar/logging.launch`
+* `cpswarm_sar/logging.launch`
   A node for logging information about the mission. Only launched if `logging=true`.
 
 Parameters:
@@ -234,7 +234,7 @@ Parameters
 
 #### uav_swarm_library.launch
 The swarm library launches the swarm algorithms and swarm functions required to perform the SAR mission. It launches:
-* `sar/uav_sar_<behavior>.launch`
+* `cpswarm_sar/uav_sar_<behavior>.launch`
   The swarm algorithms from the swarm behaviors library.
 * `area_division/area_division.launch`
   A node to divide the mission area among CPSs.

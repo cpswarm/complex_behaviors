@@ -9,21 +9,21 @@
     <arg name="altitude" default="1.5" />
     <arg name="pos_type" default="local" /> <!-- global, local -->
     <arg name="output" default="screen" /> <!-- screen, log -->
-    <arg name="behavior" default="flocking" /> <!-- random, optimal, flocking -->
+    <arg name="behavior" default="optimal" /> <!-- random, optimal, flocking -->
     <arg name="logging" default="false" />
 
     <!-- Console verbosity level -->
-    <env name="ROSCONSOLE_CONFIG_FILE" value="$(find sar)/param/rosconsole.config" />
+    <env name="ROSCONSOLE_CONFIG_FILE" value="$(find cpswarm_sar)/param/rosconsole.config" />
 
     <group ns="uav_$(arg id)">
 
         <!-- Behavior state machine -->
-        <node pkg="sar" type="uav_sar_simulation.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true">
+        <node pkg="cpswarm_sar" type="uav_sar_simulation.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true">
             <param name="altitude" value="$(arg altitude)" />
         </node>
 
         <!-- Flight controller -->
-        <include file="$(find sar)/launch/uav_fcu_$(arg fcu).launch">
+        <include file="$(find cpswarm_sar)/launch/uav_fcu_$(arg fcu).launch">
             <arg name="id" value="$(arg id)" />
             <arg name="x" value="$(arg x)" />
             <arg name="y" value="$(arg y)" />
@@ -32,13 +32,13 @@
         </include>
 
         <!-- Communication library -->
-        <include file="$(find sar)/launch/uav_communication_library.launch">
+        <include file="$(find cpswarm_sar)/launch/uav_communication_library.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
         </include>
 
         <!-- Abstraction library -->
-        <include file="$(find sar)/launch/uav_abstraction_library.launch">
+        <include file="$(find cpswarm_sar)/launch/uav_abstraction_library.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="x" value="$(arg x)" />
             <arg name="y" value="$(arg y)" />
@@ -48,14 +48,14 @@
         </include>
 
         <!-- Swarm library -->
-        <include file="$(find sar)/launch/uav_swarm_library.launch">
+        <include file="$(find cpswarm_sar)/launch/uav_swarm_library.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
             <arg name="behavior" value="$(arg behavior)" />
         </include>
 
         <!-- Data logging -->
-        <include if="$(arg logging)" file="$(find sar)/launch/logging.launch">
+        <include if="$(arg logging)" file="$(find cpswarm_sar)/launch/logging.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
         </include>-->
