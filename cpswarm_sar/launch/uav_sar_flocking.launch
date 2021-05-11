@@ -5,20 +5,23 @@
     <arg name="output" default="log" />
 
     <!-- SAR UAV coverage algorithm -->
-    <include file="$(find uav_flocking)/launch/uav_flocking_coverage.launch">
+    <include file="$(find uav_coverage)/launch/uav_coverage.launch">
         <arg name="id" value="$(arg id)" />
+        <arg name="behavior" value="flocking" />
         <arg name="output" value="$(arg output)" />
     </include>
 
     <!-- SAR UAV local coverage algorithm -->
-    <include file="$(find uav_local_coverage)/launch/uav_local_coverage.launch">
+    <include file="$(find uav_coverage)/launch/uav_coverage.launch">
         <arg name="id" value="$(arg id)" />
+        <arg name="behavior" value="local" />
         <arg name="output" value="$(arg output)" />
     </include>
 
     <!-- SAR UAV tracking algorithm -->
-    <include file="$(find uav_flocking)/launch/uav_flocking_tracking.launch">
+    <include file="$(find uav_tracking)/launch/uav_tracking.launch">
         <arg name="id" value="$(arg id)" />
+        <arg name="behavior" value="flocking" />
         <arg name="output" value="$(arg output)" />
     </include>
 
