@@ -9,7 +9,7 @@
     <arg name="altitude" default="1.5" />
     <arg name="pos_type" default="local" /> <!-- global, local -->
     <arg name="output" default="screen" /> <!-- screen, log -->
-    <arg name="behavior" default="optimal" /> <!-- random, optimal, flocking -->
+    <arg name="behavior" default="random" /> <!-- random, optimal, flocking -->
     <arg name="logging" default="false" />
 
     <!-- Console verbosity level -->
@@ -18,7 +18,7 @@
     <group ns="uav_$(arg id)">
 
         <!-- Behavior state machine -->
-        <node pkg="cpswarm_sar" type="uav_sar_simulation.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true">
+        <node pkg="cpswarm_sar" type="uav_sar_demonstration.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true">
             <param name="altitude" value="$(arg altitude)" />
         </node>
 

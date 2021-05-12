@@ -25,20 +25,20 @@ class Idle(smach.State):
 				self.service_preempt()
 				return 'preempted'
 			rospy.sleep(1.0)
-			
+
 		return 'succeeded'
 
 
 def main():
 	rospy.init_node('state_machine_node')
-	
+
 	if not rospy.has_param('~altitude'):
-		rospy.logerr('Altitude not specified, cannot perform simulation!')
+		rospy.logerr('Altitude not specified, cannot perform demonstration!')
 		return
 
 	# Create a TOP level SMACH state machine
 	top_sm = smach.StateMachine(['succeeded', 'preempted', 'aborted'])
-	
+
 	# Open the container
 	with top_sm:
 
@@ -57,7 +57,7 @@ def main():
 			default_outcome='missionAbort',
 			child_termination_cb=lambda so: True,
 			outcome_cb=out_cb)
-	
+
 		# Open the container
 		with sarthreads_concurrence:
 
@@ -84,7 +84,7 @@ def main():
 					default_outcome='launch',
 					child_termination_cb=lambda so: True,
 					outcome_cb=out_cb)
-	
+
 				# Open the container
 				with idlethreads_concurrence:
 
@@ -127,7 +127,7 @@ def main():
 					default_outcome='missionStart',
 					child_termination_cb=lambda so: True,
 					outcome_cb=out_cb)
-	
+
 				# Open the container
 				with idlethreads2_concurrence:
 
@@ -150,7 +150,7 @@ def main():
 
 				# ADD Coverage to SarBehavior #
 				smach.StateMachine.add('Coverage',
-					smach_ros.SimpleActionState('uav_coverage',
+					smach_ros.SimpleActionState('uav_random_coverage',
 						CoverageAction,
 						goal=CoverageGoal(rospy.get_param('~altitude')),
 						result_slots=['target_id', 'target_pose']),
@@ -217,7 +217,7 @@ def main():
 						result_slots=['target_id', 'target_pose']),
 					transitions={'aborted':'Coverage', 'succeeded':'SelectRover'},
 					remapping={'target_id':'target_id', 'target_pose':'pose'})
-				
+
 			#  ===================================== SarBehavior END =====================================
 
 			# ADD SarBehavior to SarThreads #
@@ -253,11 +253,11 @@ def main():
 		smach.StateMachine.add('MissionAbort',
 			missionabort_sm,
 			transitions={'succeeded':'succeeded'})
-	
+
 	# Create and start the introspection server (uncomment if needed)
 	sis = smach_ros.IntrospectionServer('smach_server', top_sm, '/SM_TOP')
 	sis.start()
-	
+
 	# Execute SMACH plan
 	outcome = top_sm.execute()
 
@@ -265,7 +265,7 @@ def main():
 	rospy.spin()
 	sis.stop()
 
-	
+
 if __name__ == '__main__':
 	try:
 		main()

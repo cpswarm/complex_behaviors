@@ -2,7 +2,7 @@
 <launch>
     <arg name="gui" default="false" />
     <arg name="world" default="worlds/empty.world" />
-    <arg name="rng_seed" default="0" />
+    <arg name="rng_seed" default="10" />
     <arg name="id" default="$(optenv CPS_ID 0)" />
 
     <param name="rng_seed" value="$(arg rng_seed)" />
@@ -16,8 +16,8 @@
     <!-- UAV -->
     <include file="$(find cpswarm_sar)/launch/uav_sitl.launch">
         <arg name="id" value="$(arg id)" />
-        <arg name="x" value="$(eval 4 * (arg('id') % 4) - 8)" />
-        <arg name="y" value="$(eval 4 * (arg('id') / 4) - 8)" />
+        <arg name="x" value="$(eval 4 * ((arg('id')-10) % 4) - 8)" />
+        <arg name="y" value="$(eval 4 * ((arg('id')-10) / 4) - 8)" />
         <arg name="Y" value="1.571" />
     </include>
 

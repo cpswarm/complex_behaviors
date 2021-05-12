@@ -77,7 +77,7 @@ def main():
 
 				# ADD Coverage to SarBehavior #
 				smach.StateMachine.add('Coverage',
-					smach_ros.SimpleActionState('uav_coverage',
+					smach_ros.SimpleActionState('uav_random_coverage',
 						CoverageAction,
 						goal=CoverageGoal(rospy.get_param('~altitude')),
 						result_slots=['target_id', 'target_pose']),
