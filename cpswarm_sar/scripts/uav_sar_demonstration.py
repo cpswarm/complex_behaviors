@@ -203,7 +203,7 @@ def main():
 
 				# ADD Tracking to SarBehavior #
 				smach.StateMachine.add('Tracking',
-					smach_ros.SimpleActionState('uav_tracking',
+					smach_ros.SimpleActionState('uav_simple_tracking',
 						TrackingAction,
 						goal_cb=tracking_goal_cb),
 					transitions={'succeeded':'Coverage', 'aborted':'Coverage'},
