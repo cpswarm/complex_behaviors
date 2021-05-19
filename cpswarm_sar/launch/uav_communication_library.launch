@@ -2,9 +2,15 @@
 <launch>
 
     <arg name="id" default="1" />
+    <arg name="discovery_server" />
     <arg name="output" default="log" />
 
     <!-- Communication library bridge -->
     <node pkg="swarmros" type="bridge" name="swarmio_$(arg id)" args="-C$(find cpswarm_sar)/param/uav_swarmros.cfg" output="$(arg output)" required="true" />
+
+    <!-- Discovery proxy client -->
+    <node pkg="monitoring" type="proxy_client.py" name="swarmio_discovery_$(arg id)" output="$(arg output)" required="true">
+        <param name="discovery_server" value="$(arg discovery_server)" />
+    </node>
 
 </launch>

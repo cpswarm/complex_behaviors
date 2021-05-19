@@ -9,6 +9,7 @@
     <arg name="pos_type" default="global" /> <!-- global, local -->
     <arg name="output" default="screen" /> <!-- screen, log -->
     <arg name="behavior" default="random" /> <!-- random, optimal, flocking -->
+    <arg name="discovery_server" default="10.1.1.5" />
     <arg name="logging" default="true" />
     <arg name="fcu_url" default="udp://@" />
 
@@ -32,6 +33,7 @@
     <!-- Communication library -->
     <include file="$(find cpswarm_sar)/launch/uav_communication_library.launch">
         <arg name="id" value="$(arg id)" />
+        <arg name="discovery_server" value="$(arg discovery_server)" />
         <arg name="output" value="$(arg output)" />
     </include>
 
