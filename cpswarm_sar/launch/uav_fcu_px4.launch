@@ -1,16 +1,17 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="id" default="0" />
+    <arg name="id" default="1" />
+    <arg name="sitl_id" default="0" />
     <arg name="vehicle" default="iris" />
     <arg name="x" default="0" />
     <arg name="y" default="0" />
     <arg name="Y" default="0" />
     <arg name="output" default="screen" />
 
-    <arg name="udp_port_obc" value="$(eval 14540 + id)" />
-    <arg name="udp_port_fcu" value="$(eval 14580 + id)" />
-    <arg name="udp_port_sim" value="$(eval 14560 + id)" />
-    <arg name="tcp_port_sim" value="$(eval 4560 + id)" />
+    <arg name="udp_port_obc" value="$(eval 14540 + sitl_id)" />
+    <arg name="udp_port_fcu" value="$(eval 14580 + sitl_id)" />
+    <arg name="udp_port_sim" value="$(eval 14560 + sitl_id)" />
+    <arg name="tcp_port_sim" value="$(eval 4560 + sitl_id)" />
 
     <!-- PX4 SITL and Gazebo vehicle spawn URDF -->
     <include file="$(find px4)/launch/single_vehicle_spawn.launch">
@@ -20,14 +21,14 @@
         <arg name="vehicle" value="$(arg vehicle)" />
         <arg name="mavlink_udp_port" value="$(arg udp_port_sim)" />
         <arg name="mavlink_tcp_port" value="$(arg tcp_port_sim)" />
-        <arg name="ID" value="$(arg id)" />
+        <arg name="ID" value="$(arg sitl_id)" />
     </include>
 
     <!-- MAVROS -->
     <include file="$(find mavros)/launch/px4.launch">
         <arg name="fcu_url" value="udp://:$(arg udp_port_obc)@localhost:$(arg udp_port_fcu)" />
         <arg name="gcs_url" value="udp://@192.168.4.170" />
-        <arg name="tgt_system" value="$(eval 1 + id)" />
+        <arg name="tgt_system" value="$(arg id)" />
         <arg name="tgt_component" value="1" />
         <arg name="log_output" value="$(arg output)" />
     </include>

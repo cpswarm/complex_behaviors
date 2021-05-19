@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-    <arg name="id" default="0" />
+    <arg name="id" default="1" />
     <arg name="output" default="log" />
 
     <!-- Communication library bridge -->

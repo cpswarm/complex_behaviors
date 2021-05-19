@@ -58,12 +58,12 @@ Visualization Manager:
       Enabled: true
       Head Length: 0.20000000298023224
       Head Radius: 0.20000000298023224
-      Name: UAV 0
+      Name: UAV 1
       Queue Size: 10
       Shaft Length: 0.20000000298023224
       Shaft Radius: 0.10000000149011612
       Shape: Arrow
-      Topic: /uav_0/pos_provider/pose
+      Topic: /uav_1/pos_provider/pose
       Unreliable: false
       Value: true
     - Alpha: 1
@@ -74,28 +74,17 @@ Visualization Manager:
       Enabled: true
       Head Length: 0.20000000298023224
       Head Radius: 0.20000000298023224
-      Name: UAV 1
+      Name: UAV 2
       Queue Size: 10
       Shaft Length: 0.20000000298023224
       Shaft Radius: 0.10000000149011612
       Shape: Arrow
-      Topic: /uav_1/pos_provider/pose
+      Topic: /uav_2/pos_provider/pose
       Unreliable: false
       Value: true
     - Alpha: 1
       Class: rviz/PointStamped
       Color: 204; 0; 0
-      Enabled: true
-      History Length: 1
-      Name: Goal UAV 0
-      Queue Size: 10
-      Radius: 0.20000000298023224
-      Topic: /uav_0/pos_controller/waypoint
-      Unreliable: false
-      Value: true
-    - Alpha: 1
-      Class: rviz/PointStamped
-      Color: 115; 210; 22
       Enabled: true
       History Length: 1
       Name: Goal UAV 1
@@ -105,33 +94,20 @@ Visualization Manager:
       Unreliable: false
       Value: true
     - Alpha: 1
-      Buffer Length: 1
-      Class: rviz/Path
-      Color: 164; 0; 0
-      Enabled: false
-      Head Diameter: 0.30000001192092896
-      Head Length: 0.20000000298023224
-      Length: 0.30000001192092896
-      Line Style: Lines
-      Line Width: 0.029999999329447746
-      Name: Path UAV 0
-      Offset:
-        X: 0
-        Y: 0
-        Z: 0
-      Pose Color: 255; 85; 255
-      Pose Style: None
+      Class: rviz/PointStamped
+      Color: 115; 210; 22
+      Enabled: true
+      History Length: 1
+      Name: Goal UAV 2
       Queue Size: 10
-      Radius: 0.029999999329447746
-      Shaft Diameter: 0.10000000149011612
-      Shaft Length: 0.10000000149011612
-      Topic: /uav_0/coverage_path/path
+      Radius: 0.20000000298023224
+      Topic: /uav_2/pos_controller/waypoint
       Unreliable: false
-      Value: false
+      Value: true
     - Alpha: 1
       Buffer Length: 1
       Class: rviz/Path
-      Color: 78; 154; 6
+      Color: 164; 0; 0
       Enabled: false
       Head Diameter: 0.30000001192092896
       Head Length: 0.20000000298023224
@@ -152,13 +128,37 @@ Visualization Manager:
       Topic: /uav_1/coverage_path/path
       Unreliable: false
       Value: false
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Path
+      Color: 78; 154; 6
+      Enabled: false
+      Head Diameter: 0.30000001192092896
+      Head Length: 0.20000000298023224
+      Length: 0.30000001192092896
+      Line Style: Lines
+      Line Width: 0.029999999329447746
+      Name: Path UAV 2
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Queue Size: 10
+      Radius: 0.029999999329447746
+      Shaft Diameter: 0.10000000149011612
+      Shaft Length: 0.10000000149011612
+      Topic: /uav_2/coverage_path/path
+      Unreliable: false
+      Value: false
     - Alpha: 0.699999988079071
       Class: rviz/Map
       Color Scheme: costmap
       Draw Behind: false
       Enabled: false
       Name: Assigned Area 1
-      Topic: /uav_0/assigned_map
+      Topic: /uav_1/assigned_map
       Unreliable: false
       Use Timestamp: false
       Value: false
@@ -168,7 +168,7 @@ Visualization Manager:
       Draw Behind: false
       Enabled: false
       Name: Assigned Area 2
-      Topic: /uav_1/assigned_map
+      Topic: /uav_2/assigned_map
       Unreliable: false
       Use Timestamp: false
       Value: false
@@ -181,12 +181,12 @@ Visualization Manager:
       Enabled: false
       Head Length: 0
       Head Radius: 0
-      Name: MST UAV 0
+      Name: MST UAV 1
       Queue Size: 10
       Shaft Length: 1
       Shaft Radius: 0.05000000074505806
       Shape: Arrow (3D)
-      Topic: /uav_0/coverage_path/mst
+      Topic: /uav_1/coverage_path/mst
       Unreliable: false
       Value: false
     - Alpha: 1
@@ -198,12 +198,12 @@ Visualization Manager:
       Enabled: false
       Head Length: 0
       Head Radius: 0
-      Name: MST UAV 1
+      Name: MST UAV 2
       Queue Size: 10
       Shaft Length: 1
       Shaft Radius: 0.05000000074505806
       Shape: Arrow (3D)
-      Topic: /uav_1/coverage_path/mst
+      Topic: /uav_2/coverage_path/mst
       Unreliable: false
       Value: false
   Enabled: true

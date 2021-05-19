@@ -63,7 +63,7 @@ Visualization Manager:
       Shaft Length: 0.20000000298023224
       Shaft Radius: 0.10000000149011612
       Shape: Arrow
-      Topic: /uav_0/pos_provider/pose
+      Topic: /uav_1/pos_provider/pose
       Unreliable: false
       Value: true
     - Alpha: 1
@@ -74,7 +74,7 @@ Visualization Manager:
       Name: Goal
       Queue Size: 10
       Radius: 0.25
-      Topic: /uav_0/pos_controller/waypoint
+      Topic: /uav_1/pos_controller/waypoint
       Unreliable: false
       Value: true
     - Alpha: 1
@@ -98,7 +98,7 @@ Visualization Manager:
       Radius: 0.029999999329447746
       Shaft Diameter: 0.10000000149011612
       Shaft Length: 0.10000000149011612
-      Topic: /uav_0/coverage_path/path
+      Topic: /uav_1/coverage_path/path
       Unreliable: false
       Value: false
     - Alpha: 0.699999988079071
@@ -107,7 +107,7 @@ Visualization Manager:
       Draw Behind: false
       Enabled: false
       Name: Assigned
-      Topic: /uav_0/assigned_map
+      Topic: /uav_1/assigned_map
       Unreliable: false
       Use Timestamp: false
       Value: false

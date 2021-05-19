@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <launch>
 
-    <arg name="id" default="0" />
+    <arg name="id" default="1" /> <!-- namespace and MAVLink ID -->
+    <arg name="sitl_id" default="0" /> <!-- port offset for simulator communication -->
     <arg name="fcu" default="px4" /> <!-- px4, apm -->
     <arg name="x" default="0" />
     <arg name="y" default="0" />
@@ -25,6 +26,7 @@
         <!-- Flight controller -->
         <include file="$(find cpswarm_sar)/launch/uav_fcu_$(arg fcu).launch">
             <arg name="id" value="$(arg id)" />
+            <arg name="sitl_id" value="$(arg sitl_id)" />
             <arg name="x" value="$(arg x)" />
             <arg name="y" value="$(arg y)" />
             <arg name="Y" value="$(arg Y)" />

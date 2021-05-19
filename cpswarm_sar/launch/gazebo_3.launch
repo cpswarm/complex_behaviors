@@ -14,7 +14,8 @@
 
     <!-- UAV 1 -->
     <include file="$(find cpswarm_sar)/launch/uav_sitl.launch">
-        <arg name="id" value="0" />
+        <arg name="id" value="1" />
+        <arg name="sitl_id" value="0" />
         <arg name="x" value="-2" />
         <arg name="y" value="-4" />
         <arg name="Y" value="1.571" />
@@ -22,7 +23,8 @@
 
     <!-- UAV 2 -->
     <include file="$(find cpswarm_sar)/launch/uav_sitl.launch">
-        <arg name="id" value="1" />
+        <arg name="id" value="2" />
+        <arg name="sitl_id" value="1" />
         <arg name="x" value="0" />
         <arg name="y" value="-4" />
         <arg name="Y" value="1.571" />
@@ -30,7 +32,8 @@
 
     <!-- UAV 3 -->
     <include file="$(find cpswarm_sar)/launch/uav_sitl.launch">
-        <arg name="id" value="2" />
+        <arg name="id" value="3" />
+        <arg name="sitl_id" value="2" />
         <arg name="x" value="2" />
         <arg name="y" value="-4" />
         <arg name="Y" value="1.571" />
