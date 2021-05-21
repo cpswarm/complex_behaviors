@@ -44,7 +44,7 @@ def main():
     port_local = rospy.get_param("~port_local", 5670)
     port_in = rospy.get_param("~port_in", 6780)
     port_out = rospy.get_param("~port_out", 7890)
-    network = rospy.get_param("~network", 16)
+    network = rospy.get_param("~network", 24)
 
     # determine ip address
     temp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
