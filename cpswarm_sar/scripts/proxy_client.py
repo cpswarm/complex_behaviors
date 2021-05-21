@@ -58,7 +58,7 @@ def main():
 
     # network socket for incoming local udp beacon broadcast
     bc_in = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
-    bc_in.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    bc_in.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1) # enable port reuse among same user
     bc_in.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
     bc_in.bind((bc_ip, port_local))
     bc_in.settimeout(0.2)
