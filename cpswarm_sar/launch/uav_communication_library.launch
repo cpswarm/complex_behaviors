@@ -2,7 +2,6 @@
 <launch>
 
     <arg name="id" default="1" />
-    <arg name="discovery_server" />
     <arg name="output" default="log" />
 
     <!-- Communication library bridge -->
