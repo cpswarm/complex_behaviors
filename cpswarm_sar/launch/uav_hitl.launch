@@ -3,7 +3,6 @@
 
     <arg name="id" default="0" />
     <arg name="fcu" default="px4" /> <!-- px4, apm -->
-    <arg name="gcs" default="192.168.1.1" />
     <arg name="x" default="0" />
     <arg name="y" default="0" />
     <arg name="altitude" default="25" />
@@ -24,7 +23,6 @@
     <!-- MAVROS -->
     <include file="$(find mavros)/launch/$(arg fcu).launch">
         <arg name="fcu_url" value="$(arg fcu_url)" />
-        <arg name="gcs_url" value="udp://@$(arg gcs)" />
         <arg name="tgt_system" value="$(arg id)" />
         <arg name="tgt_component" value="1" />
         <arg name="log_output" value="$(arg output)" />
