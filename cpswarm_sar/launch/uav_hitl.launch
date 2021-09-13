@@ -40,6 +40,7 @@
         <arg name="x" value="$(arg x)" />
         <arg name="y" value="$(arg y)" />
         <arg name="pos_type" value="$(arg pos_type)" />
+        <arg name="fcu" value="$(arg fcu)" />
         <arg name="obc" value="false" />
         <arg name="output" value="$(arg output)" />
     </include>
