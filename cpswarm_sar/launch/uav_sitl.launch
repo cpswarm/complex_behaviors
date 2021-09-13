@@ -3,6 +3,7 @@
 
     <arg name="id" default="0" />
     <arg name="fcu" default="px4" /> <!-- px4, apm -->
+    <arg name="gcs" default="192.168.1.1" />
     <arg name="x" default="0" />
     <arg name="y" default="0" />
     <arg name="Y" default="0" />
@@ -25,6 +26,7 @@
         <!-- Flight controller -->
         <include file="$(find cpswarm_sar)/launch/uav_fcu_$(arg fcu).launch">
             <arg name="id" value="$(arg id)" />
+            <arg name="gcs" value="$(arg gcs)" />
             <arg name="x" value="$(arg x)" />
             <arg name="y" value="$(arg y)" />
             <arg name="Y" value="$(arg Y)" />

@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <launch>
     <arg name="id" default="0" />
+    <arg name="gcs" default="127.0.0.1" />
     <arg name="vehicle" default="iris" />
     <arg name="x" default="0" />
     <arg name="y" default="0" />
@@ -26,7 +27,7 @@
     <!-- MAVROS -->
     <include file="$(find mavros)/launch/px4.launch">
         <arg name="fcu_url" value="udp://:$(arg udp_port_obc)@localhost:$(arg udp_port_fcu)" />
-        <arg name="gcs_url" value="udp://@127.0.0.1" />
+        <arg name="gcs_url" value="udp://@$(arg gcs)" />
         <arg name="tgt_system" value="$(eval 1 + id)" />
         <arg name="tgt_component" value="1" />
         <arg name="log_output" value="$(arg output)" />
