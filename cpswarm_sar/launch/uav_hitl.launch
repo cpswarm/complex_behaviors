@@ -17,7 +17,7 @@
     <env name="ROSCONSOLE_CONFIG_FILE" value="$(find cpswarm_sar)/param/rosconsole.config" />
 
     <!-- Behavior state machine -->
-    <node pkg="sar" type="uav_sar_demonstration.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true">
+    <node pkg="cpswarm_sar" type="uav_sar_demonstration.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true">
         <param name="altitude" value="$(arg altitude)" />
     </node>
 
