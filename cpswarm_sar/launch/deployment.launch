@@ -16,9 +16,6 @@
     <!-- UAV -->
     <include file="$(find cpswarm_sar)/launch/uav_sitl.launch">
         <arg name="id" value="$(arg id)" />
-        <arg name="x" value="$(eval 4 * ((arg('id')-10) % 4) - 8)" />
-        <arg name="y" value="$(eval 4 * ((arg('id')-10) / 4) - 8)" />
-        <arg name="Y" value="1.571" />
     </include>
 
 </launch>
