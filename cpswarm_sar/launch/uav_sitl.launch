@@ -53,6 +53,7 @@
         <include file="$(find cpswarm_sar)/launch/uav_swarm_library.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
+            <arg name="pos_type" value="$(arg pos_type)" />
             <arg name="behavior" value="$(arg behavior)" />
         </include>
 
