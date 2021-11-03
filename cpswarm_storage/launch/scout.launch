@@ -15,16 +15,16 @@
     <group ns="$(arg frame)">
 
         <!-- Behavior state machine -->
-        <node pkg="storage" type="worker_state_machine.py" name="worker_state_machine_$(arg id)" output="$(arg output)" required="true" />
+        <node pkg="cpswarm_storage" type="scout_state_machine.py" name="scout_state_machine_$(arg id)" output="$(arg output)" required="true" />
 
         <!-- CPSwarm communication library -->
-        <include file="$(find storage)/launch/communication_library.launch">
+        <include file="$(find cpswarm_storage)/launch/communication_library.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
         </include>
 
         <!-- CPSwarm abstraction library -->
-        <include file="$(find storage)/launch/abstraction_library.launch">
+        <include file="$(find cpswarm_storage)/launch/abstraction_library.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="frame" value="$(arg frame)" />
             <arg name="x" value="$(arg x)" />
@@ -36,13 +36,13 @@
         </include>
 
         <!-- CPSwarm swarm library -->
-        <include file="$(find storage)/launch/swarm_library.launch">
+        <include file="$(find cpswarm_storage)/launch/swarm_library.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
         </include>
 
         <!-- Data logging -->
-        <include if="$(arg logging)" file="$(find storage)/launch/logging.launch">
+        <include if="$(arg logging)" file="$(find cpswarm_storage)/launch/logging.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
         </include>

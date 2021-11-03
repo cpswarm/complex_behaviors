@@ -1,4 +1,4 @@
-# storage
+# cpswarm_storage
 A package that performs box storage with a swarm of unmanned ground vehicles (UGVs). It is part of the complex behaviors library.
 
 ## Overview
@@ -48,7 +48,7 @@ Each launch file has a set of parameters. They are inherited through the hierarc
 ### Simulation
 For simulation with the Stage simulator, execute the launch file
 ```
-roslaunch storage stage.launch
+roslaunch cpswarm_storage stage.launch
 ```
 It launches:
 * `stage_ros/stageros`
@@ -71,27 +71,27 @@ The following parameters allow to configure the simulation:
   The seed used for random number generation. In the default case, a random seed is generated.
 
 The `scout.launch` creates a distinct namespace `/$(arg vehicle)_$(arg id)`. It launches:
-* `storage/scout_state_machine.py`
+* `cpswarm_storage/scout_state_machine.py`
   The scout UGV behavior state machine.
-* `storage/communication_library.launch`
+* `cpswarm_storage/communication_library.launch`
   The communication library enabling communication between UGVs in the swarm.
-* `storage/abstraction_library.launch`
+* `cpswarm_storage/abstraction_library.launch`
   The abstraction library which launches the required nodes to access the hardware functionality.
-* `storage/swarm_library.launch`
+* `cpswarm_storage/swarm_library.launch`
   The swarm algorithms and swarm functions required to perform the storage mission.
-* `storage/logging.launch`
+* `cpswarm_storage/logging.launch`
   A node for logging information about the mission. Only launched if `logging=true`.
 
 The `worker.launch` creates a distinct namespace `/$(arg vehicle)_$(arg id)`. It launches:
-* `storage/worker_state_machine.py`
+* `cpswarm_storage/worker_state_machine.py`
   The worker UGV behavior state machine.
-* `storage/communication_library.launch`
+* `cpswarm_storage/communication_library.launch`
   The communication library enabling communication between UGVs in the swarm.
-* `storage/abstraction_library.launch`
+* `cpswarm_storage/abstraction_library.launch`
   The abstraction library which launches the required nodes to access the hardware functionality.
-* `storage/swarm_library.launch`
+* `cpswarm_storage/swarm_library.launch`
   The swarm algorithms and swarm functions required to perform the storage mission.
-* `storage/logging.launch`
+* `cpswarm_storage/logging.launch`
   A node for logging information about the mission. Only launched if `logging=true`.
 
 Both launch files can be configured with following parameters:

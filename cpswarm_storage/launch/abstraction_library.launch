@@ -44,7 +44,7 @@
         <arg name="frame" value="$(arg frame)" />
         <arg name="x" value="$(arg x)" />
         <arg name="y" value="$(arg y)" />
-        <arg name="world" value="$(find storage)/world/$(arg world).yaml" />
+        <arg name="world" value="$(find cpswarm_storage)/world/$(arg world).yaml" />
         <arg name="output" value="$(arg output)" />
     </include>
     <include unless="$(arg simulation)" file="$(find navigation_pos_provider)/launch/navigation_pos_provider.launch">
