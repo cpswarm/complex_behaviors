@@ -21,8 +21,8 @@
     <!-- The *depend tags are used to specify dependencies -->
     <!-- Dependencies can be catkin packages or system dependencies -->
     <buildtool_depend>catkin</buildtool_depend>
-    <exec_depend>sar</exec_depend>
-    <exec_depend>storage</exec_depend>
+    <exec_depend>cpswarm_sar</exec_depend>
+    <exec_depend>cpswarm_storage</exec_depend>
 
     <!-- The export tag contains other, unspecified, tags -->
     <export>
