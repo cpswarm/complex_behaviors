@@ -2,8 +2,9 @@
 <launch>
 
     <arg name="id" default="0" />
-    <arg name="output" default="log" />
     <arg name="behavior" default="random" />
+    <arg name="pos_type" default="local" />
+    <arg name="output" default="log" />
 
     <!-- SAR algorithms -->
     <include file="$(find cpswarm_sar)/launch/uav_sar_$(arg behavior).launch">
@@ -13,6 +14,13 @@
 
     <!-- Exchanging position and velocity -->
     <include file="$(find kinematics_exchanger)/launch/kinematics_exchanger.launch">
+        <arg name="id" value="$(arg id)" />
+        <arg name="pos_type" value="$(arg pos_type)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
+
+    <!-- Collision avoidance -->
+    <include file="$(find collision_avoidance)/launch/collision_avoidance.launch">
         <arg name="id" value="$(arg id)" />
         <arg name="output" value="$(arg output)" />
     </include>

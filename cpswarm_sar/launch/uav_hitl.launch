@@ -8,7 +8,7 @@
     <arg name="altitude" default="25" />
     <arg name="pos_type" default="global" /> <!-- global, local -->
     <arg name="output" default="screen" /> <!-- screen, log -->
-    <arg name="behavior" default="optimal" /> <!-- random, optimal, flocking -->
+    <arg name="behavior" default="random" /> <!-- random, optimal, flocking -->
     <arg name="logging" default="true" />
     <arg name="fcu_url" default="udp://@" />
 
@@ -16,15 +16,14 @@
     <env name="ROSCONSOLE_CONFIG_FILE" value="$(find cpswarm_sar)/param/rosconsole.config" />
 
     <!-- Behavior state machine -->
-    <node pkg="sar" type="uav_sar_demonstration.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true">
+    <node pkg="cpswarm_sar" type="uav_sar_demonstration.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true">
         <param name="altitude" value="$(arg altitude)" />
     </node>
 
     <!-- MAVROS -->
     <include file="$(find mavros)/launch/$(arg fcu).launch">
         <arg name="fcu_url" value="$(arg fcu_url)" />
-        <arg name="gcs_url" value="" />
-        <arg name="tgt_system" value="$(eval 1 + id)" />
+        <arg name="tgt_system" value="$(arg id)" />
         <arg name="tgt_component" value="1" />
         <arg name="log_output" value="$(arg output)" />
     </include>
@@ -41,6 +40,7 @@
         <arg name="x" value="$(arg x)" />
         <arg name="y" value="$(arg y)" />
         <arg name="pos_type" value="$(arg pos_type)" />
+        <arg name="fcu" value="$(arg fcu)" />
         <arg name="obc" value="false" />
         <arg name="output" value="$(arg output)" />
     </include>
@@ -49,6 +49,7 @@
     <include file="$(find cpswarm_sar)/launch/uav_swarm_library.launch">
         <arg name="id" value="$(arg id)" />
         <arg name="output" value="$(arg output)" />
+        <arg name="pos_type" value="$(arg pos_type)" />
         <arg name="behavior" value="$(arg behavior)" />
     </include>
 

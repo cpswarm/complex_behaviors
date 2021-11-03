@@ -3,14 +3,15 @@
 
     <arg name="id" default="0" />
     <arg name="fcu" default="px4" /> <!-- px4, apm -->
+    <arg name="gcs" default="192.168.1.1" />
     <arg name="x" default="0" />
     <arg name="y" default="0" />
     <arg name="Y" default="0" />
     <arg name="altitude" default="1.5" />
     <arg name="pos_type" default="local" /> <!-- global, local -->
-    <arg name="output" default="screen" /> <!-- screen, log -->
-    <arg name="behavior" default="optimal" /> <!-- random, optimal, flocking -->
+    <arg name="behavior" default="random" /> <!-- random, optimal, flocking -->
     <arg name="logging" default="false" />
+    <arg name="output" default="screen" /> <!-- screen, log -->
 
     <!-- Console verbosity level -->
     <env name="ROSCONSOLE_CONFIG_FILE" value="$(find cpswarm_sar)/param/rosconsole.config" />
@@ -18,13 +19,14 @@
     <group ns="uav_$(arg id)">
 
         <!-- Behavior state machine -->
-        <node pkg="cpswarm_sar" type="uav_sar_simulation.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true">
+        <node pkg="cpswarm_sar" type="uav_sar_demonstration.py" name="uav_sar_state_machine_$(arg id)" output="$(arg output)" required="true">
             <param name="altitude" value="$(arg altitude)" />
         </node>
 
         <!-- Flight controller -->
         <include file="$(find cpswarm_sar)/launch/uav_fcu_$(arg fcu).launch">
             <arg name="id" value="$(arg id)" />
+            <arg name="gcs" value="$(arg gcs)" />
             <arg name="x" value="$(arg x)" />
             <arg name="y" value="$(arg y)" />
             <arg name="Y" value="$(arg Y)" />
@@ -51,6 +53,7 @@
         <include file="$(find cpswarm_sar)/launch/uav_swarm_library.launch">
             <arg name="id" value="$(arg id)" />
             <arg name="output" value="$(arg output)" />
+            <arg name="pos_type" value="$(arg pos_type)" />
             <arg name="behavior" value="$(arg behavior)" />
         </include>
 
