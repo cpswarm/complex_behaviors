@@ -58,6 +58,22 @@ Visualization Manager:
       Enabled: true
       Head Length: 0.20000000298023224
       Head Radius: 0.20000000298023224
+      Name: UAV 0
+      Queue Size: 10
+      Shaft Length: 0.20000000298023224
+      Shaft Radius: 0.10000000149011612
+      Shape: Arrow
+      Topic: /uav_0/pos_provider/pose
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.10000000149011612
+      Class: rviz/Pose
+      Color: 252; 233; 79
+      Enabled: true
+      Head Length: 0.20000000298023224
+      Head Radius: 0.20000000298023224
       Name: UAV 1
       Queue Size: 10
       Shaft Length: 0.20000000298023224
@@ -70,7 +86,7 @@ Visualization Manager:
       Axes Length: 1
       Axes Radius: 0.10000000149011612
       Class: rviz/Pose
-      Color: 252; 233; 79
+      Color: 114; 159; 207
       Enabled: true
       Head Length: 0.20000000298023224
       Head Radius: 0.20000000298023224
@@ -86,7 +102,7 @@ Visualization Manager:
       Axes Length: 1
       Axes Radius: 0.10000000149011612
       Class: rviz/Pose
-      Color: 114; 159; 207
+      Color: 138; 226; 52
       Enabled: true
       Head Length: 0.20000000298023224
       Head Radius: 0.20000000298023224
@@ -102,7 +118,7 @@ Visualization Manager:
       Axes Length: 1
       Axes Radius: 0.10000000149011612
       Class: rviz/Pose
-      Color: 138; 226; 52
+      Color: 252; 175; 62
       Enabled: true
       Head Length: 0.20000000298023224
       Head Radius: 0.20000000298023224
@@ -118,7 +134,7 @@ Visualization Manager:
       Axes Length: 1
       Axes Radius: 0.10000000149011612
       Class: rviz/Pose
-      Color: 252; 175; 62
+      Color: 173; 127; 168
       Enabled: true
       Head Length: 0.20000000298023224
       Head Radius: 0.20000000298023224
@@ -134,7 +150,7 @@ Visualization Manager:
       Axes Length: 1
       Axes Radius: 0.10000000149011612
       Class: rviz/Pose
-      Color: 173; 127; 168
+      Color: 233; 185; 110
       Enabled: true
       Head Length: 0.20000000298023224
       Head Radius: 0.20000000298023224
@@ -150,7 +166,7 @@ Visualization Manager:
       Axes Length: 1
       Axes Radius: 0.10000000149011612
       Class: rviz/Pose
-      Color: 233; 185; 110
+      Color: 136; 138; 133
       Enabled: true
       Head Length: 0.20000000298023224
       Head Radius: 0.20000000298023224
@@ -163,24 +179,19 @@ Visualization Manager:
       Unreliable: false
       Value: true
     - Alpha: 1
-      Axes Length: 1
-      Axes Radius: 0.10000000149011612
-      Class: rviz/Pose
-      Color: 136; 138; 133
+      Class: rviz/PointStamped
+      Color: 164; 0; 0
       Enabled: true
-      Head Length: 0.20000000298023224
-      Head Radius: 0.20000000298023224
-      Name: UAV 8
+      History Length: 1
+      Name: Goal UAV 0
       Queue Size: 10
-      Shaft Length: 0.20000000298023224
-      Shaft Radius: 0.10000000149011612
-      Shape: Arrow
-      Topic: /uav_8/pos_provider/pose
+      Radius: 0.20000000298023224
+      Topic: /uav_0/coverage_path/waypoint
       Unreliable: false
       Value: true
     - Alpha: 1
       Class: rviz/PointStamped
-      Color: 164; 0; 0
+      Color: 196; 160; 0
       Enabled: true
       History Length: 1
       Name: Goal UAV 1
@@ -191,7 +202,7 @@ Visualization Manager:
       Value: true
     - Alpha: 1
       Class: rviz/PointStamped
-      Color: 196; 160; 0
+      Color: 32; 74; 135
       Enabled: true
       History Length: 1
       Name: Goal UAV 2
@@ -202,7 +213,7 @@ Visualization Manager:
       Value: true
     - Alpha: 1
       Class: rviz/PointStamped
-      Color: 32; 74; 135
+      Color: 78; 154; 6
       Enabled: true
       History Length: 1
       Name: Goal UAV 3
@@ -224,7 +235,7 @@ Visualization Manager:
       Value: true
     - Alpha: 1
       Class: rviz/PointStamped
-      Color: 78; 154; 6
+      Color: 92; 53; 102
       Enabled: true
       History Length: 1
       Name: Goal UAV 5
@@ -235,7 +246,7 @@ Visualization Manager:
       Value: true
     - Alpha: 1
       Class: rviz/PointStamped
-      Color: 92; 53; 102
+      Color: 143; 89; 2
       Enabled: true
       History Length: 1
       Name: Goal UAV 6
@@ -246,7 +257,7 @@ Visualization Manager:
       Value: true
     - Alpha: 1
       Class: rviz/PointStamped
-      Color: 143; 89; 2
+      Color: 46; 52; 54
       Enabled: true
       History Length: 1
       Name: Goal UAV 7
@@ -256,20 +267,33 @@ Visualization Manager:
       Unreliable: false
       Value: true
     - Alpha: 1
-      Class: rviz/PointStamped
-      Color: 46; 52; 54
+      Buffer Length: 1
+      Class: rviz/Path
+      Color: 239; 41; 41
       Enabled: true
-      History Length: 1
-      Name: Goal UAV 8
+      Head Diameter: 0.30000001192092896
+      Head Length: 0.20000000298023224
+      Length: 0.30000001192092896
+      Line Style: Lines
+      Line Width: 0.029999999329447746
+      Name: Path UAV 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
       Queue Size: 10
-      Radius: 0.20000000298023224
-      Topic: /uav_8/coverage_path/waypoint
+      Radius: 0.029999999329447746
+      Shaft Diameter: 0.10000000149011612
+      Shaft Length: 0.10000000149011612
+      Topic: /uav_0/coverage_path/path
       Unreliable: false
       Value: true
     - Alpha: 1
       Buffer Length: 1
       Class: rviz/Path
-      Color: 239; 41; 41
+      Color: 252; 233; 79
       Enabled: true
       Head Diameter: 0.30000001192092896
       Head Length: 0.20000000298023224
@@ -293,7 +317,7 @@ Visualization Manager:
     - Alpha: 1
       Buffer Length: 1
       Class: rviz/Path
-      Color: 252; 233; 79
+      Color: 114; 159; 207
       Enabled: true
       Head Diameter: 0.30000001192092896
       Head Length: 0.20000000298023224
@@ -317,7 +341,7 @@ Visualization Manager:
     - Alpha: 1
       Buffer Length: 1
       Class: rviz/Path
-      Color: 114; 159; 207
+      Color: 138; 226; 52
       Enabled: true
       Head Diameter: 0.30000001192092896
       Head Length: 0.20000000298023224
@@ -341,7 +365,7 @@ Visualization Manager:
     - Alpha: 1
       Buffer Length: 1
       Class: rviz/Path
-      Color: 138; 226; 52
+      Color: 252; 175; 62
       Enabled: true
       Head Diameter: 0.30000001192092896
       Head Length: 0.20000000298023224
@@ -365,7 +389,7 @@ Visualization Manager:
     - Alpha: 1
       Buffer Length: 1
       Class: rviz/Path
-      Color: 252; 175; 62
+      Color: 173; 127; 168
       Enabled: true
       Head Diameter: 0.30000001192092896
       Head Length: 0.20000000298023224
@@ -389,7 +413,7 @@ Visualization Manager:
     - Alpha: 1
       Buffer Length: 1
       Class: rviz/Path
-      Color: 173; 127; 168
+      Color: 233; 185; 110
       Enabled: true
       Head Diameter: 0.30000001192092896
       Head Length: 0.20000000298023224
@@ -413,7 +437,7 @@ Visualization Manager:
     - Alpha: 1
       Buffer Length: 1
       Class: rviz/Path
-      Color: 233; 185; 110
+      Color: 136; 138; 133
       Enabled: true
       Head Diameter: 0.30000001192092896
       Head Length: 0.20000000298023224
@@ -432,30 +456,6 @@ Visualization Manager:
       Shaft Diameter: 0.10000000149011612
       Shaft Length: 0.10000000149011612
       Topic: /uav_7/coverage_path/path
-      Unreliable: false
-      Value: true
-    - Alpha: 1
-      Buffer Length: 1
-      Class: rviz/Path
-      Color: 136; 138; 133
-      Enabled: true
-      Head Diameter: 0.30000001192092896
-      Head Length: 0.20000000298023224
-      Length: 0.30000001192092896
-      Line Style: Lines
-      Line Width: 0.029999999329447746
-      Name: Path UAV 8
-      Offset:
-        X: 0
-        Y: 0
-        Z: 0
-      Pose Color: 255; 85; 255
-      Pose Style: None
-      Queue Size: 10
-      Radius: 0.029999999329447746
-      Shaft Diameter: 0.10000000149011612
-      Shaft Length: 0.10000000149011612
-      Topic: /uav_8/coverage_path/path
       Unreliable: false
       Value: true
   Enabled: true
