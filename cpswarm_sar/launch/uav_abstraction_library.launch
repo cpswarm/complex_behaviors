@@ -35,7 +35,7 @@
     <!-- SENSING ACTUATION -->
 
     <!-- Mission area services -->
-    <include file="$(find area_provider)/launch/area_provider.launch">
+    <include file="$(find area_provider)/launch/ma_services.launch">
         <arg name="id" value="$(arg id)" />
         <arg name="pos_type" value="$(arg pos_type)" />
         <arg name="x" value="$(arg x)" />
